@@ -1,0 +1,34 @@
+ManifestFileVersion: 0
+CRC: 3670620000
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 547dd52709b7f65bfacba6905bdee340
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: adfd2104f2f63d13624c3f2e7ec4c769
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: c35969a52ac667046b61f4cc344f06f3, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c6d442484f63c05449d9ff0dff473922, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+- Class: 221
+  Script: {instanceID: 0}
+Assets:
+- Assets/Animators/AnimationSpecial11.overrideController
+- Assets/Animators/AnimationSword1.overrideController
+- Assets/Animators/AnimationFire1.overrideController
+- Assets/Animators/AnimationAttack6.overrideController
+- Assets/Animators/AnimationAttack1.overrideController
+Dependencies: []

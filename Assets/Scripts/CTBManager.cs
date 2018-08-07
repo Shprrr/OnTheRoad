@@ -85,6 +85,12 @@ public class CTBManager : MonoBehaviour
         }
     }
 
+    public void StartBattle()
+    {
+        BattleTurn = 0;
+        OrderBattle.Clear();
+    }
+
     public void CalculateCTB(BattleEvent battle)
     {
         CTBTurn? firstTurn = null;
@@ -211,5 +217,22 @@ public class CTBManager : MonoBehaviour
         }
 
         OrderBattle.Sort(); // Some battlers can't move so this could change the order.
+    }
+
+    public void BeginTurn(BattleEvent battle)
+    {
+        // Keep the CV of the next turn of the current battler
+        if (BattleTurn > 0)
+        {
+            CTBTurn turn = OrderBattle[0];
+            turn.SetCounter();
+            OrderBattle[0] = turn;
+            OrderBattle[0].battler.CounterCTB = OrderBattle[0].counter;
+        }
+
+        // Update CTB and change the active battler for the next one.
+        CalculateCTB(battle);
+
+        BattleTurn++;
     }
 }

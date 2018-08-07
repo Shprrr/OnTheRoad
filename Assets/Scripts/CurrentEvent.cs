@@ -25,6 +25,8 @@ public class CurrentEvent : MonoBehaviour
     public GameObject buttonSkills;
     public GameObject buttonItems;
     public GameObject buttonRun;
+    public GameObject buttonBackTarget;
+    public GameObject ctbPanel;
 
     public GameObject enemySpawn1;
     public GameObject enemySpawn2;
@@ -73,6 +75,8 @@ public class CurrentEvent : MonoBehaviour
         buttonSkills.GetComponent<Button>().onClick.RemoveAllListeners();
         buttonItems.GetComponent<Button>().onClick.RemoveAllListeners();
         buttonRun.GetComponent<Button>().onClick.RemoveAllListeners();
+        ctbPanel.SetActive(false);
+        GetComponent<Animator>().enabled = false;
 
         enemySpawn1.DestroyAllChildren();
         enemySpawn2.DestroyAllChildren();
