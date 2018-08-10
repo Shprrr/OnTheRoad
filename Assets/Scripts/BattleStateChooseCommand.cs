@@ -17,7 +17,7 @@ public class BattleStateChooseCommand : StateMachineBehaviour
             return;
         }
 
-        battle.ctbManager.BeginTurn(battle);
+        battle._currentEvent.ctbManager.BeginTurn(battle);
 
         //TODO: Statuses
         //foreach (var actor in Actors)

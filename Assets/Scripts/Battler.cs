@@ -444,7 +444,6 @@ public class Battler : MonoBehaviour
         if (animationsBundle == null)
             Debug.LogError("animationsBundle is null");
         taking.animationAttack = animationsBundle.LoadAsset<AnimatorOverrideController>(animationAttack);
-
     }
 
     public bool Casts(SkillData skill, out int skillLevel)

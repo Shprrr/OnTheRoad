@@ -28,5 +28,7 @@ public class TakingDamage : MonoBehaviour
     {
         if (damage != Damage.Empty)
             damage.ApplyDamage();
+
+        GameObject.FindGameObjectWithTag("GameController").GetComponent<Animator>().SetInteger("state", 0);
     }
 }

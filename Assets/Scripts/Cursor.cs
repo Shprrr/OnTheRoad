@@ -234,4 +234,14 @@ public class Cursor
         }
         return targets;
     }
+
+    public override string ToString()
+    {
+        string r = TargetType.ToString();
+
+        if (TargetType == eTargetType.SINGLE_ENEMY || TargetType == eTargetType.SINGLE_PARTY)
+            r += " " + SingleTarget;
+
+        return r;
+    }
 }

@@ -17,20 +17,27 @@
     public BattleCommand Kind;
     public Cursor Target;
     public SkillData Skill;
-    //public BaseItem Item;
+    public ItemData Item;
 
-    //public BattleAction(eKind kind = eKind.WAIT, Skill skill = null, BaseItem item = null)
-    //{
-    //    this.Kind = kind;
-    //    this.Target = null;
-    //    this.Skill = skill;
-    //    this.Item = item;
-    //}
-
-    public BattleAction(BattleCommand kind = BattleCommand.Nothing, SkillData skill = null)
+    public BattleAction(BattleCommand kind = BattleCommand.Nothing, SkillData skill = null, ItemData item = null)
     {
         Kind = kind;
         Target = null;
         Skill = skill;
+        Item = item;
+    }
+
+    public override string ToString()
+    {
+        string r = Kind.ToString();
+        if (Kind == BattleCommand.Skills)
+            r = Skill.ToString();
+        if (Kind == BattleCommand.Items)
+            r = Item.ToString();
+
+        if (Target != null)
+            r += " on " + Target;
+
+        return r;
     }
 }

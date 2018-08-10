@@ -69,6 +69,11 @@ public class CurrentEvent : MonoBehaviour
         currentPosition = position;
         currentEvent = map.mapData[position];
 
+        RefreshPosition();
+    }
+
+    public void RefreshPosition()
+    {
         battleCommands.SetActive(false);
         buttonAttack.GetComponent<Button>().onClick.RemoveAllListeners();
         buttonLastCommand.GetComponent<Button>().onClick.RemoveAllListeners();

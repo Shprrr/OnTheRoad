@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SkillManager : MonoBehaviour
+public class SkillsManager : MonoBehaviour
 {
     public GameObject skillPanel;
     private GameObject skillContent;

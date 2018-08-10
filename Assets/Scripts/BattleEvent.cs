@@ -20,14 +20,15 @@ public class BattleEvent : MapEvent
     public int MAX_ACTOR = 2;
     public int MAX_ENEMY = 3;
 
-    private CurrentEvent _currentEvent;
-    public CTBManager ctbManager;
+    public CurrentEvent _currentEvent;
 
     private Animator animator;
 
     public GameObject prefabEnemy1;
     public GameObject prefabEnemy2;
     public GameObject prefabEnemy3;
+
+    public bool finished;
 
     public List<Battler> Actors;
     public List<Battler> Enemies;
@@ -45,7 +46,13 @@ public class BattleEvent : MapEvent
         base.RefreshEvent(currentEvent);
 
         _currentEvent = currentEvent;
-        ctbManager = _currentEvent.ctbManager;
+        animator = currentEvent.GetComponent<Animator>();
+
+        if (finished)
+        {
+            animator.enabled = false;
+            return;
+        }
 
         Actors.Clear();
         Actors.AddRange(currentEvent.party.GetComponentsInChildren<Battler>());
@@ -66,10 +73,9 @@ public class BattleEvent : MapEvent
         currentEvent.ctbPanel.SetActive(true);
         RefreshButtons(false);
 
-        animator = currentEvent.GetComponent<Animator>();
         animator.enabled = true;
         animator.Rebind();
-        ctbManager.StartBattle();
+        _currentEvent.ctbManager.StartBattle();
     }
 
     private void SpawnEnemy(GameObject prefabEnemy, Transform transform)
@@ -230,6 +236,12 @@ public class BattleEvent : MapEvent
         return false;
     }
 
+    public void FinishBattle()
+    {
+        finished = true;
+        _currentEvent.RefreshPosition();
+    }
+
     public void ActionState(BattleAction action)
     {
         var targets = action.Target.getTargetBattler();
@@ -316,7 +328,7 @@ public class BattleEvent : MapEvent
     public void LastCommand()
     {
         var lastAction = getActiveBattler().lastAction;
-        Debug.LogFormat("LastCommand => {0} !", lastAction);
+        Debug.LogFormat("LastCommand => {0} !", lastAction.Value);
         switch (lastAction.Value.Kind)
         {
             default:
@@ -341,7 +353,7 @@ public class BattleEvent : MapEvent
     public void Skills()
     {
         Debug.Log("Skills !");
-        var skillManager = _currentEvent.GetComponent<SkillManager>();
+        var skillManager = _currentEvent.GetComponent<SkillsManager>();
         skillManager.skills = getActiveBattler().skills;
         skillManager.OnClick += (sender, e) =>
         {

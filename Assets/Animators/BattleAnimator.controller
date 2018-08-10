@@ -13,13 +13,13 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: end
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -48,15 +48,16 @@ MonoBehaviour:
     Type: 
     MAX_ACTOR: 2
     MAX_ENEMY: 3
-    ctbManager: {fileID: 0}
+    _currentEvent: {fileID: 0}
     prefabEnemy1: {fileID: 0}
     prefabEnemy2: {fileID: 0}
     prefabEnemy3: {fileID: 0}
+    finished: 0
     Actors: []
     Enemies: []
     ActiveBattlerIndex: 0
     Result: 0
---- !u!114 &114734261302641086
+--- !u!114 &114537533228177928
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -64,21 +65,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ddb8895991e99d40893eaab78ee7f39, type: 3}
+  m_Script: {fileID: 11500000, guid: 40134c659260012409629ec310a4be93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   battle:
     Type: 
     MAX_ACTOR: 2
     MAX_ENEMY: 3
-    ctbManager: {fileID: 0}
+    _currentEvent: {fileID: 0}
     prefabEnemy1: {fileID: 0}
     prefabEnemy2: {fileID: 0}
     prefabEnemy3: {fileID: 0}
+    finished: 0
     Actors: []
     Enemies: []
     ActiveBattlerIndex: 0
     Result: 0
+  resultPanelPrefab: {fileID: 1335862162431910, guid: 999ecb3f4815fce469a5bb843e460ac9,
+    type: 2}
 --- !u!114 &114930786047761306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -94,10 +98,11 @@ MonoBehaviour:
     Type: 
     MAX_ACTOR: 2
     MAX_ENEMY: 3
-    ctbManager: {fileID: 0}
+    _currentEvent: {fileID: 0}
     prefabEnemy1: {fileID: 0}
     prefabEnemy2: {fileID: 0}
     prefabEnemy3: {fileID: 0}
+    finished: 0
     Actors: []
     Enemies: []
     ActiveBattlerIndex: 0
@@ -139,10 +144,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_ExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -184,10 +189,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_ExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -208,10 +213,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_ExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -222,17 +227,20 @@ AnimatorStateTransition:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 
-  m_Conditions: []
+  m_Conditions:
+  - m_ConditionMode: 6
+    m_ConditionEvent: state
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102113240287404732}
   m_Solo: 0
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_ExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -253,10 +261,10 @@ AnimatorStateTransition:
   m_Mute: 0
   m_IsExit: 0
   serializedVersion: 3
-  m_TransitionDuration: 0.25
+  m_TransitionDuration: 0
   m_TransitionOffset: 0
-  m_ExitTime: 0.75
-  m_HasExitTime: 1
+  m_ExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -300,7 +308,8 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 114537533228177928}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -326,8 +335,7 @@ AnimatorState:
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 1101775994460187006}
-  m_StateMachineBehaviours:
-  - {fileID: 114734261302641086}
+  m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
