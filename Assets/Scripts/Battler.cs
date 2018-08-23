@@ -10,7 +10,6 @@ public class Battler : MonoBehaviour
     private int Level = 2;
 
     public GameObject animationPrefab;
-    public GameObject targetPrefab;
     public bool IsPlayer;
 
     public int BaseMaxHP;
@@ -67,7 +66,7 @@ public class Battler : MonoBehaviour
         // Put skills by Unity in the factory
         for (int i = 0; i < skills.Length; i++)
         {
-            skills[i] = SkillFactory.Build(skills[i].Name);
+            skills[i] = SkillFactory.Build(skills[i].Id);
         }
     }
 
@@ -455,17 +454,17 @@ public class Battler : MonoBehaviour
         return true;
     }
 
-    public void Used(Battler target, SkillData skill, int skillLevel, int nbTarget)
+    public void Used(Battler target, Data data, int nbTarget)
     {
         Damage damage;
-        skill.Effect.CalculateDamage(this, target, out damage);
-        Debug.LogFormat("{0} used {3} on {1} for {2}", name, target.name, damage, skill.Name);
+        data.Effect.CalculateDamage(this, target, out damage);
+        Debug.LogFormat("{0} used {3} on {1} for {2}", name, target.name, damage, data.Name);
         var taking = Instantiate(animationPrefab, target.transform).GetComponent<TakingDamage>();
         taking.damage = damage;
 
         if (animationsBundle == null)
             Debug.LogError("animationsBundle is null");
-        taking.animationAttack = animationsBundle.LoadAsset<AnimatorOverrideController>(skill.AnimationName);
+        taking.animationAttack = animationsBundle.LoadAsset<AnimatorOverrideController>(data.AnimationName);
     }
 
     public Damage CalculatePhysicalDamage(Battler target)
@@ -562,7 +561,9 @@ public class Battler : MonoBehaviour
         }
 
         //Calculate attack multiplier
-        if (!isItem)
+        if (isItem)
+            damage.Multiplier = 1;
+        else
         {
             damage.Multiplier = 0;
             for (int i = 0; i < getMagicAttackMultiplier(); i++)

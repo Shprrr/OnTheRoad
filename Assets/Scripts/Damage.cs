@@ -49,7 +49,7 @@ public struct Damage
     public override string ToString()
     {
         //return Multiplier + "x" + Value + " " + Type;
-        return Multiplier == 0 ? "MISS" : Value.ToString();
+        return Multiplier == 0 ? "MISS" : Value + " " + Type;
     }
 
     public override bool Equals(object obj)

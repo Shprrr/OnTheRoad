@@ -11,7 +11,9 @@ public class BattleStateResult : StateMachineBehaviour
         battle = (BattleEvent)animator.GetComponent<CurrentEvent>().currentEvent;
 
         var result = Instantiate(resultPanelPrefab, GameObject.Find("Canvas").transform).GetComponent<BattleResult>();
+        result.party = animator.GetComponent<CurrentEvent>().party;
         result.moneyGained = battle.Enemies.Count * 2;
+        result.itemsGained = new ItemData[] { ItemFactory.Build("potionHp1", 1), ItemFactory.Build("potionSp1", 2) };
 
         battle.FinishBattle();
     }

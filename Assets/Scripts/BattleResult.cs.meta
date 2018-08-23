@@ -4,9 +4,10 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
+  - party: {instanceID: 0}
   - moneyText: {instanceID: 0}
   - itemsContent: {instanceID: 0}
-  - itemPrefab: {fileID: 1012289177383364, guid: df4da95e0cf7f184ea0ba4a8b32d2c13,
+  - itemPrefab: {fileID: 1058828849565294, guid: e351108782c89784996cb7fb7895f658,
       type: 2}
   executionOrder: 0
   icon: {instanceID: 0}

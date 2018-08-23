@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BattleStateAction : StateMachineBehaviour
 {
@@ -13,14 +11,13 @@ public class BattleStateAction : StateMachineBehaviour
 
         if (battle.getActiveBattler().IsPlayer)
         {
-            //if (OnSetupCommandWindow != null) OnSetupCommandWindow(this, EventArgs.Empty);
             Debug.LogFormat("CommandWindow for {0}", battle.getActiveBattler().name);
             battle.RefreshButtons(true);
         }
         else
         {
             Debug.LogFormat("AIAction for {0}", battle.getActiveBattler().name);
-            battle.ActionState(battle.getActiveBattler().GetComponent<BattleAI>().ChooseAction(battle.Enemies, battle.Actors));
+            battle._currentEvent.targetSelectionManager.ActionState(battle.getActiveBattler(), battle.getActiveBattler().GetComponent<BattleAI>().ChooseAction(battle.Enemies, battle.Actors));
         }
     }
 }

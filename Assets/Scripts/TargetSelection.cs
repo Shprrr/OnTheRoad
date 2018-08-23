@@ -2,7 +2,8 @@
 
 public class TargetSelection : MonoBehaviour
 {
-    public BattleEvent battle;
+    public TargetSelectionManager manager;
+    public Battler user;
     public Battler target;
     public Cursor.eTargetType targetType;
     public BattleAction action;
@@ -11,7 +12,7 @@ public class TargetSelection : MonoBehaviour
     {
         action.Target.TargetType = targetType;
         action.Target.SingleTarget = target;
-        battle.ActionState(action);
-        battle.RemoveTargetChoice();
+        manager.ActionState(user, action);
+        manager.RemoveTargetChoice();
     }
 }

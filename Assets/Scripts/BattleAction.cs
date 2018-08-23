@@ -16,24 +16,20 @@
 
     public BattleCommand Kind;
     public Cursor Target;
-    public SkillData Skill;
-    public ItemData Item;
+    public Data Data;
 
-    public BattleAction(BattleCommand kind = BattleCommand.Nothing, SkillData skill = null, ItemData item = null)
+    public BattleAction(BattleCommand kind = BattleCommand.Nothing, Data data = null, Cursor target = null)
     {
         Kind = kind;
-        Target = null;
-        Skill = skill;
-        Item = item;
+        Target = target;
+        Data = data;
     }
 
     public override string ToString()
     {
         string r = Kind.ToString();
-        if (Kind == BattleCommand.Skills)
-            r = Skill.ToString();
-        if (Kind == BattleCommand.Items)
-            r = Item.ToString();
+        if (Kind == BattleCommand.Skills || Kind == BattleCommand.Items)
+            r = Data.ToString();
 
         if (Target != null)
             r += " on " + Target;

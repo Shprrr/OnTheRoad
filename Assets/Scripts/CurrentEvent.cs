@@ -2,30 +2,43 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(CTBManager), typeof(TargetSelectionManager))]
 public class CurrentEvent : MonoBehaviour
 {
-    public CTBManager ctbManager;
-
     public Map map;
 
     public MapPosition currentPosition;
     public MapEvent currentEvent;
 
-    public GameObject party;
+    public Canvas canvas;
 
+    public Party party;
+
+    [Header("Directions")]
     public GameObject directions;
     public GameObject buttonLeft;
     public GameObject buttonMiddle;
     public GameObject buttonRight;
     public GameObject buttonBack;
+    public Button buttonInventory;
+    public GameObject itemsPanelPrefab;
+    public GameObject skillsPanelPrefab;
 
+    [HideInInspector]
+    public TargetSelectionManager targetSelectionManager;
+    [Header("Target Selection")]
+    public GameObject targetSelection;
+    public Button buttonBackTarget;
+
+    [HideInInspector]
+    public CTBManager ctbManager;
+    [Header("Battle")]
     public GameObject battleCommands;
     public GameObject buttonAttack;
     public GameObject buttonLastCommand;
     public GameObject buttonSkills;
     public GameObject buttonItems;
     public GameObject buttonRun;
-    public GameObject buttonBackTarget;
     public GameObject ctbPanel;
 
     public GameObject enemySpawn1;
@@ -36,11 +49,13 @@ public class CurrentEvent : MonoBehaviour
     private void Start()
     {
         ctbManager = GetComponent<CTBManager>();
+        targetSelectionManager = GetComponent<TargetSelectionManager>();
+        buttonInventory.onClick.AddListener(AccessInventoryOutsideBattle);
     }
 
     public void Move(Direction direction)
     {
-        MapPosition nextPosition = new MapPosition(currentPosition.X, currentPosition.Y);
+        var nextPosition = new MapPosition(currentPosition.X, currentPosition.Y);
 
         switch (direction)
         {
@@ -74,12 +89,17 @@ public class CurrentEvent : MonoBehaviour
 
     public void RefreshPosition()
     {
+        targetSelection.SetActive(false);
+        targetSelectionManager.onTargetSelected = null;
+        targetSelectionManager.Enemies.Clear();
+
         battleCommands.SetActive(false);
         buttonAttack.GetComponent<Button>().onClick.RemoveAllListeners();
         buttonLastCommand.GetComponent<Button>().onClick.RemoveAllListeners();
         buttonSkills.GetComponent<Button>().onClick.RemoveAllListeners();
         buttonItems.GetComponent<Button>().onClick.RemoveAllListeners();
         buttonRun.GetComponent<Button>().onClick.RemoveAllListeners();
+        buttonBackTarget.onClick.RemoveAllListeners();
         ctbPanel.SetActive(false);
         GetComponent<Animator>().enabled = false;
 
@@ -98,5 +118,34 @@ public class CurrentEvent : MonoBehaviour
         buttonMiddle.SetActive(map.mapData.ContainsKey(new MapPosition(currentPosition.X, currentPosition.Y + 1)));
         buttonRight.SetActive(map.mapData.ContainsKey(new MapPosition(currentPosition.X + 1, currentPosition.Y)));
         buttonBack.SetActive(map.mapData.ContainsKey(new MapPosition(currentPosition.X, currentPosition.Y - 1)));
+    }
+
+    public GameObject AccessInventory()
+    {
+        return Instantiate(itemsPanelPrefab, canvas.transform);
+    }
+
+    private void AccessInventoryOutsideBattle()
+    {
+        var panel = AccessInventory();
+        var rectTransform = panel.GetComponent<RectTransform>();
+        rectTransform.anchorMax = new Vector2(rectTransform.anchorMax.x, 0.47f);
+        var manager = panel.GetComponent<ItemsManager>();
+        manager.outsideBattle = true;
+        manager.items = party.items;
+        manager.OnClick += ItemsManager_OnClick;
+    }
+
+    private void ItemsManager_OnClick(object sender, System.EventArgs e)
+    {
+        var item = (ItemData)sender;
+        var actor = targetSelectionManager.Actors[0];
+        targetSelectionManager.ShowTargetChoice(actor, new BattleAction(BattleAction.BattleCommand.Items, item,
+            new Cursor(Cursor.eTargetType.SINGLE_ENEMY, actor, item.TargetsPossible, targetSelectionManager.Actors, new List<Battler>())));
+    }
+
+    public GameObject AccessSkills()
+    {
+        return Instantiate(skillsPanelPrefab, canvas.transform);
     }
 }

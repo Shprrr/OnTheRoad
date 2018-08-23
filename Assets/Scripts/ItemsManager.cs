@@ -1,7 +1,46 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ItemManager : MonoBehaviour
+[RequireComponent(typeof(Animator))]
+public class ItemsManager : MonoBehaviour
 {
+    private Animator animator;
+
+    public GameObject itemContent;
+    public GameObject itemPrefab;
+    public ItemData[] items;
+    public bool outsideBattle;
+
+    // Awake est appelé quand l'instance de script est chargée
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+    }
+
+    // Start est appelé juste avant qu'une méthode Update soit appelée pour la première fois
+    private void Start()
+    {
+        itemContent.DestroyAllChildren();
+        foreach (var item in items)
+        {
+            var go = Instantiate(itemPrefab, itemContent.transform);
+            go.GetComponent<Item>().data = item;
+            go.GetComponent<Button>().onClick.AddListener(() => Click(item));
+            if (outsideBattle)
+                go.GetComponent<Button>().interactable = item.UsableOutsideBattle;
+        }
+    }
+
+    public event EventHandler OnClick;
+    public void Click(ItemData item)
+    {
+        OnClick?.Invoke(item, EventArgs.Empty);
+        animator.SetTrigger("close");
+    }
+
+    public void Back()
+    {
+        animator.SetTrigger("close");
+    }
 }

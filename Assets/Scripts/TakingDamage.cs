@@ -4,6 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class TakingDamage : MonoBehaviour
 {
+    public Color damageHPColor;
+    public Color damageMPColor;
+    public Color healHPColor;
+    public Color healMPColor;
+
     private Animator animator;
 
     public AnimatorOverrideController animationAttack;
@@ -20,7 +25,16 @@ public class TakingDamage : MonoBehaviour
     {
         animator.runtimeAnimatorController = animationAttack;
 
-        GetComponentInChildren<TextMeshProUGUI>().text = damage.ToString();
+        var text = GetComponentInChildren<TextMeshProUGUI>();
+        text.text = damage.Multiplier == 0 ? "MISS" : System.Math.Abs(damage.Value).ToString();
+        if (damage.Value < 0)
+            if (damage.Type == Damage.eDamageType.MP)
+                text.color = healMPColor;
+            else text.color = healHPColor;
+        else if (damage.Type == Damage.eDamageType.MP)
+            text.color = damageMPColor;
+        else
+            text.color = damageHPColor;
     }
 
     // Cette fonction est appelée quand le MonoBehaviour est détruit

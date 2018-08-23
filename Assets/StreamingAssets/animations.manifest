@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 1689681843
+CRC: 1284574134
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5a26afa6377c1afccd5a49f4c02fa33f
+    Hash: 55d9dde0976139c7631e3a5ca75b9983
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 82dc23b5818754d821fbf015a87571e7
+    Hash: 8823356fed30ae3b32ffd56d37814d48
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -29,4 +29,5 @@ Assets:
 - Assets/Animators/AnimationFire1.overrideController
 - Assets/Animators/AnimationAttack6.overrideController
 - Assets/Animators/AnimationAttack1.overrideController
+- Assets/Animators/AnimationHeal1.overrideController
 Dependencies: []
