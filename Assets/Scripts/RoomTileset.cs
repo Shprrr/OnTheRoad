@@ -23,6 +23,10 @@ public class RoomTileset
     public Sprite upRightDownDoor;
     public Sprite allDoor;
     public Sprite noRoom;
+    public Sprite fogOfWar;
+
+    [Header("Indicators")]
+    public Sprite currentPosition;
 
     public Sprite GetDoorSprite(bool hasLeftDoor, bool hasRightDoor, bool hasUpDoor, bool hasDownDoor)
     {

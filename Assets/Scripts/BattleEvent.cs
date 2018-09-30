@@ -35,8 +35,12 @@ public class BattleEvent : MapEvent
     public int ActiveBattlerIndex;
     public eBattleResult Result;
 
-    public BattleEvent()
+    public BattleEvent(GameObject enemy1Prefab, GameObject enemy2Prefab = null, GameObject enemy3Prefab = null, string type = "Battle")
     {
+        Type = type;
+        prefabEnemy1 = enemy1Prefab;
+        prefabEnemy2 = enemy2Prefab;
+        prefabEnemy3 = enemy3Prefab;
         Actors = new List<Battler>(MAX_ACTOR);
         Enemies = new List<Battler>(MAX_ENEMY);
     }
@@ -115,13 +119,13 @@ public class BattleEvent : MapEvent
                     var lastSkill = (SkillData)lastAction.Value.Data;
                     if (lastSkill.SpCost > getActiveBattler().Sp)
                         buttonLastCommand.interactable = false;
-                    buttonLastCommand.GetComponentInChildren<Text>().text = lastSkill.Name + "  SP Cost:" + lastSkill.SpCost;
+                    buttonLastCommand.GetComponentInChildren<Text>().text = lastSkill.Name + "\nSP Cost:" + lastSkill.SpCost;
                     break;
                 case BattleCommand.Items:
                     var lastItem = (ItemData)lastAction.Value.Data;
                     if (lastItem.Amount == 0)
                         buttonLastCommand.interactable = false;
-                    buttonLastCommand.GetComponentInChildren<Text>().text = lastItem.Name + "  Amount:" + lastItem.Amount;
+                    buttonLastCommand.GetComponentInChildren<Text>().text = lastItem.Name + "\nAmount:" + lastItem.Amount;
                     break;
                 case BattleCommand.Run:
                     buttonLastCommand.GetComponentInChildren<Text>().text = "Run";
@@ -178,7 +182,6 @@ public class BattleEvent : MapEvent
 
     public void Attack()
     {
-        Debug.Log("Attack !");
         var action = new BattleAction(BattleCommand.Attack);
         action.Target = new Cursor(Cursor.eTargetType.SINGLE_ENEMY, getActiveBattler(), Cursor.POSSIBLE_TARGETS_ONE, Actors, Enemies);
         _currentEvent.targetSelectionManager.ShowTargetChoice(getActiveBattler(), action);
@@ -224,7 +227,6 @@ public class BattleEvent : MapEvent
 
     public void Skills()
     {
-        Debug.Log("Skills !");
         var skillManager = _currentEvent.AccessSkills().GetComponent<SkillsManager>();
         skillManager.user = getActiveBattler();
         skillManager.skills = getActiveBattler().skills;
@@ -241,7 +243,6 @@ public class BattleEvent : MapEvent
 
     public void Items()
     {
-        Debug.Log("Items !");
         var manager = _currentEvent.AccessInventory().GetComponent<ItemsManager>();
         manager.items = _currentEvent.party.items;
         manager.OnClick += (sender, e) =>

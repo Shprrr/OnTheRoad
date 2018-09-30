@@ -13,18 +13,17 @@ public class BattleAI : MonoBehaviour
     /// <returns></returns>
     public BattleAction ChooseAction(List<Battler> actors, List<Battler> enemies)
     {
-        BattleAction action = new BattleAction();
-        List<int> indexTargetPotential = new List<int>();
+        var action = new BattleAction();
+        var indexTargetPotential = new List<int>();
 
         //TODO: Si aucun skill appris, attack obligatoirement physique.
         action.Kind = BattleCommand.Attack;
         for (int i = 0; i < enemies.Count; i++)
         {
-            if (enemies[i] != null)
+            if (enemies[i] != null && !enemies[i].CantFight)
                 indexTargetPotential.Add(i);
         }
         //var cursor = new Cursor(Cursor.eTargetType.SINGLE_PARTY, indexTargetPotential[Random.Range(0, indexTargetPotential.Count)], Cursor.POSSIBLE_TARGETS_ANYONE);
-        //TODO: Bug si AI est player.
         var cursor = new Cursor(Cursor.eTargetType.SINGLE_PARTY, GetComponent<Battler>(), Cursor.POSSIBLE_TARGETS_ANYONE, enemies, actors);
         cursor.SingleTarget = enemies[indexTargetPotential[Random.Range(0, indexTargetPotential.Count)]];
         action.Target = cursor;

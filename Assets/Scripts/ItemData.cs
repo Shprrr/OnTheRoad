@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using static Cursor;
 
 [Serializable]
-public class ItemData : Data, IEquatable<ItemData>
+public class ItemData : DataEffect, IEquatable<ItemData>
 {
     public int Amount;
     public int Price;

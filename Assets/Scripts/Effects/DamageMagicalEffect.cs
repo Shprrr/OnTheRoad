@@ -1,17 +1,17 @@
 ﻿using System;
 
 [Serializable]
-public class DamageEffect : Effect
+public class DamageMagicalEffect : Effect
 {
     public int BaseDamage;
     public int BaseAccuracy;
     public Damage.eDamageType DamageType;
 
-    public DamageEffect()
+    public DamageMagicalEffect()
     {
     }
 
-    public DamageEffect(int baseDamage, int baseAccuracy, Damage.eDamageType damageType = Damage.eDamageType.HP)
+    public DamageMagicalEffect(int baseDamage, int baseAccuracy, Damage.eDamageType damageType = Damage.eDamageType.HP)
     {
         BaseDamage = baseDamage;
         BaseAccuracy = baseAccuracy;

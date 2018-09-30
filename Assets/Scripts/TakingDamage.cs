@@ -1,17 +1,22 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Animator))]
 public class TakingDamage : MonoBehaviour
 {
+    public GameObject attackNamePanelPrefab;
     public Color damageHPColor;
     public Color damageMPColor;
     public Color healHPColor;
     public Color healMPColor;
 
     private Animator animator;
+    private GameObject attackNamePanel;
 
+    public bool showAnimation;
     public AnimatorOverrideController animationAttack;
+    public bool showDamage;
     public Damage damage;
 
     // Awake est appelé quand l'instance de script est chargée
@@ -24,6 +29,12 @@ public class TakingDamage : MonoBehaviour
     private void Start()
     {
         animator.runtimeAnimatorController = animationAttack;
+
+        if (showAnimation)
+        {
+            attackNamePanel = Instantiate(attackNamePanelPrefab, GameObject.FindGameObjectWithTag("GameController").GetComponent<CurrentEvent>().canvas.transform);
+            attackNamePanel.GetComponentInChildren<Text>().text = damage.Name;
+        }
 
         var text = GetComponentInChildren<TextMeshProUGUI>();
         text.text = damage.Multiplier == 0 ? "MISS" : System.Math.Abs(damage.Value).ToString();
@@ -40,9 +51,24 @@ public class TakingDamage : MonoBehaviour
     // Cette fonction est appelée quand le MonoBehaviour est détruit
     private void OnDestroy()
     {
+        if (showAnimation)
+            Destroy(attackNamePanel);
+
         if (damage != Damage.Empty)
             damage.ApplyDamage();
 
         GameObject.FindGameObjectWithTag("GameController").GetComponent<Animator>().SetInteger("state", 0);
+    }
+
+    public void AdjustAnimation()
+    {
+        GetComponent<Image>().enabled = showAnimation;
+        GetComponentInChildren<TextMeshProUGUI>().enabled = false;
+    }
+
+    public void AdjustDamage()
+    {
+        GetComponent<Image>().enabled = false;
+        GetComponentInChildren<TextMeshProUGUI>().enabled = showDamage;
     }
 }

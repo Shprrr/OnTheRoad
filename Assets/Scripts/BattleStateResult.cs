@@ -8,13 +8,18 @@ public class BattleStateResult : StateMachineBehaviour
     // Appelée sur la première image où Update est exécuté, quand un statemachine évalue cet état
     public override void OnStateEnter(Animator animator, AnimatorStateInfo animatorStateInfo, int layerIndex)
     {
-        battle = (BattleEvent)animator.GetComponent<CurrentEvent>().currentEvent;
+        var currentEvent = animator.GetComponent<CurrentEvent>();
+        battle = (BattleEvent)currentEvent.currentEvent;
 
-        var result = Instantiate(resultPanelPrefab, GameObject.Find("Canvas").transform).GetComponent<BattleResult>();
-        result.party = animator.GetComponent<CurrentEvent>().party;
-        result.moneyGained = battle.Enemies.Count * 2;
-        result.itemsGained = new ItemData[] { ItemFactory.Build("potionHp1", 1), ItemFactory.Build("potionSp1", 2) };
+        var result = Instantiate(resultPanelPrefab, currentEvent.canvas.transform).GetComponent<BattleResult>();
+        result.currentEvent = currentEvent;
+        result.gameOver = battle.Result != BattleEvent.eBattleResult.WIN;
+        if (!result.gameOver)
+        {
+            result.moneyGained = battle.Enemies.Count * 2;
+            result.itemsGained = new ItemData[] { ItemFactory.Build("potionHp1", 1), ItemFactory.Build("potionSp1", 2) };
 
-        battle.FinishBattle();
+            battle.FinishBattle();
+        }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(CTBManager), typeof(TargetSelectionManager))]
 public class CurrentEvent : MonoBehaviour
 {
+    public GameObject nextMapPanelPrefab;
     public Map map;
 
     public MapPosition currentPosition;
@@ -44,6 +45,7 @@ public class CurrentEvent : MonoBehaviour
     public GameObject enemySpawn1;
     public GameObject enemySpawn2;
     public GameObject enemySpawn3;
+    public GameObject chestPrefab;
 
     // Start est appelé juste avant qu'une méthode Update soit appelée pour la première fois
     private void Start()
@@ -51,6 +53,7 @@ public class CurrentEvent : MonoBehaviour
         ctbManager = GetComponent<CTBManager>();
         targetSelectionManager = GetComponent<TargetSelectionManager>();
         buttonInventory.onClick.AddListener(AccessInventoryOutsideBattle);
+        AccessNextMap();
     }
 
     public void Move(Direction direction)
@@ -81,6 +84,7 @@ public class CurrentEvent : MonoBehaviour
         if (!map.mapData.ContainsKey(position))
             throw new KeyNotFoundException("Wrong direction.");
 
+        map.mapData[position].Visited = true;
         currentPosition = position;
         currentEvent = map.mapData[position];
 
@@ -147,5 +151,15 @@ public class CurrentEvent : MonoBehaviour
     public GameObject AccessSkills()
     {
         return Instantiate(skillsPanelPrefab, canvas.transform);
+    }
+
+    public GameObject AccessNextMap()
+    {
+        var go = Instantiate(nextMapPanelPrefab, canvas.transform);
+        var panel = go.GetComponent<NextMapManager>();
+        panel.party = party;
+        panel.templates = new MapTemplateData[] { new MapTemplateData("test"), new MapTemplateData("tutorial"), new MapTemplateData("greenhill") };
+        panel.mapGenerator = map;
+        return go;
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using static Cursor;
 
 [Serializable]
-public class SkillData : Data, IEquatable<SkillData>
+public class SkillData : DataEffect, IEquatable<SkillData>
 {
     public int SpCost;
 

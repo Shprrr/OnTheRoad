@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Map : MonoBehaviour, ISerializationCallbackReceiver
@@ -57,12 +58,34 @@ public class Map : MonoBehaviour, ISerializationCallbackReceiver
     // Start est appelé juste avant qu'une méthode Update soit appelée pour la première fois
     private void Start()
     {
-        var generator = GetComponent<MapGeneratorTest>();
-        if (generator != null)
-        {
-            generator.Generate();
-            var eventComponent = currentEvent.GetComponent<CurrentEvent>();
-            eventComponent.Move(new MapPosition(0, 0));
-        }
+        Generate(GetComponent<MapGeneratorTest>());
+    }
+
+    public void Generate(IMapGenerator generator, int difficulty = 1)
+    {
+        if (generator == null) return;
+
+        generator.Generate(difficulty);
+        var position = mapData.FirstOrDefault(m => m.Value.Type == "Spawn").Key;
+        var eventComponent = currentEvent.GetComponent<CurrentEvent>();
+        eventComponent.Move(position);
+    }
+
+    public bool IsVisited(MapPosition position, bool checkNoRoom = true)
+    {
+        if (mapData.ContainsKey(position))
+            return mapData[position].Visited;
+
+        if (!checkNoRoom) return false;
+
+        // If no room, checks if near rooms are visited.
+        bool leftVisited = IsVisited(new MapPosition(position.X - 1, position.Y), false);
+        if (leftVisited) return leftVisited;
+        bool rightVisited = IsVisited(new MapPosition(position.X + 1, position.Y), false);
+        if (rightVisited) return rightVisited;
+        bool upVisited = IsVisited(new MapPosition(position.X, position.Y + 1), false);
+        if (upVisited) return upVisited;
+        bool downVisited = IsVisited(new MapPosition(position.X, position.Y - 1), false);
+        return downVisited;
     }
 }

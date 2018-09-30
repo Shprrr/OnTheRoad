@@ -25,6 +25,15 @@ public class Party : MonoBehaviour
         moneyText.text = money.ToString("### ##0").Trim();
     }
 
+    public void FullHeal()
+    {
+        foreach (var battler in GetComponentsInChildren<Battler>())
+        {
+            battler.Hp = battler.MaxHP;
+            battler.Sp = battler.MaxSP;
+        }
+    }
+
     public void AddItem(ItemData item)
     {
         var index = Array.FindIndex(items, i => i.Name == item.Name);

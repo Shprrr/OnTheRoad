@@ -16,9 +16,9 @@
 
     public BattleCommand Kind;
     public Cursor Target;
-    public Data Data;
+    public DataEffect Data;
 
-    public BattleAction(BattleCommand kind = BattleCommand.Nothing, Data data = null, Cursor target = null)
+    public BattleAction(BattleCommand kind = BattleCommand.Nothing, DataEffect data = null, Cursor target = null)
     {
         Kind = kind;
         Target = target;

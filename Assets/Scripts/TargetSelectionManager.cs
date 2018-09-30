@@ -164,24 +164,24 @@ public class TargetSelectionManager : MonoBehaviour
 
                     int nbTarget = 0;
                     for (int i = 0; i < targets.Count; i++)
-                        if (targets[i] != null)
+                        if (targets[i] != null && !targets[i].CantFight)
                             nbTarget++;
 
                     for (int i = 0; i < targets.Count; i++)
-                        if (targets[i] != null)
+                        if (targets[i] != null && !targets[i].CantFight)
                             user.Used(targets[i], action.Data, nbTarget);
                 }
                 break;
-
+            //TODO: Revoir nbTarget vs CantFight avec des items qui target les morts
             case BattleCommand.Items:
                 {
                     int nbTarget = 0;
                     for (int i = 0; i < targets.Count; i++)
-                        if (targets[i] != null)
+                        if (targets[i] != null && !targets[i].CantFight)
                             nbTarget++;
 
                     for (int i = 0; i < targets.Count; i++)
-                        if (targets[i] != null)
+                        if (targets[i] != null && !targets[i].CantFight)
                             user.Used(targets[i], action.Data, nbTarget);
 
                     if (user.IsPlayer)

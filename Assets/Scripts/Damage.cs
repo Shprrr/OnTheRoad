@@ -19,6 +19,8 @@ public struct Damage
     public Battler User { get; set; }
     public Battler Target { get; set; }//TODO: Rename for Target
 
+    public string Name { get; set; }
+
     public void ApplyDamage()//TODO: Change for Attacker
     {
         switch (Type)

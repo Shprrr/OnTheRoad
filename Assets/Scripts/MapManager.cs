@@ -63,8 +63,14 @@ public class MapManager : MonoBehaviour
             {
                 var roomGO = rooms[x - currentEvent.currentPosition.X + xCount, y - currentEvent.currentPosition.Y + yCount];
                 roomGO.name = "Room " + x + "," + y;
-                bool room = currentEvent.map.mapData.ContainsKey(new MapPosition(x, y));
-                if (!room)
+
+                if (!currentEvent.map.IsVisited(new MapPosition(x, y)))
+                {
+                    roomGO.GetComponent<Image>().sprite = roomTileSet.fogOfWar;
+                    continue;
+                }
+
+                if (!currentEvent.map.mapData.ContainsKey(new MapPosition(x, y)))
                 {
                     roomGO.GetComponent<Image>().sprite = roomTileSet.noRoom;
                     continue;

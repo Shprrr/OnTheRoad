@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using System.IO;
+﻿using System.IO;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -16,6 +16,8 @@ public class Battler : MonoBehaviour
     public int BaseMaxSP;
     public int Strength;
     public int Vitality;
+    public int Intellect;
+    public int Wisdom;
     public int Agility;
 
     public int CurrentHP;
@@ -46,7 +48,7 @@ public class Battler : MonoBehaviour
     }
 
     public int MaxHP { get { return BaseMaxHP + Vitality / 4 * (Level - 1) + (Level - 1) * 10; } }
-    public int MaxSP { get { return BaseMaxSP + Vitality / 4 * (Level - 1) + (Level - 1) * 5; } }//TODO: Remplacer Vitality par Wisdom
+    public int MaxSP { get { return BaseMaxSP + Wisdom / 4 * (Level - 1) + (Level - 1) * 5; } }
 
     public SkillData[] skills;
     public string animationAttack;
@@ -82,8 +84,6 @@ public class Battler : MonoBehaviour
     // Update est appelé pour chaque trame, si le MonoBehaviour est activé
     private void Update()
     {
-        //CurrentHP = Hp;
-        //CurrentSP = Sp;
         animator.SetInteger("CurrentHp", CurrentHP);
     }
 
@@ -312,7 +312,6 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getMagicBaseDamage(int spellDamage)
     {
-        //TODO: Revert to old formula.
         //return (Intelligence / 2) + spellDamage; //FF3
         //switch (damageOption)
         //{
@@ -323,7 +322,7 @@ public class Battler : MonoBehaviour
         //    default:
         //        return (Intelligence / 8) + (Wisdom / 8) + (Level / 4) + spellDamage;
         //}
-        return getBaseDamage() + spellDamage;
+        return Intellect / 8 + Wisdom / 8 + Level / 4 + spellDamage;
     }
 
     /// <summary>
@@ -343,7 +342,7 @@ public class Battler : MonoBehaviour
         //    default:
         //        return (Intelligence / 16) + (Wisdom / 16) + (Accuracy / 8) + (Level / 4) + spellHitPourc;
         //}
-        return getHitPourc() + spellHitPourc;
+        return Intellect / 16 + Wisdom / 16 + Level / 4 + spellHitPourc;
     }
 
     /// <summary>
@@ -365,7 +364,7 @@ public class Battler : MonoBehaviour
         //        attMul = (Intelligence / 32) + (Wisdom / 32) + (Level / 16) + 1;
         //        break;
         //}
-        attMul = getAttackMultiplier();
+        attMul = Intellect / 32 + Wisdom / 32 + Level / 16 + 1;
         return attMul < 16 ? attMul : 16;
     }
 
@@ -390,8 +389,7 @@ public class Battler : MonoBehaviour
         //if (LeftHand is Shield)
         //    armorsDefense += ((Shield)LeftHand).MagicDefenseValue;
 
-        //return (Wisdom / 2) + armorsDefense;
-        return getDefenseDamage();
+        return Wisdom / 2 + armorsDefense;
     }
 
     /// <summary>
@@ -415,8 +413,7 @@ public class Battler : MonoBehaviour
         //if (LeftHand is Shield)
         //    armorsEvadePourc += ((Shield)LeftHand).MagicEvadePourc;
 
-        //return (Agility / 8) + (Wisdom / 8) + armorsEvadePourc;
-        return getEvadePourc();
+        return Agility / 8 + Wisdom / 8 + armorsEvadePourc;
     }
 
     /// <summary>
@@ -425,10 +422,9 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getMagicDefenseMultiplier()
     {
-        //return getNbShield() > 0 ? ((Agility / 32) + (Wisdom / 32) + (Level / 16) + 1) * getNbShield() :
-        //    (Agility / 64) + (Wisdom / 64) + (Level / 32);
+        return getNbShield() > 0 ? (Agility / 32 + Wisdom / 32 + Level / 16 + 1) * getNbShield() :
+            Agility / 64 + Wisdom / 64 + Level / 32;
         //return (Agility / 32) + (Wisdom / 16); //FF3
-        return getDefenseMultiplier();
     }
     #endregion
 
@@ -436,13 +432,9 @@ public class Battler : MonoBehaviour
     public void Attacks(Battler target)
     {
         var damage = CalculatePhysicalDamage(target);
+        damage.Name = "Attack";
         Debug.LogFormat("{0} attacks {1} for {2}", name, target.name, damage);
-        var taking = Instantiate(animationPrefab, target.transform).GetComponent<TakingDamage>();
-        taking.damage = damage;
-
-        if (animationsBundle == null)
-            Debug.LogError("animationsBundle is null");
-        taking.animationAttack = animationsBundle.LoadAsset<AnimatorOverrideController>(animationAttack);
+        InstantiateTakingDamage(target.transform, damage, animationAttack, 1);
     }
 
     public bool Casts(SkillData skill, out int skillLevel)
@@ -454,20 +446,48 @@ public class Battler : MonoBehaviour
         return true;
     }
 
-    public void Used(Battler target, Data data, int nbTarget)
+    public void Used(Battler target, DataEffect data, int nbTarget)
     {
         Damage damage;
-        data.Effect.CalculateDamage(this, target, out damage);
+        data.Effect.CalculateDamage(this, target, out damage, nbTarget);
+        damage.Name = data.Name;
         Debug.LogFormat("{0} used {3} on {1} for {2}", name, target.name, damage, data.Name);
-        var taking = Instantiate(animationPrefab, target.transform).GetComponent<TakingDamage>();
+        InstantiateTakingDamage(target.transform, damage, data.AnimationName, nbTarget);
+    }
+
+    private void InstantiateTakingDamage(Transform targetTransform, Damage damage, string animationName, int nbTarget)
+    {
+        // When targetting more than one target, the animation plays on the party, but damages is showing on each targets.
+        if (nbTarget > 1)
+        {
+            Transform partyTransform = damage.Target.IsPlayer ? targetTransform.parent : targetTransform.parent.parent;
+
+            // Create juste one for the party.
+            if (partyTransform.GetComponentInChildren<TakingDamage>() == null)
+            {
+                var takingParty = Instantiate(animationPrefab, partyTransform).GetComponent<TakingDamage>();
+                takingParty.showAnimation = true;
+                takingParty.showDamage = false;
+                takingParty.damage = Damage.Empty; // To not taking damage.
+                takingParty.damage.Name = damage.Name; // But to show the name.
+
+                if (animationsBundle == null)
+                    Debug.LogError("animationsBundle is null");
+                takingParty.animationAttack = animationsBundle.LoadAsset<AnimatorOverrideController>(animationName);
+            }
+        }
+
+        var taking = Instantiate(animationPrefab, targetTransform).GetComponent<TakingDamage>();
+        taking.showAnimation = nbTarget == 1;
+        taking.showDamage = true;
         taking.damage = damage;
 
         if (animationsBundle == null)
             Debug.LogError("animationsBundle is null");
-        taking.animationAttack = animationsBundle.LoadAsset<AnimatorOverrideController>(data.AnimationName);
+        taking.animationAttack = animationsBundle.LoadAsset<AnimatorOverrideController>(animationName);
     }
 
-    public Damage CalculatePhysicalDamage(Battler target)
+    public Damage CalculatePhysicalDamage(Battler target, int spellDamage = 0, bool alwaysHit = false, int nbTarget = 1)
     {
         var damage = new Damage();
         damage.Type = Damage.eDamageType.HP;
@@ -475,7 +495,7 @@ public class Battler : MonoBehaviour
         damage.Target = target;
 
         //Calculate min and max base damage
-        int baseMinDmg = getBaseDamage();
+        int baseMinDmg = getBaseDamage() + spellDamage;
 
         //Bonus on base damage for Attacker
         //baseMinDmg += HasCheer ? 10 * CheerLevel : 0;
@@ -490,7 +510,7 @@ public class Battler : MonoBehaviour
 
         //Calculate hit%
         int hitPourc = getHitPourc();
-        hitPourc = (hitPourc < 99 ? hitPourc : 99);
+        hitPourc = hitPourc < 99 ? hitPourc : 99;
         //hitPourc /= (attacker.IsFrontRow || weapon.IsLongRange ? 1 : 2);
         //hitPourc /= (blindStatus ? 2 : 1);
         //hitPourc /= (IsFrontRow || weapon.IsLongRange ? 1 : 2);
@@ -519,8 +539,12 @@ public class Battler : MonoBehaviour
             if (Random.Range(0, 100) < target.getEvadePourc())
                 damage.Multiplier--;
 
+        if (alwaysHit && damage.Multiplier < 1)
+            damage.Multiplier = 1;
+
         damage.Value = (Random.Range(baseMinDmg, baseMaxDmg + 1) - defense) * damage.Multiplier;
         //damage *= AttackIsJump ? 3 : 1;
+        damage.Value /= nbTarget;
 
         //Validate final damage and multiplier
         if (damage.Value < 1) //Min 1 s'il tape au moins une fois
@@ -557,7 +581,7 @@ public class Battler : MonoBehaviour
         else
         {
             hitPourc = getMagicHitPourc(spellHitPourc);
-            hitPourc = (hitPourc < 99 ? hitPourc : 99);
+            hitPourc = hitPourc < 99 ? hitPourc : 99;
         }
 
         //Calculate attack multiplier
