@@ -384,7 +384,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5028bcd376b1da45bebd18ac63cd74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  party: {fileID: 0}
+  currentEvent: {fileID: 0}
+  titleText: {fileID: 114687723725625842}
   moneyGained: 0
   moneyTitle: {fileID: 1940071442164034}
   moneyText: {fileID: 114119637074277126}
@@ -392,6 +393,7 @@ MonoBehaviour:
   itemsTitle: {fileID: 1386004977258054}
   itemsContent: {fileID: 1585624385432188}
   itemPrefab: {fileID: 1058828849565294, guid: e351108782c89784996cb7fb7895f658, type: 2}
+  gameOver: 0
   gameOverText: {fileID: 1078056872292078}
 --- !u!114 &114025439751917624
 MonoBehaviour:
@@ -923,7 +925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

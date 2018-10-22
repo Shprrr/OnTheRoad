@@ -35,6 +35,6 @@ public class Chest : MonoBehaviour
     public void Open()
     {
         open = !open;
-        currentEvent.Open = open;
+        currentEvent.Opened = open;
     }
 }

@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 224185632384886086}
   - component: {fileID: 222132876101396096}
   - component: {fileID: 114870220716722030}
+  - component: {fileID: 114913073974524128}
   m_Layer: 9
   m_Name: Image
   m_TagString: Untagged
@@ -172,6 +173,20 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114913073974524128
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1427007219743262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114957801545872040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,7 +203,7 @@ MonoBehaviour:
     Visited: 0
     ItemsInChest: []
     MoneyInChest: 0
-    Open: 0
+    Opened: 0
   open: 0
 --- !u!222 &222041973458261174
 CanvasRenderer:
@@ -220,7 +235,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224357062525538438
 RectTransform:

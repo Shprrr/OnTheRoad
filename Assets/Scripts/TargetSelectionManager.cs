@@ -138,6 +138,7 @@ public class TargetSelectionManager : MonoBehaviour
         {
             Destroy(target);
         }
+        targetsPossible.Clear();
     }
 
     public void BackTarget()
@@ -181,11 +182,13 @@ public class TargetSelectionManager : MonoBehaviour
                             nbTarget++;
 
                     for (int i = 0; i < targets.Count; i++)
+                    {
                         if (targets[i] != null && !targets[i].CantFight)
                             user.Used(targets[i], action.Data, nbTarget);
+                    }
 
                     if (user.IsPlayer)
-                        currentEvent.party.DropItem((ItemData)action.Data);
+                        currentEvent.party.DropItem((IItemData)action.Data);
                 }
                 break;
 

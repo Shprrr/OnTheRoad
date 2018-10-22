@@ -50,6 +50,15 @@ public class Battler : MonoBehaviour
     public int MaxHP { get { return BaseMaxHP + Vitality / 4 * (Level - 1) + (Level - 1) * 10; } }
     public int MaxSP { get { return BaseMaxSP + Wisdom / 4 * (Level - 1) + (Level - 1) * 5; } }
 
+    public WeaponData weapon;
+    public EquipableData offhand;
+    public ArmorData head;
+    public ArmorData body;
+    public ArmorData feet;
+    public EquipableData neck;
+    public EquipableData finger1;
+    public EquipableData finger2;
+
     public SkillData[] skills;
     public string animationAttack;
     public BattleAction? lastAction;
@@ -446,7 +455,7 @@ public class Battler : MonoBehaviour
         return true;
     }
 
-    public void Used(Battler target, DataEffect data, int nbTarget)
+    public void Used(Battler target, IDataEffect data, int nbTarget)
     {
         Damage damage;
         data.Effect.CalculateDamage(this, target, out damage, nbTarget);

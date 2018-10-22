@@ -30,14 +30,8 @@ public class MapManager : MonoBehaviour
     {
         roomContent.gameObject.DestroyAllChildren();
         for (int y = 0; y < yCount * 2 + 1; y++)
-        {
             for (int x = 0; x < xCount * 2 + 1; x++)
-            {
                 rooms[x, y] = Instantiate(roomPrefab, roomContent);
-                if (x == xCount && y == yCount)
-                    rooms[x, y].transform.GetChild(0).GetComponent<Image>().enabled = true;
-            }
-        }
     }
 
     // Update est appelé pour chaque trame, si le MonoBehaviour est activé
@@ -63,16 +57,19 @@ public class MapManager : MonoBehaviour
             {
                 var roomGO = rooms[x - currentEvent.currentPosition.X + xCount, y - currentEvent.currentPosition.Y + yCount];
                 roomGO.name = "Room " + x + "," + y;
+                var position = new MapPosition(x, y);
 
-                if (!currentEvent.map.IsVisited(new MapPosition(x, y)))
+                if (!currentEvent.map.IsVisited(position))
                 {
                     roomGO.GetComponent<Image>().sprite = roomTileSet.fogOfWar;
+                    roomGO.transform.GetChild(0).GetComponent<Image>().enabled = false;
                     continue;
                 }
 
-                if (!currentEvent.map.mapData.ContainsKey(new MapPosition(x, y)))
+                if (!currentEvent.map.mapData.ContainsKey(position))
                 {
                     roomGO.GetComponent<Image>().sprite = roomTileSet.noRoom;
+                    roomGO.transform.GetChild(0).GetComponent<Image>().enabled = false;
                     continue;
                 }
 
@@ -81,9 +78,26 @@ public class MapManager : MonoBehaviour
                 bool upDoor = currentEvent.map.mapData.ContainsKey(new MapPosition(x, y + 1));
                 bool downDoor = currentEvent.map.mapData.ContainsKey(new MapPosition(x, y - 1));
                 roomGO.GetComponent<Image>().sprite = roomTileSet.GetDoorSprite(leftDoor, rightDoor, upDoor, downDoor);
+
+                // Set indicator of the room
+                if (x == currentEvent.currentPosition.X && y == currentEvent.currentPosition.Y)
+                    SetIndicatorImage(roomGO, roomTileSet.currentPosition);
+                else if (currentEvent.map.mapData[position] is BattleEvent)
+                    SetIndicatorImage(roomGO, roomTileSet.battle);
+                else if (currentEvent.map.mapData[position] is TreasureEvent)
+                    SetIndicatorImage(roomGO, roomTileSet.treasure);
+                else
+                    roomGO.transform.GetChild(0).GetComponent<Image>().enabled = false;
             }
         }
         //watch.Stop();
         //Debug.Log(watch.Elapsed);
+    }
+
+    private void SetIndicatorImage(GameObject roomGO, Sprite indicatorSprite)
+    {
+        var image = roomGO.transform.GetChild(0).GetComponent<Image>();
+        image.enabled = true;
+        image.sprite = indicatorSprite;
     }
 }

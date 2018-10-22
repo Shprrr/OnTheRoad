@@ -1,14 +1,21 @@
 ﻿using System;
 
 [Serializable]
-public class MapTemplateData : Data
+public class MapTemplateData : IData
 {
+    public string _id;
+    public string _name;
+    public string _description;
     public Type Generator;
     public int MinDifficulty;
     public int MaxDifficulty;
     public int BaseCost;
     public int CostByDifficulty;
     public PossibleEnemyData[] PossibleEnemiesData;
+
+    public string Id { get { return _id; } set { _id = value; } }
+    public string Name { get { return _name; } set { _name = value; } }
+    public string Description { get { return _description; } set { _description = value; } }
 
     public MapTemplateData(string id) : this(MapTemplateFactory.Build(id))
     {

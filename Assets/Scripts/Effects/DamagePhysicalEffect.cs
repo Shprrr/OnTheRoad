@@ -24,4 +24,9 @@ public class DamagePhysicalEffect : Effect
         damage.Type = DamageType;
         return true;
     }
+
+    public override string ToString()
+    {
+        return string.Format("DamagePhysicalEffect({0}, {1}, {2})", BaseDamage, AlwaysHit, DamageType);
+    }
 }

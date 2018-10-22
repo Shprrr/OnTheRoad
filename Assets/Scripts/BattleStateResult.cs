@@ -17,7 +17,7 @@ public class BattleStateResult : StateMachineBehaviour
         if (!result.gameOver)
         {
             result.moneyGained = battle.Enemies.Count * 2;
-            result.itemsGained = new ItemData[] { ItemFactory.Build("potionHp1", 1), ItemFactory.Build("potionSp1", 2) };
+            result.itemsGained = new IItemData[] { ItemFactory.Build("potionHp1", 1), ItemFactory.Build("potionSp1", 2) };
 
             battle.FinishBattle();
         }

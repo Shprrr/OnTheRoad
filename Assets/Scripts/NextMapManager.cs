@@ -15,6 +15,8 @@ public class NextMapManager : MonoBehaviour
     public GameObject mapSelectionGroup;
     public Text mapName;
     public Text mapDifficulty;
+    public Button lowerDifficulty;
+    public Button raiseDifficulty;
     public GameObject possibleEnemyPrefab;
     public RectTransform possibleEnemiesContent;
     public Text money;
@@ -56,6 +58,8 @@ public class NextMapManager : MonoBehaviour
 
         mapName.text = mapSelected.Name;
         mapDifficulty.text = difficulty.ToString();
+        lowerDifficulty.interactable = difficulty > mapSelected.MinDifficulty;
+        raiseDifficulty.interactable = difficulty < mapSelected.MaxDifficulty;
         money.text = party.money.ToString("### ##0").Trim();
         cost.text = Cost.ToString("### ##0").Trim();
         buttonGo.interactable = Cost <= party.money;

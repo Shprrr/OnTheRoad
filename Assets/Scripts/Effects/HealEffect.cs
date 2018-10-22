@@ -25,4 +25,9 @@ public class HealEffect : Effect
         damage.Type = DamageType;
         return true;
     }
+
+    public override string ToString()
+    {
+        return string.Format("HealEffect({0}, {1}, {2})", BaseHeal, BaseAccuracy, DamageType);
+    }
 }

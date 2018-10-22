@@ -24,4 +24,9 @@ public class DamageMagicalEffect : Effect
         damage.Type = DamageType;
         return true;
     }
+
+    public override string ToString()
+    {
+        return string.Format("DamageMagicalEffect({0}, {1}, {2})", BaseDamage, BaseAccuracy, DamageType);
+    }
 }

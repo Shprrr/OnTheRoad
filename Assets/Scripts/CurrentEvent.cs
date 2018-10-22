@@ -46,6 +46,7 @@ public class CurrentEvent : MonoBehaviour
     public GameObject enemySpawn2;
     public GameObject enemySpawn3;
     public GameObject chestPrefab;
+    public GameObject resultPanelPrefab;
 
     // Start est appelé juste avant qu'une méthode Update soit appelée pour la première fois
     private void Start()
@@ -142,7 +143,7 @@ public class CurrentEvent : MonoBehaviour
 
     private void ItemsManager_OnClick(object sender, System.EventArgs e)
     {
-        var item = (ItemData)sender;
+        var item = (ItemUsableData)sender;
         var actor = targetSelectionManager.Actors[0];
         targetSelectionManager.ShowTargetChoice(actor, new BattleAction(BattleAction.BattleCommand.Items, item,
             new Cursor(Cursor.eTargetType.SINGLE_ENEMY, actor, item.TargetsPossible, targetSelectionManager.Actors, new List<Battler>())));

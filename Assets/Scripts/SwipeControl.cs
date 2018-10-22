@@ -1,26 +1,38 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class SwipeControl : MonoBehaviour
+public class SwipeControl : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     private bool isDragging;
     public bool swipeUp, swipeDown;
     private Vector2 startTouch, swipeDelta;
 
-    // OnMouseDown est appelé quand l'utilisateur appuie sur le bouton de la souris alors que le curseur est sur GUIElement ou Collider
-    private void OnMouseDown()
+    // LateUpdate est appelé pour chaque trame, si le Behaviour est activé
+    private void LateUpdate()
     {
-        //Debug.Log("OnMouseDown");
-        isDragging = true;
-        startTouch = Input.mousePosition;
+        swipeUp = false;
+        swipeDown = false;
     }
 
-    // OnMouseDrag est appelé quand l'utilisateur clique sur un GUIElement ou Collider et maintient le bouton de la souris enfoncé
-    private void OnMouseDrag()
+    // Rétablir les valeurs par défaut
+    private void Reset()
     {
-        //Debug.Log("OnMouseDrag");
+        isDragging = false;
+        startTouch = swipeDelta = Vector2.zero;
+    }
+
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        //Debug.Log("OnBeginDrag");
+        isDragging = true;
+        startTouch = eventData.position;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
         if (!isDragging) return;
 
-        swipeDelta = (Vector2)Input.mousePosition - startTouch;
+        swipeDelta = eventData.position - startTouch;
 
         // Beyond deadzone
         if (swipeDelta.magnitude > 100)
@@ -35,24 +47,8 @@ public class SwipeControl : MonoBehaviour
         }
     }
 
-    // OnMouseUp est appelé quand l'utilisateur relâche le bouton de la souris
-    private void OnMouseUp()
+    public void OnEndDrag(PointerEventData eventData)
     {
-        //Debug.Log("OnMouseUp Delta=" + swipeDelta + " magnitude=" + swipeDelta.magnitude);
         Reset();
-    }
-
-    // LateUpdate est appelé pour chaque trame, si le Behaviour est activé
-    private void LateUpdate()
-    {
-        swipeUp = false;
-        swipeDown = false;
-    }
-
-    // Rétablir les valeurs par défaut
-    private void Reset()
-    {
-        isDragging = false;
-        startTouch = swipeDelta = Vector2.zero;
     }
 }

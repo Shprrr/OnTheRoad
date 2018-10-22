@@ -7,10 +7,11 @@ public class BattleResult : MonoBehaviour
     private Animator animator;
 
     public CurrentEvent currentEvent;
+    public Text titleText;
     public int moneyGained;
     public GameObject moneyTitle;
     public Text moneyText;
-    public ItemData[] itemsGained;
+    public IItemData[] itemsGained;
     public GameObject itemsTitle;
     public GameObject itemsContent;
     public GameObject itemPrefab;
@@ -32,12 +33,13 @@ public class BattleResult : MonoBehaviour
         moneyText.text = moneyGained.ToString("### ##0").Trim();
 
         itemsContent.DestroyAllChildren();
-        foreach (var item in itemsGained)
-        {
-            currentEvent.party.AddItem(item);
-            var go = Instantiate(itemPrefab, itemsContent.transform);
-            go.GetComponent<Item>().data = item;
-        }
+        if (itemsGained != null)
+            foreach (var item in itemsGained)
+            {
+                currentEvent.party.AddItem(item);
+                var go = Instantiate(itemPrefab, itemsContent.transform);
+                go.GetComponent<Item>().data = item;
+            }
     }
 
     public void ContinueClick()

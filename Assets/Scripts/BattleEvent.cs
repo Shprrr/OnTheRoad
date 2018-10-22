@@ -70,6 +70,17 @@ public class BattleEvent : MapEvent
         currentEvent.targetSelectionManager.Enemies.Clear();
         currentEvent.targetSelectionManager.Enemies.AddRange(Enemies);
 
+        foreach (var actor in Actors)
+        {
+            if (actor.lastAction.HasValue)
+            {
+                actor.lastAction.Value.Target.Actors.Clear();
+                actor.lastAction.Value.Target.Actors.AddRange(Actors);
+                actor.lastAction.Value.Target.Enemies.Clear();
+                actor.lastAction.Value.Target.Enemies.AddRange(Enemies);
+            }
+        }
+
         currentEvent.directions.SetActive(false);
         currentEvent.battleCommands.SetActive(true);
         currentEvent.buttonAttack.GetComponent<Button>().onClick.AddListener(Attack);
@@ -122,7 +133,7 @@ public class BattleEvent : MapEvent
                     buttonLastCommand.GetComponentInChildren<Text>().text = lastSkill.Name + "\nSP Cost:" + lastSkill.SpCost;
                     break;
                 case BattleCommand.Items:
-                    var lastItem = (ItemData)lastAction.Value.Data;
+                    var lastItem = (ItemUsableData)lastAction.Value.Data;
                     if (lastItem.Amount == 0)
                         buttonLastCommand.interactable = false;
                     buttonLastCommand.GetComponentInChildren<Text>().text = lastItem.Name + "\nAmount:" + lastItem.Amount;
@@ -247,7 +258,7 @@ public class BattleEvent : MapEvent
         manager.items = _currentEvent.party.items;
         manager.OnClick += (sender, e) =>
           {
-              var item = (ItemData)sender;
+              var item = (ItemUsableData)sender;
               var action = new BattleAction(BattleCommand.Items, item,
                   new Cursor(Cursor.eTargetType.SINGLE_ENEMY, getActiveBattler(), item.TargetsPossible, Actors, Enemies));
               _currentEvent.targetSelectionManager.ShowTargetChoice(getActiveBattler(), action);
