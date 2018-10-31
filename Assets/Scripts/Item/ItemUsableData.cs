@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml;
-using System.Xml.Schema;
 using static Cursor;
 
 [Serializable]
@@ -93,47 +90,6 @@ public class ItemUsableData : IItemData, IDataEffect, IEquatable<ItemUsableData>
     public IItemData Copy(int amount)
     {
         return new ItemUsableData(this, amount);
-    }
-
-    System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(ItemUsableData), typeof(Effect).Assembly.GetTypes().Where(t => typeof(Effect).IsAssignableFrom(t)).ToArray());
-    public string Serialize()
-    {
-        using (var writer = new System.IO.StringWriter())
-        {
-            serializer.Serialize(writer, this);
-            return writer.ToString();
-        }
-    }
-    public IItemData Deserialize(string xml)
-    {
-        using (var reader = new System.IO.StringReader(xml))
-        {
-            return serializer.Deserialize(reader) as IItemData;
-        }
-    }
-
-    public XmlSchema GetSchema()
-    {
-        return null;
-    }
-
-    public void ReadXml(XmlReader reader)
-    {
-        var item = serializer.Deserialize(reader) as ItemUsableData;
-        Id = item.Id;
-        Name = item.Name;
-        Description = item.Description;
-        Amount = item.Amount;
-        Price = item.Price;
-        AnimationName = item.AnimationName;
-        TargetsPossible = item.TargetsPossible;
-        UsableOutsideBattle = item.UsableOutsideBattle;
-        Effect = item.Effect;
-    }
-
-    public void WriteXml(XmlWriter writer)
-    {
-        serializer.Serialize(writer, this);
     }
 
     public static bool operator ==(ItemUsableData item1, ItemUsableData item2) => item1?.Id == item2?.Id;

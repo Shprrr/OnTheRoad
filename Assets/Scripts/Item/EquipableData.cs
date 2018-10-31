@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml;
-using System.Xml.Schema;
 
 [Serializable]
 public class EquipableData : IItemData, IEquatable<EquipableData>
@@ -24,6 +21,20 @@ public class EquipableData : IItemData, IEquatable<EquipableData>
     public bool foldout { get; set; }
 #endif
 
+
+    public enum EquipmentSlot
+    {
+        Weapon,
+        Offhand,
+        Head,
+        Body,
+        Feet,
+        Neck,
+        Finger
+    }
+
+    public EquipmentSlot Slot;
+
     public EquipableData()
     {
     }
@@ -35,6 +46,17 @@ public class EquipableData : IItemData, IEquatable<EquipableData>
         Description = itemData.Description;
         Amount = amount;
         Price = itemData.Price;
+        Slot = itemData.Slot;
+    }
+
+    public EquipableData(string id, string name, int price, EquipmentSlot slot, string description, int amount = 1)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        Amount = amount;
+        Price = price;
+        Slot = slot;
     }
 
     public override bool Equals(object obj)
@@ -64,46 +86,9 @@ public class EquipableData : IItemData, IEquatable<EquipableData>
         return Name;
     }
 
-    public IItemData Copy(int amount)
+    public virtual IItemData Copy(int amount)
     {
         return new EquipableData(this, amount);
-    }
-
-    System.Xml.Serialization.XmlSerializer serializer = new System.Xml.Serialization.XmlSerializer(typeof(EquipableData), typeof(Effect).Assembly.GetTypes().Where(t => typeof(Effect).IsAssignableFrom(t)).ToArray());
-    public string Serialize()
-    {
-        using (var writer = new System.IO.StringWriter())
-        {
-            serializer.Serialize(writer, this);
-            return writer.ToString();
-        }
-    }
-    public IItemData Deserialize(string xml)
-    {
-        using (var reader = new System.IO.StringReader(xml))
-        {
-            return serializer.Deserialize(reader) as IItemData;
-        }
-    }
-
-    public XmlSchema GetSchema()
-    {
-        return null;
-    }
-
-    public void ReadXml(XmlReader reader)
-    {
-        var item = serializer.Deserialize(reader) as EquipableData;
-        Id = item.Id;
-        Name = item.Name;
-        Description = item.Description;
-        Amount = item.Amount;
-        Price = item.Price;
-    }
-
-    public void WriteXml(XmlWriter writer)
-    {
-        serializer.Serialize(writer, this);
     }
 
     public static bool operator ==(EquipableData item1, EquipableData item2) => item1?.Id == item2?.Id;

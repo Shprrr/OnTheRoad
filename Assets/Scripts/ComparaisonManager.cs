@@ -1,0 +1,156 @@
+﻿using UnityEngine;
+using UnityEngine.UI;
+
+[RequireComponent(typeof(Animator), typeof(BattlerStatsUI), typeof(BattlerStatsUI))]
+public class ComparaisonManager : MonoBehaviour
+{
+    private Animator animator;
+    private BattlerStatsUI oldStatsUI;
+    private BattlerStatsUI newStatsUI;
+
+    public Color positiveColor;
+    public Color negativeColor;
+
+    public CurrentEvent currentEvent;
+    public Battler battler;
+    public EquipableData equipableData;
+    public EquipmentSlot slot;
+
+    public Image portrait;
+    public Text itemFrom;
+    public Text itemTo;
+
+    // Awake est appelé quand l'instance de script est chargée
+    private void Awake()
+    {
+        animator = GetComponent<Animator>();
+        oldStatsUI = GetComponent<BattlerStatsUI>();
+        newStatsUI = GetComponents<BattlerStatsUI>()[1];
+    }
+
+    // Start est appelé juste avant qu'une méthode Update soit appelée pour la première fois
+    private void Start()
+    {
+        oldStatsUI.battler = battler;
+        newStatsUI.battler = Instantiate(battler);
+        ChangeItem(newStatsUI.battler);
+
+        portrait.GetComponent<Image>().sprite = battler.GetComponentInChildren<Image>().sprite;
+        itemFrom.text = GetItemFromSlot(battler)?.Name ?? "- NONE -";
+        itemTo.text = equipableData?.Name ?? "- NONE -";
+
+        ChangeColor(newStatsUI.maxHP, oldStatsUI.battler.MaxHP, newStatsUI.battler.MaxHP);
+        ChangeColor(newStatsUI.maxSP, oldStatsUI.battler.MaxSP, newStatsUI.battler.MaxSP);
+        ChangeColor(newStatsUI.strength, oldStatsUI.battler.Strength, newStatsUI.battler.Strength);
+        ChangeColor(newStatsUI.vitality, oldStatsUI.battler.Vitality, newStatsUI.battler.Vitality);
+        ChangeColor(newStatsUI.intellect, oldStatsUI.battler.Intellect, newStatsUI.battler.Intellect);
+        ChangeColor(newStatsUI.wisdom, oldStatsUI.battler.Wisdom, newStatsUI.battler.Wisdom);
+        ChangeColor(newStatsUI.agility, oldStatsUI.battler.Agility, newStatsUI.battler.Agility);
+
+        ChangeColor(newStatsUI.physicalDamage, (oldStatsUI.battler.getMinBaseDamage() + oldStatsUI.battler.getMaxBaseDamage()) / 2, (newStatsUI.battler.getMinBaseDamage() + newStatsUI.battler.getMaxBaseDamage()) / 2);
+        ChangeColor(newStatsUI.physicalAccuracy, oldStatsUI.battler.getAttackMultiplier() * oldStatsUI.battler.getHitPourc(), newStatsUI.battler.getAttackMultiplier() * newStatsUI.battler.getHitPourc());
+        ChangeColor(newStatsUI.physicalDefense, oldStatsUI.battler.getDefenseDamage(), newStatsUI.battler.getDefenseDamage());
+        ChangeColor(newStatsUI.physicalEvasion, oldStatsUI.battler.getDefenseMultiplier() * oldStatsUI.battler.getEvadePourc(), newStatsUI.battler.getDefenseMultiplier() * newStatsUI.battler.getEvadePourc());
+
+        ChangeColor(newStatsUI.magicalDamage, (oldStatsUI.battler.getMagicMinBaseDamage(0) + oldStatsUI.battler.getMagicMaxBaseDamage(0)) / 2, (newStatsUI.battler.getMagicMinBaseDamage(0) + newStatsUI.battler.getMagicMaxBaseDamage(0)) / 2);
+        ChangeColor(newStatsUI.magicalAccuracy, oldStatsUI.battler.getMagicAttackMultiplier() * oldStatsUI.battler.getMagicHitPourc(80), newStatsUI.battler.getMagicAttackMultiplier() * newStatsUI.battler.getMagicHitPourc(80));
+        ChangeColor(newStatsUI.magicalDefense, oldStatsUI.battler.getMagicDefenseDamage(), newStatsUI.battler.getMagicDefenseDamage());
+        ChangeColor(newStatsUI.magicalEvasion, oldStatsUI.battler.getMagicDefenseMultiplier() * oldStatsUI.battler.getMagicEvadePourc(), newStatsUI.battler.getMagicDefenseMultiplier() * newStatsUI.battler.getMagicEvadePourc());
+    }
+
+    private void ChangeColor(Text textToChange, int oldValue, int newValue)
+    {
+        if (newValue > oldValue)
+            textToChange.color = positiveColor;
+        if (newValue < oldValue)
+            textToChange.color = negativeColor;
+    }
+
+    public void Confirm()
+    {
+        EquipableData oldItem = GetItemFromSlot(battler);
+
+        ChangeItem(battler);
+
+        if (oldItem != null)
+        {
+            oldItem.Amount = 1;
+            currentEvent.party.AddItem(oldItem);
+        }
+        if (equipableData != null)
+            currentEvent.party.DropItem(equipableData);
+
+        Back();
+    }
+
+    private EquipableData GetItemFromSlot(Battler battler)
+    {
+        EquipableData oldItem = null;
+        switch (slot)
+        {
+            case EquipmentSlot.Weapon:
+                oldItem = battler.Weapon;
+                break;
+            case EquipmentSlot.Offhand:
+                oldItem = battler.Offhand;
+                break;
+            case EquipmentSlot.Head:
+                oldItem = battler.Head;
+                break;
+            case EquipmentSlot.Body:
+                oldItem = battler.Body;
+                break;
+            case EquipmentSlot.Feet:
+                oldItem = battler.Feet;
+                break;
+            case EquipmentSlot.Neck:
+                oldItem = battler.Neck;
+                break;
+            case EquipmentSlot.Finger1:
+                oldItem = battler.Finger1;
+                break;
+            case EquipmentSlot.Finger2:
+                oldItem = battler.Finger2;
+                break;
+        }
+
+        return oldItem;
+    }
+
+    private void ChangeItem(Battler battler)
+    {
+        switch (slot)
+        {
+            case EquipmentSlot.Weapon:
+                battler.Weapon = (WeaponData)equipableData;
+                break;
+            case EquipmentSlot.Offhand:
+                battler.Offhand = equipableData;
+                break;
+            case EquipmentSlot.Head:
+                battler.Head = (ArmorData)equipableData;
+                break;
+            case EquipmentSlot.Body:
+                battler.Body = (ArmorData)equipableData;
+                break;
+            case EquipmentSlot.Feet:
+                battler.Feet = (ArmorData)equipableData;
+                break;
+            case EquipmentSlot.Neck:
+                battler.Neck = equipableData;
+                break;
+            case EquipmentSlot.Finger1:
+                battler.Finger1 = equipableData;
+                break;
+            case EquipmentSlot.Finger2:
+                battler.Finger2 = equipableData;
+                break;
+        }
+    }
+
+    public void Back()
+    {
+        Destroy(newStatsUI.battler.gameObject);
+        animator.SetTrigger("close");
+    }
+}

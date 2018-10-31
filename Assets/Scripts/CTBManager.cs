@@ -9,6 +9,7 @@ public class CTBManager : MonoBehaviour
     public struct CTBTurn : IComparable<CTBTurn>
     {
         public const int RANK_DEFAULT = 3;
+        public const int RANK_ITEM = 2;
 
         public int counter;
         public int rank;
@@ -234,5 +235,17 @@ public class CTBManager : MonoBehaviour
         CalculateCTB(battle);
 
         BattleTurn++;
+    }
+
+    /// <summary>
+    /// Change the rank of the turn for the active battler.
+    /// </summary>
+    /// <param name="rank">rank of this turn</param>
+    public void ChangeActiveRank(BattleEvent battle, int rank)
+    {
+        var firstTurn = OrderBattle[0];
+        firstTurn.rank = rank;
+        OrderBattle[0] = firstTurn;
+        CalculateCTB(battle);
     }
 }

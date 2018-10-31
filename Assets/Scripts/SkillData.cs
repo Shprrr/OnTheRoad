@@ -12,6 +12,7 @@ public class SkillData : IDataEffect, IEquatable<SkillData>
     public eTargetType[] _targetsPossible;
     public Effect _effect;
     public int SpCost;
+    public int CTBRank;
 
     public string Id { get { return _id; } set { _id = value; } }
     public string Name { get { return _name; } set { _name = value; } }
@@ -24,12 +25,13 @@ public class SkillData : IDataEffect, IEquatable<SkillData>
     {
     }
 
-    public SkillData(string id, string name, int spCost, string animationName, eTargetType[] targetsPossible, Effect effect, string description)
+    public SkillData(string id, string name, int spCost, string animationName, eTargetType[] targetsPossible, int ctbRank, Effect effect, string description)
     {
         Id = id;
         Name = name;
         Description = description;
         SpCost = spCost;
+        CTBRank = ctbRank;
         AnimationName = animationName;
         TargetsPossible = targetsPossible;
         Effect = effect;

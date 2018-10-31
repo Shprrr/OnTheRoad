@@ -11,6 +11,9 @@ public class Party : MonoBehaviour
 #if UNITY_EDITOR
     [IItemData(nameof(items))]
     public string itemsInspector;
+#else
+    [SerializeField]
+    private string itemsInspector;
 #endif
     public IItemData[] items;
     public int money;
@@ -19,16 +22,30 @@ public class Party : MonoBehaviour
     // Cette fonction est appelée quand le script est chargé ou qu'une valeur est modifiée dans l'inspecteur (appelée dans l'éditeur uniquement)
     private void OnValidate()
     {
+        //Debug.LogFormat("OnValidate() with {0}", itemsInspector);
+#if !UNITY_2018_2 || UNITY_EDITOR
         items = itemsInspector.FromXML<IItemData[]>();
+#else
+        items = new IItemData[] { new ItemUsableData { Id = "potionHp1", Amount = 4 }, new ItemUsableData { Id = "molotov", Amount = 1 }, new WeaponData { Id = "staff", Amount = 1 }, new ArmorData { Id = "shield", Amount = 2 }, new ArmorData { Id = "chestArmor", Amount = 1 } };
+#endif
     }
 
     // Awake est appelé quand l'instance de script est chargée
     private void Awake()
     {
+#if !UNITY_EDITOR
+        OnValidate();
+#endif
         // Put items by Unity in the factory
         for (int i = 0; i < items.Length; i++)
         {
+#if UNITY_EDITOR
+            var foldout = items[i].foldout;
+#endif
             items[i] = ItemFactory.Build(items[i].Id, items[i].Amount);
+#if UNITY_EDITOR
+            items[i].foldout = foldout;
+#endif
         }
     }
 

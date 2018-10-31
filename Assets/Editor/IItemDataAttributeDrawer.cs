@@ -63,11 +63,11 @@ public class IItemDataAttributeDrawer : PropertyDrawer
 
                 return EditorGUIUtility.singleLineHeight * 10 + EditorGUI.GetPropertyHeight(sp, true);
             case ItemDataType.Equipable:
-                return EditorGUIUtility.singleLineHeight * 7;
+                return EditorGUIUtility.singleLineHeight * 8;
             case ItemDataType.Weapon:
-                return EditorGUIUtility.singleLineHeight * 7;
+                return EditorGUIUtility.singleLineHeight * 13;
             case ItemDataType.Armor:
-                return EditorGUIUtility.singleLineHeight * 7;
+                return EditorGUIUtility.singleLineHeight * 12;
             case ItemDataType.NULL:
             case ItemDataType.Undefined:
             default:
@@ -85,7 +85,6 @@ public class IItemDataAttributeDrawer : PropertyDrawer
             OnGUISingle(position, ObjectNames.NicifyVariableName(attributeValue.MemberName), ref realValue, () =>
             {
                 fieldInfoReal.SetValue(property.serializedObject.targetObject, realValue);
-                //property.stringValue = realValue?.Serialize();
                 property.stringValue = realValue?.ToXML();
                 property.serializedObject.ApplyModifiedProperties();
             });
@@ -151,11 +150,11 @@ public class IItemDataAttributeDrawer : PropertyDrawer
 
         // Choose a type.
         EditorGUI.BeginChangeCheck();
-        System.Enum type = GetItemDataType(realValue);
-        type = EditorGUI.EnumPopup(pos, type);
+        var type = GetItemDataType(realValue);
+        type = (ItemDataType)EditorGUI.EnumPopup(pos, type);
         if (EditorGUI.EndChangeCheck())
         {
-            realValue = ChangeType((ItemDataType)type, realValue);
+            realValue = ChangeType(type, realValue);
             actionSaveValue?.Invoke();
         }
 
@@ -227,6 +226,93 @@ public class IItemDataAttributeDrawer : PropertyDrawer
             if (EditorGUI.EndChangeCheck())
                 actionSaveValue?.Invoke();
         }
+
+        if (realValue is EquipableData)
+        {
+            var equipable = (EquipableData)realValue;
+
+            pos.y += pos.height;
+            EditorGUI.BeginChangeCheck();
+            equipable.Slot = (EquipableData.EquipmentSlot)EditorGUI.EnumPopup(pos, "Slot", equipable.Slot);
+            if (EditorGUI.EndChangeCheck())
+                actionSaveValue?.Invoke();
+        }
+
+        if (realValue is WeaponData)
+        {
+            var weapon = (WeaponData)realValue;
+
+            pos.y += pos.height;
+            EditorGUI.BeginChangeCheck();
+            weapon.AnimationNameAttack = EditorGUI.TextField(pos, ObjectNames.NicifyVariableName("AnimationNameAttack"), weapon.AnimationNameAttack);
+            if (EditorGUI.EndChangeCheck())
+                actionSaveValue?.Invoke();
+
+            pos.y += pos.height;
+            EditorGUI.BeginChangeCheck();
+            var multiPos = EditorGUI.PrefixLabel(pos, new GUIContent("Physical Damage (Min-Max)"));
+            var values = new int[] { weapon.PhysicalMinDamage, weapon.PhysicalMaxDamage };
+            EditorGUI.MultiIntField(multiPos, new GUIContent[] { GUIContent.none, new GUIContent("-") }, values);
+            if (EditorGUI.EndChangeCheck())
+            {
+                weapon.PhysicalMinDamage = values[0];
+                weapon.PhysicalMaxDamage = values[1];
+                actionSaveValue?.Invoke();
+            }
+
+            pos.y += pos.height;
+            EditorGUI.BeginChangeCheck();
+            weapon.PhysicalAccuracy = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("PhysicalAccuracy"), weapon.PhysicalAccuracy);
+            if (EditorGUI.EndChangeCheck())
+                actionSaveValue?.Invoke();
+
+            pos.y += pos.height;
+            EditorGUI.BeginChangeCheck();
+            multiPos = EditorGUI.PrefixLabel(pos, new GUIContent("Magical Damage (Min-Max)"));
+            values = new int[] { weapon.MagicalMinDamage, weapon.MagicalMaxDamage };
+            EditorGUI.MultiIntField(multiPos, new GUIContent[] { GUIContent.none, new GUIContent("-") }, values);
+            if (EditorGUI.EndChangeCheck())
+            {
+                weapon.MagicalMinDamage = values[0];
+                weapon.MagicalMaxDamage = values[1];
+                actionSaveValue?.Invoke();
+            }
+
+            pos.y += pos.height;
+            EditorGUI.BeginChangeCheck();
+            weapon.MagicalAccuracy = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("MagicalAccuracy"), weapon.MagicalAccuracy);
+            if (EditorGUI.EndChangeCheck())
+                actionSaveValue?.Invoke();
+        }
+
+        if (realValue is ArmorData)
+        {
+            var armor = (ArmorData)realValue;
+
+            pos.y += pos.height;
+            EditorGUI.BeginChangeCheck();
+            armor.PhysicalArmor = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("PhysicalArmor"), armor.PhysicalArmor);
+            if (EditorGUI.EndChangeCheck())
+                actionSaveValue?.Invoke();
+
+            pos.y += pos.height;
+            EditorGUI.BeginChangeCheck();
+            armor.PhysicalEvasion = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("PhysicalEvasion"), armor.PhysicalEvasion);
+            if (EditorGUI.EndChangeCheck())
+                actionSaveValue?.Invoke();
+
+            pos.y += pos.height;
+            EditorGUI.BeginChangeCheck();
+            armor.MagicalArmor = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("MagicalArmor"), armor.MagicalArmor);
+            if (EditorGUI.EndChangeCheck())
+                actionSaveValue?.Invoke();
+
+            pos.y += pos.height;
+            EditorGUI.BeginChangeCheck();
+            armor.MagicalEvasion = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("MagicalEvasion"), armor.MagicalEvasion);
+            if (EditorGUI.EndChangeCheck())
+                actionSaveValue?.Invoke();
+        }
     }
 
     class ScriptableItemUsable : ScriptableObject
@@ -241,9 +327,9 @@ public class IItemDataAttributeDrawer : PropertyDrawer
         var type = itemData.GetType();
 
         if (type == typeof(ItemUsableData)) return ItemDataType.ItemUsable;
-        if (type == typeof(EquipableData)) return ItemDataType.Equipable;
         if (type == typeof(WeaponData)) return ItemDataType.Weapon;
         if (type == typeof(ArmorData)) return ItemDataType.Armor;
+        if (type == typeof(EquipableData)) return ItemDataType.Equipable;
         return ItemDataType.Undefined;
     }
 

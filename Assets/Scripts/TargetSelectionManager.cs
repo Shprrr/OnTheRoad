@@ -36,6 +36,7 @@ public class TargetSelectionManager : MonoBehaviour
 
     public void ShowTargetChoice(Battler user, BattleAction action)
     {
+        int rank = CTBManager.CTBTurn.RANK_DEFAULT;
         switch (action.Kind)
         {
             default:
@@ -50,16 +51,21 @@ public class TargetSelectionManager : MonoBehaviour
             case BattleCommand.Skills:
                 attackName.text = action.Data.Name;
                 description.text = action.Data.Description;
+                rank = ((SkillData)action.Data).CTBRank;
                 break;
             case BattleCommand.Items:
                 attackName.text = action.Data.Name;
                 description.text = action.Data.Description;
+                rank = CTBManager.CTBTurn.RANK_ITEM;
                 break;
             case BattleCommand.Run:
                 attackName.text = "Run";
                 description.text = "Escape battle and return to previous room.";
                 break;
         }
+
+        if (currentEvent.currentEvent is BattleEvent)
+            currentEvent.ctbManager.ChangeActiveRank((BattleEvent)currentEvent.currentEvent, rank);
 
         wasDirectionActive = currentEvent.directions.activeSelf;
         wasBattleCommandsActive = currentEvent.battleCommands.activeSelf;

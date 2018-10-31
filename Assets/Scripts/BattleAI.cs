@@ -83,6 +83,7 @@ public class BattleAI : MonoBehaviour
          * skillId = SkillIdChoisi
         */
         //TODO: Parcourir les skills appris.
+        //Changer le rank.
 
         /*
          * S'il n'y pas de skill utile,

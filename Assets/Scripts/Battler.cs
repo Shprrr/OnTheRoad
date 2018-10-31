@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -50,17 +51,17 @@ public class Battler : MonoBehaviour
     public int MaxHP { get { return BaseMaxHP + Vitality / 4 * (Level - 1) + (Level - 1) * 10; } }
     public int MaxSP { get { return BaseMaxSP + Wisdom / 4 * (Level - 1) + (Level - 1) * 5; } }
 
-    public WeaponData weapon;
-    public EquipableData offhand;
-    public ArmorData head;
-    public ArmorData body;
-    public ArmorData feet;
-    public EquipableData neck;
-    public EquipableData finger1;
-    public EquipableData finger2;
+    public WeaponData Weapon;
+    public EquipableData Offhand;
+    public ArmorData Head;
+    public ArmorData Body;
+    public ArmorData Feet;
+    public EquipableData Neck;
+    public EquipableData Finger1;
+    public EquipableData Finger2;
 
     public SkillData[] skills;
-    public string animationAttack;
+    public string AnimationAttack { get { return Weapon == null ? "AnimationAttack1" : Weapon.AnimationNameAttack; } }
     public BattleAction? lastAction;
 
     // Awake est appelé quand l'instance de script est chargée
@@ -74,11 +75,25 @@ public class Battler : MonoBehaviour
                 Debug.LogError("animationsBundle is null");
         }
 
+        Weapon = GenerateEquipableData(Weapon) as WeaponData;
+        Offhand = GenerateEquipableData(Offhand);
+        Head = GenerateEquipableData(Head) as ArmorData;
+        Body = GenerateEquipableData(Body) as ArmorData;
+        Feet = GenerateEquipableData(Feet) as ArmorData;
+        Neck = GenerateEquipableData(Neck);
+        Finger1 = GenerateEquipableData(Finger1);
+        Finger2 = GenerateEquipableData(Finger2);
+
         // Put skills by Unity in the factory
         for (int i = 0; i < skills.Length; i++)
         {
             skills[i] = SkillFactory.Build(skills[i].Id);
         }
+    }
+
+    private EquipableData GenerateEquipableData(EquipableData equipableData)
+    {
+        return string.IsNullOrEmpty(equipableData?.Id) ? null : ItemFactory.Build(equipableData.Id) as EquipableData;
     }
 
     // Start est appelé juste avant qu'une méthode Update soit appelée pour la première fois
@@ -194,16 +209,38 @@ public class Battler : MonoBehaviour
     /// </summary>
     /// <param name="damageOption"></param>
     /// <returns></returns>
-    public int getBaseDamage()
+    public int getMinBaseDamage()
     {
         int weaponDamage = 0;
+
+        if (Weapon != null)
+            weaponDamage += Weapon.PhysicalMinDamage;
 
         //if (damageOption != ePhysicalDamageOption.LEFT && RightHand is Weapon)
         //    weaponDamage += ((Weapon)RightHand).Damage;
         //if (damageOption != ePhysicalDamageOption.RIGHT && LeftHand is Weapon)
         //    weaponDamage += ((Weapon)LeftHand).Damage;
         //if (RightHand == null && LeftHand == null) // Est-ce que Shield est barehand ?
-        weaponDamage = 1; // Barehand
+        if (Weapon == null)
+            weaponDamage = 1; // Barehand
+
+        return Strength / 4 + Level / 4 + weaponDamage;
+    }
+
+    public int getMaxBaseDamage()
+    {
+        int weaponDamage = 0;
+
+        if (Weapon != null)
+            weaponDamage += Weapon.PhysicalMaxDamage;
+
+        //if (damageOption != ePhysicalDamageOption.LEFT && RightHand is Weapon)
+        //    weaponDamage += ((Weapon)RightHand).Damage;
+        //if (damageOption != ePhysicalDamageOption.RIGHT && LeftHand is Weapon)
+        //    weaponDamage += ((Weapon)LeftHand).Damage;
+        //if (RightHand == null && LeftHand == null) // Est-ce que Shield est barehand ?
+        if (Weapon == null)
+            weaponDamage = 2; // Barehand
 
         return Strength / 4 + Level / 4 + weaponDamage;
     }
@@ -217,6 +254,8 @@ public class Battler : MonoBehaviour
     {
         int weaponHitPourc = 0;
 
+        if (Weapon != null)
+            weaponHitPourc += Weapon.PhysicalAccuracy;
         //if (damageOption != ePhysicalDamageOption.LEFT && RightHand is Weapon)
         //    weaponHitPourc += ((Weapon)RightHand).HitPourc;
         //if (damageOption != ePhysicalDamageOption.RIGHT && LeftHand is Weapon)
@@ -224,7 +263,8 @@ public class Battler : MonoBehaviour
         //if (damageOption == ePhysicalDamageOption.BOTH && RightHand is Weapon && LeftHand is Weapon)
         //    weaponHitPourc /= 2; // On a additionné 2 fois un 100%, donc on remet sur 100%
         //if (RightHand == null && LeftHand == null) // Est-ce que Shield est barehand ?
-        weaponHitPourc = 80; // Barehand
+        if (Weapon == null)
+            weaponHitPourc = 80; // Barehand
 
         return weaponHitPourc;
     }
@@ -247,20 +287,16 @@ public class Battler : MonoBehaviour
     {
         int armorsDefense = 0;
 
-        //if (Head != null)
-        //    armorsDefense += Head.DefenseValue;
-        //if (Body != null)
-        //    armorsDefense += Body.DefenseValue;
-        //if (Arms != null)
-        //    armorsDefense += Arms.DefenseValue;
-        //if (Feet != null)
-        //    armorsDefense += Feet.DefenseValue;
-        //if (RightHand is Shield)
-        //    armorsDefense += ((Shield)RightHand).DefenseValue;
-        //if (LeftHand is Shield)
-        //    armorsDefense += ((Shield)LeftHand).DefenseValue;
+        if (Head != null)
+            armorsDefense += Head.PhysicalArmor;
+        if (Body != null)
+            armorsDefense += Body.PhysicalArmor;
+        if (Feet != null)
+            armorsDefense += Feet.PhysicalArmor;
+        if (Offhand is ArmorData)
+            armorsDefense += ((ArmorData)Offhand).PhysicalArmor;
 
-        return Vitality / 2 + armorsDefense;
+        return Math.Max(Vitality / 2 + armorsDefense, 0);
     }
 
     /// <summary>
@@ -271,20 +307,16 @@ public class Battler : MonoBehaviour
     {
         int armorsEvadePourc = 0;
 
-        //if (Head != null)
-        //    armorsEvadePourc += Head.EvadePourc;
-        //if (Body != null)
-        //    armorsEvadePourc += Body.EvadePourc;
-        //if (Arms != null)
-        //    armorsEvadePourc += Arms.EvadePourc;
-        //if (Feet != null)
-        //    armorsEvadePourc += Feet.EvadePourc;
-        //if (RightHand is Shield)
-        //    armorsEvadePourc += ((Shield)RightHand).EvadePourc;
-        //if (LeftHand is Shield)
-        //    armorsEvadePourc += ((Shield)LeftHand).EvadePourc;
+        if (Head != null)
+            armorsEvadePourc += Head.PhysicalEvasion;
+        if (Body != null)
+            armorsEvadePourc += Body.PhysicalEvasion;
+        if (Feet != null)
+            armorsEvadePourc += Feet.PhysicalEvasion;
+        if (Offhand is ArmorData)
+            armorsEvadePourc += ((ArmorData)Offhand).PhysicalEvasion;
 
-        return Agility / 4 + armorsEvadePourc;
+        return Math.Max(Agility / 4 + armorsEvadePourc, 0);
     }
 
     /// <summary>
@@ -295,6 +327,8 @@ public class Battler : MonoBehaviour
     {
         int nbShield = 0;
 
+        if (Offhand is ArmorData)
+            nbShield++;
         //if (RightHand is Shield)
         //    nbShield++;
         //if (LeftHand is Shield)
@@ -309,8 +343,9 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getDefenseMultiplier()
     {
-        return getNbShield() > 0 ? (Agility / 16 + Level / 16 + 1) * getNbShield() :
-            Agility / 32 + Level / 32;
+        return getNbShield() + 1;
+        //return getNbShield() > 0 ? (Agility / 16 + Level / 16 + 1) * getNbShield() :
+        //    Agility / 32 + Level / 32;
     }
 
     /// <summary>
@@ -319,8 +354,13 @@ public class Battler : MonoBehaviour
     /// <param name="damageOption"></param>
     /// <param name="spellDamage"></param>
     /// <returns></returns>
-    public int getMagicBaseDamage(int spellDamage)
+    public int getMagicMinBaseDamage(int spellDamage)
     {
+        var weaponDamage = 0;
+
+        if (Weapon != null)
+            weaponDamage += Weapon.MagicalMinDamage;
+
         //return (Intelligence / 2) + spellDamage; //FF3
         //switch (damageOption)
         //{
@@ -331,7 +371,27 @@ public class Battler : MonoBehaviour
         //    default:
         //        return (Intelligence / 8) + (Wisdom / 8) + (Level / 4) + spellDamage;
         //}
-        return Intellect / 8 + Wisdom / 8 + Level / 4 + spellDamage;
+        return Intellect / 8 + Wisdom / 8 + Level / 4 + weaponDamage + spellDamage;
+    }
+
+    public int getMagicMaxBaseDamage(int spellDamage)
+    {
+        var weaponDamage = 0;
+
+        if (Weapon != null)
+            weaponDamage += Weapon.MagicalMaxDamage;
+
+        //return (Intelligence / 2) + spellDamage; //FF3
+        //switch (damageOption)
+        //{
+        //    case eMagicalDamageOption.BLACK:
+        //        return (Intelligence / 4) + (Level / 4) + spellDamage;
+        //    case eMagicalDamageOption.WHITE:
+        //        return (Wisdom / 4) + (Level / 4) + spellDamage;
+        //    default:
+        //        return (Intelligence / 8) + (Wisdom / 8) + (Level / 4) + spellDamage;
+        //}
+        return Intellect / 8 + Wisdom / 8 + Level / 4 + weaponDamage + spellDamage;
     }
 
     /// <summary>
@@ -340,6 +400,10 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getMagicHitPourc(int spellHitPourc)
     {
+        int weaponHitPourc = 0;
+
+        if (Weapon != null)
+            weaponHitPourc += Weapon.MagicalAccuracy;
         // 80% barehanded
         //return (Intelligence / 2) + spellHitPourc; //FF3
         //switch (damageOption)
@@ -351,7 +415,7 @@ public class Battler : MonoBehaviour
         //    default:
         //        return (Intelligence / 16) + (Wisdom / 16) + (Accuracy / 8) + (Level / 4) + spellHitPourc;
         //}
-        return Intellect / 16 + Wisdom / 16 + Level / 4 + spellHitPourc;
+        return Intellect / 16 + Wisdom / 16 + Level / 4 + weaponHitPourc + spellHitPourc;
     }
 
     /// <summary>
@@ -385,20 +449,16 @@ public class Battler : MonoBehaviour
     {
         int armorsDefense = 0;
 
-        //if (Head != null)
-        //    armorsDefense += Head.MagicDefenseValue;
-        //if (Body != null)
-        //    armorsDefense += Body.MagicDefenseValue;
-        //if (Arms != null)
-        //    armorsDefense += Arms.MagicDefenseValue;
-        //if (Feet != null)
-        //    armorsDefense += Feet.MagicDefenseValue;
-        //if (RightHand is Shield)
-        //    armorsDefense += ((Shield)RightHand).MagicDefenseValue;
-        //if (LeftHand is Shield)
-        //    armorsDefense += ((Shield)LeftHand).MagicDefenseValue;
+        if (Head != null)
+            armorsDefense += Head.MagicalArmor;
+        if (Body != null)
+            armorsDefense += Body.MagicalArmor;
+        if (Feet != null)
+            armorsDefense += Feet.MagicalArmor;
+        if (Offhand is ArmorData)
+            armorsDefense += ((ArmorData)Offhand).MagicalArmor;
 
-        return Wisdom / 2 + armorsDefense;
+        return Math.Max(Wisdom / 2 + armorsDefense, 0);
     }
 
     /// <summary>
@@ -409,20 +469,16 @@ public class Battler : MonoBehaviour
     {
         int armorsEvadePourc = 0;
 
-        //if (Head != null)
-        //    armorsEvadePourc += Head.MagicEvadePourc;
-        //if (Body != null)
-        //    armorsEvadePourc += Body.MagicEvadePourc;
-        //if (Arms != null)
-        //    armorsEvadePourc += Arms.MagicEvadePourc;
-        //if (Feet != null)
-        //    armorsEvadePourc += Feet.MagicEvadePourc;
-        //if (RightHand is Shield)
-        //    armorsEvadePourc += ((Shield)RightHand).MagicEvadePourc;
-        //if (LeftHand is Shield)
-        //    armorsEvadePourc += ((Shield)LeftHand).MagicEvadePourc;
+        if (Head != null)
+            armorsEvadePourc += Head.MagicalEvasion;
+        if (Body != null)
+            armorsEvadePourc += Body.MagicalEvasion;
+        if (Feet != null)
+            armorsEvadePourc += Feet.MagicalEvasion;
+        if (Offhand is ArmorData)
+            armorsEvadePourc += ((ArmorData)Offhand).MagicalEvasion;
 
-        return Agility / 8 + Wisdom / 8 + armorsEvadePourc;
+        return Math.Max(Agility / 8 + Wisdom / 8 + armorsEvadePourc, 0);
     }
 
     /// <summary>
@@ -431,8 +487,9 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getMagicDefenseMultiplier()
     {
-        return getNbShield() > 0 ? (Agility / 32 + Wisdom / 32 + Level / 16 + 1) * getNbShield() :
-            Agility / 64 + Wisdom / 64 + Level / 32;
+        return getNbShield() + 1;
+        //return getNbShield() > 0 ? (Agility / 32 + Wisdom / 32 + Level / 16 + 1) * getNbShield() :
+        //    Agility / 64 + Wisdom / 64 + Level / 32;
         //return (Agility / 32) + (Wisdom / 16); //FF3
     }
     #endregion
@@ -443,7 +500,7 @@ public class Battler : MonoBehaviour
         var damage = CalculatePhysicalDamage(target);
         damage.Name = "Attack";
         Debug.LogFormat("{0} attacks {1} for {2}", name, target.name, damage);
-        InstantiateTakingDamage(target.transform, damage, animationAttack, 1);
+        InstantiateTakingDamage(target.transform, damage, AnimationAttack, 1);
     }
 
     public bool Casts(SkillData skill, out int skillLevel)
@@ -504,7 +561,7 @@ public class Battler : MonoBehaviour
         damage.Target = target;
 
         //Calculate min and max base damage
-        int baseMinDmg = getBaseDamage() + spellDamage;
+        int baseMinDmg = getMinBaseDamage() + spellDamage;
 
         //Bonus on base damage for Attacker
         //baseMinDmg += HasCheer ? 10 * CheerLevel : 0;
@@ -515,7 +572,8 @@ public class Battler : MonoBehaviour
         //baseMinDmg *= IsMini || IsToad ? 2 : 1;
         //baseMinDmg *= attacker->IsMini || attacker->IsToad ? 0 : 1;
 
-        int baseMaxDmg = (int)(baseMinDmg * 1.5);
+        //int baseMaxDmg = (int)(baseMinDmg * 1.5);
+        int baseMaxDmg = getMaxBaseDamage() + spellDamage;
 
         //Calculate hit%
         int hitPourc = getHitPourc();
@@ -560,7 +618,13 @@ public class Battler : MonoBehaviour
             damage.Value = 1;
 
         if (damage.Multiplier < 1) //Check s'il tape au moins une fois
+        {
+            damage.Multiplier = 0;
             damage.Value = 0;
+        }
+
+        // Check le Damage 0 no miss
+        //Debug.AssertFormat(damage.Multiplier > 0 && damage.Value != 0 || damage.Multiplier == 0 && damage.Value == 0, "Incohérence dans Damage (Multiplier={0}, Value={1})", damage.Multiplier, damage.Value);
 
         return damage;
     }
@@ -575,13 +639,14 @@ public class Battler : MonoBehaviour
         bool isItem = spellHitPourc == 101;
 
         //Calculate min and max base damage
-        int baseMinDmg = getMagicBaseDamage(spellDamage);
+        int baseMinDmg = getMagicMinBaseDamage(spellDamage);
 
         //Bonus on base damage for Attacker
         //baseMinDmg *= ElementalEffect(attacker);
         //baseMinDmg *= IsMini || IsToad ? 2 : 1;
 
-        int baseMaxDmg = (int)(baseMinDmg * 1.5);
+        //int baseMaxDmg = (int)(baseMinDmg * 1.5);
+        int baseMaxDmg = getMagicMaxBaseDamage(spellDamage);
 
         //Calculate hit%
         int hitPourc = 0;

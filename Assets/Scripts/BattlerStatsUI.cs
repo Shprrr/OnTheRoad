@@ -44,9 +44,9 @@ public class BattlerStatsUI : MonoBehaviour
     // Update est appelé pour chaque trame, si le MonoBehaviour est activé
     private void Update()
     {
-        currentHP.text = battler.CurrentHP.ToString("### ##0").Trim();
+        if (currentHP != null) currentHP.text = battler.CurrentHP.ToString("### ##0").Trim();
         maxHP.text = battler.MaxHP.ToString("### ##0").Trim();
-        currentSP.text = battler.CurrentSP.ToString("##0");
+        if (currentSP != null) currentSP.text = battler.CurrentSP.ToString("##0");
         maxSP.text = battler.MaxSP.ToString("##0");
 
         if (strength != null) strength.text = battler.Strength.ToString("##0");
@@ -56,10 +56,7 @@ public class BattlerStatsUI : MonoBehaviour
         if (agility != null) agility.text = battler.Agility.ToString("##0");
 
         if (physicalDamage != null)
-        {
-            var baseDamage = battler.getBaseDamage();
-            physicalDamage.text = baseDamage.ToString("##0") + " - " + ((int)(baseDamage * 1.5)).ToString("##0");
-        }
+            physicalDamage.text = battler.getMinBaseDamage().ToString("##0") + " - " + battler.getMaxBaseDamage().ToString("##0");
 
         if (physicalAccuracy != null)
             physicalAccuracy.text = battler.getAttackMultiplier().ToString("#0") + "x" + battler.getHitPourc().ToString("##0") + "%";
@@ -71,10 +68,7 @@ public class BattlerStatsUI : MonoBehaviour
             physicalEvasion.text = battler.getDefenseMultiplier().ToString("#0") + "x" + battler.getEvadePourc().ToString("##0") + "%";
 
         if (magicalDamage != null)
-        {
-            var baseDamage = battler.getMagicBaseDamage(0);
-            magicalDamage.text = baseDamage.ToString("##0") + " - " + ((int)(baseDamage * 1.5)).ToString("##0");
-        }
+            magicalDamage.text = battler.getMagicMinBaseDamage(0).ToString("##0") + " - " + battler.getMagicMaxBaseDamage(0).ToString("##0");
 
         if (magicalAccuracy != null)
             magicalAccuracy.text = battler.getMagicAttackMultiplier().ToString("#0") + "x" + battler.getMagicHitPourc(80).ToString("##0") + "%";
@@ -86,27 +80,27 @@ public class BattlerStatsUI : MonoBehaviour
             magicalEvasion.text = battler.getMagicDefenseMultiplier().ToString("#0") + "x" + battler.getMagicEvadePourc().ToString("##0") + "%";
 
         if (weapon != null)
-            weapon.GetComponentInChildren<Text>().text = battler.weapon?.Name;
+            weapon.GetComponentInChildren<Text>().text = battler.Weapon?.Name;
 
         if (offhand != null)
-            offhand.GetComponentInChildren<Text>().text = battler.offhand?.Name;
+            offhand.GetComponentInChildren<Text>().text = battler.Offhand?.Name;
 
         if (head != null)
-            head.GetComponentInChildren<Text>().text = battler.head?.Name;
+            head.GetComponentInChildren<Text>().text = battler.Head?.Name;
 
         if (body != null)
-            body.GetComponentInChildren<Text>().text = battler.body?.Name;
+            body.GetComponentInChildren<Text>().text = battler.Body?.Name;
 
         if (feet != null)
-            feet.GetComponentInChildren<Text>().text = battler.feet?.Name;
+            feet.GetComponentInChildren<Text>().text = battler.Feet?.Name;
 
         if (neck != null)
-            neck.GetComponentInChildren<Text>().text = battler.neck?.Name;
+            neck.GetComponentInChildren<Text>().text = battler.Neck?.Name;
 
         if (finger1 != null)
-            finger1.GetComponentInChildren<Text>().text = battler.finger1?.Name;
+            finger1.GetComponentInChildren<Text>().text = battler.Finger1?.Name;
 
         if (finger2 != null)
-            finger2.GetComponentInChildren<Text>().text = battler.finger2?.Name;
+            finger2.GetComponentInChildren<Text>().text = battler.Finger2?.Name;
     }
 }

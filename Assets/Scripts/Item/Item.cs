@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Item : MonoBehaviour {
+public class Item : MonoBehaviour
+{
     public Text nameText;
     public Text amountText;
     public IItemData data;
@@ -10,6 +11,6 @@ public class Item : MonoBehaviour {
     private void Update()
     {
         nameText.text = data?.Name;
-        amountText.text = data?.Amount.ToString();
+        amountText.text = string.IsNullOrEmpty(data?.Id) ? "" : data?.Amount.ToString();
     }
 }

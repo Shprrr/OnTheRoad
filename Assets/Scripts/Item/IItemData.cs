@@ -1,6 +1,6 @@
 ﻿using System;
 
-public interface IItemData : IData, IEquatable<IItemData>//, System.Xml.Serialization.IXmlSerializable
+public interface IItemData : IData, IEquatable<IItemData>
 {
     int Amount { get; set; }
     int Price { get; set; }
@@ -11,7 +11,4 @@ public interface IItemData : IData, IEquatable<IItemData>//, System.Xml.Serializ
     [UnityEngine.HideInInspector]
     bool foldout { get; set; }
 #endif
-
-    string Serialize();
-    IItemData Deserialize(string xml);
 }

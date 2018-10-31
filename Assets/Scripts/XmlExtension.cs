@@ -1,5 +1,7 @@
-﻿
+﻿using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Xml;
 
 static class XmlExtension
 {
@@ -7,9 +9,9 @@ static class XmlExtension
     {
         var extraTypes = o.GetType().Assembly.GetTypes().Where(t => typeof(IItemData).IsAssignableFrom(t)).ToArray();
 
-        var serializer = new System.Runtime.Serialization.DataContractSerializer(o.GetType(), extraTypes);
-        var sw = new System.IO.StringWriter();
-        var xw = new System.Xml.XmlTextWriter(sw);
+        var serializer = new DataContractSerializer(o.GetType(), extraTypes);
+        var sw = new StringWriter();
+        var xw = new XmlTextWriter(sw);
         serializer.WriteObject(xw, o);
         return sw.ToString();
     }
@@ -23,9 +25,9 @@ static class XmlExtension
             type = type.GetElementType();
         var extraTypes = typeof(T).Assembly.GetTypes().Where(t => type.IsAssignableFrom(t) || typeof(Effect).IsAssignableFrom(t)).ToArray();
 
-        var serializer = new System.Runtime.Serialization.DataContractSerializer(typeof(T), extraTypes);
-        var sr = new System.IO.StringReader(str);
-        var xr = new System.Xml.XmlTextReader(sr);
+        var serializer = new DataContractSerializer(typeof(T), extraTypes);
+        var sr = new StringReader(str);
+        var xr = new XmlTextReader(sr);
         var o = serializer.ReadObject(xr);
         return (T)o;
     }

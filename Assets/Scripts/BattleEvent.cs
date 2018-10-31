@@ -255,7 +255,7 @@ public class BattleEvent : MapEvent
     public void Items()
     {
         var manager = _currentEvent.AccessInventory().GetComponent<ItemsManager>();
-        manager.items = _currentEvent.party.items;
+        manager.interactableItems = i => i is ItemUsableData;
         manager.OnClick += (sender, e) =>
           {
               var item = (ItemUsableData)sender;

@@ -21,7 +21,6 @@ public class CurrentEvent : MonoBehaviour
     public GameObject buttonMiddle;
     public GameObject buttonRight;
     public GameObject buttonBack;
-    public Button buttonInventory;
     public GameObject itemsPanelPrefab;
     public GameObject skillsPanelPrefab;
 
@@ -53,7 +52,6 @@ public class CurrentEvent : MonoBehaviour
     {
         ctbManager = GetComponent<CTBManager>();
         targetSelectionManager = GetComponent<TargetSelectionManager>();
-        buttonInventory.onClick.AddListener(AccessInventoryOutsideBattle);
         AccessNextMap();
     }
 
@@ -125,19 +123,24 @@ public class CurrentEvent : MonoBehaviour
         buttonBack.SetActive(map.mapData.ContainsKey(new MapPosition(currentPosition.X, currentPosition.Y - 1)));
     }
 
-    public GameObject AccessInventory()
+    public GameObject AccessInventory(bool fullPanel = false)
     {
-        return Instantiate(itemsPanelPrefab, canvas.transform);
+        var panel = Instantiate(itemsPanelPrefab, canvas.transform);
+        if (fullPanel)
+        {
+            var rectTransform = panel.GetComponent<RectTransform>();
+            rectTransform.anchorMax = new Vector2(rectTransform.anchorMax.x, 0.47f);
+        }
+        var manager = panel.GetComponent<ItemsManager>();
+        manager.items = party.items;
+        return panel;
     }
 
-    private void AccessInventoryOutsideBattle()
+    public void AccessInventoryOutsideBattle()
     {
-        var panel = AccessInventory();
-        var rectTransform = panel.GetComponent<RectTransform>();
-        rectTransform.anchorMax = new Vector2(rectTransform.anchorMax.x, 0.47f);
+        var panel = AccessInventory(true);
         var manager = panel.GetComponent<ItemsManager>();
-        manager.outsideBattle = true;
-        manager.items = party.items;
+        manager.interactableItems = i => i is ItemUsableData && ((ItemUsableData)i).UsableOutsideBattle;
         manager.OnClick += ItemsManager_OnClick;
     }
 

@@ -10,7 +10,7 @@ public class ItemsManager : MonoBehaviour
     public GameObject itemContent;
     public GameObject itemPrefab;
     public IItemData[] items;
-    public bool outsideBattle;
+    public Func<IItemData, bool> interactableItems;
 
     // Awake est appelé quand l'instance de script est chargée
     private void Awake()
@@ -27,13 +27,7 @@ public class ItemsManager : MonoBehaviour
             var go = Instantiate(itemPrefab, itemContent.transform);
             go.GetComponent<Item>().data = item;
             go.GetComponent<Button>().onClick.AddListener(() => Click(item));
-            if (item is ItemUsableData)
-            {
-                if (outsideBattle)
-                    go.GetComponent<Button>().interactable = ((ItemUsableData)item).UsableOutsideBattle;
-            }
-            else
-                go.GetComponent<Button>().interactable = false;
+            go.GetComponent<Button>().interactable = interactableItems?.Invoke(item) ?? false;
         }
     }
 
