@@ -70,6 +70,7 @@ public class BattleEvent : MapEvent
         currentEvent.targetSelectionManager.Enemies.Clear();
         currentEvent.targetSelectionManager.Enemies.AddRange(Enemies);
 
+        // Update target in last actions.
         foreach (var actor in Actors)
         {
             if (actor.lastAction.HasValue)
@@ -217,7 +218,7 @@ public class BattleEvent : MapEvent
     public void LastCommand()
     {
         var lastAction = getActiveBattler().lastAction;
-        Debug.LogFormat("LastCommand => {0} !", lastAction.Value);
+        //Debug.LogFormat("LastCommand => {0} !", lastAction.Value);
         switch (lastAction.Value.Kind)
         {
             default:
@@ -240,7 +241,7 @@ public class BattleEvent : MapEvent
     {
         var skillManager = _currentEvent.AccessSkills().GetComponent<SkillsManager>();
         skillManager.user = getActiveBattler();
-        skillManager.skills = getActiveBattler().skills;
+        skillManager.skills = getActiveBattler().Skills;
         skillManager.OnClick += (sender, e) =>
             {
                 var skill = (SkillData)sender;

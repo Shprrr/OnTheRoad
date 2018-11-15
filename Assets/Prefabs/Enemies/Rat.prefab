@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 222981614208006164}
   - component: {fileID: 114240928781702238}
   - component: {fileID: 114378179791149902}
+  - component: {fileID: 114896591801153730}
   - component: {fileID: 95202331329527412}
   - component: {fileID: 114221519330896338}
   - component: {fileID: 114111935118718292}
@@ -140,10 +141,96 @@ MonoBehaviour:
   Agility: 3
   CurrentHP: 0
   CurrentSP: 0
-  skills: []
-  animationAttack: AnimationAttack1
+  Weapon:
+    _id: 
+    _name: 
+    _description: 
+    _amount: 0
+    _price: 0
+    Slot: 0
+    AnimationNameAttack: 
+    PhysicalMinDamage: 0
+    PhysicalMaxDamage: 0
+    PhysicalAccuracy: 0
+    MagicalMinDamage: 0
+    MagicalMaxDamage: 0
+    MagicalAccuracy: 0
+  Offhand:
+    _id: 
+    _name: 
+    _description: 
+    _amount: 0
+    _price: 0
+    Slot: 0
+  Head:
+    _id: 
+    _name: 
+    _description: 
+    _amount: 0
+    _price: 0
+    Slot: 0
+    PhysicalArmor: 0
+    PhysicalEvasion: 0
+    MagicalArmor: 0
+    MagicalEvasion: 0
+  Body:
+    _id: 
+    _name: 
+    _description: 
+    _amount: 0
+    _price: 0
+    Slot: 0
+    PhysicalArmor: 0
+    PhysicalEvasion: 0
+    MagicalArmor: 0
+    MagicalEvasion: 0
+  Feet:
+    _id: 
+    _name: 
+    _description: 
+    _amount: 0
+    _price: 0
+    Slot: 0
+    PhysicalArmor: 0
+    PhysicalEvasion: 0
+    MagicalArmor: 0
+    MagicalEvasion: 0
+  Neck:
+    _id: 
+    _name: 
+    _description: 
+    _amount: 0
+    _price: 0
+    Slot: 0
+  Finger1:
+    _id: 
+    _name: 
+    _description: 
+    _amount: 0
+    _price: 0
+    Slot: 0
+  Finger2:
+    _id: 
+    _name: 
+    _description: 
+    _amount: 0
+    _price: 0
+    Slot: 0
+  Skills: []
+  BattlerStatus: {fileID: 0}
   CounterCTB: 0
   HasteStatus: 1
+--- !u!114 &114896591801153730
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1793292713363552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa6198f7475bbac4cb0f7f23f15a5887, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222981614208006164
 CanvasRenderer:
   m_ObjectHideFlags: 1

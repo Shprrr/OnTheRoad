@@ -17,9 +17,19 @@ public struct Damage
     /// </summary>
     public int Multiplier { get; set; }
     public Battler User { get; set; }
-    public Battler Target { get; set; }//TODO: Rename for Target
+    public Battler Target { get; set; }
 
     public string Name { get; set; }
+
+    public Damage(eDamageType type, int value, int multiplier, Battler user, Battler target, string name = "")
+    {
+        Type = type;
+        Value = value;
+        Multiplier = multiplier;
+        User = user;
+        Target = target;
+        Name = name;
+    }
 
     public void ApplyDamage()//TODO: Change for Attacker
     {
@@ -58,7 +68,7 @@ public struct Damage
     {
         if (obj is Damage)
         {
-            Damage d2 = (Damage)obj;
+            var d2 = (Damage)obj;
             return Type == d2.Type && Value == d2.Value && Multiplier == d2.Multiplier && User == d2.User;
         }
 
@@ -96,14 +106,8 @@ public struct Damage
         if (d1.Type != d2.Type || d1.User != d2.User)
             throw new InvalidOperationException("Damages are not compatible for the operation.");
 
-        return new Damage()
-        {
-            Type = d1.Type,
-            Value = d1.Value + d2.Value,
-            Multiplier = d1.Multiplier + d2.Multiplier,
-            User = d1.User
-        };
+        return new Damage(d1.Type, d1.Value + d2.Value, d1.Multiplier + d2.Multiplier, d1.User, d1.Target, d1.Name);
     }
 
-    public static readonly Damage Empty = new Damage() { Type = eDamageType.HP, Value = 0, Multiplier = 0, User = null };
+    public static readonly Damage Empty = new Damage(eDamageType.HP, 0, 0, null, null);
 }

@@ -20,6 +20,7 @@ public class BattleStateChooseCommand : StateMachineBehaviour
         battle._currentEvent.ctbManager.BeginTurn(battle);
 
         //TODO: Statuses
+        battle.getActiveBattler().BattlerStatus.PassTurn();
         //foreach (var actor in Actors)
         //{
         //    if (!Character.IsNullOrDead(actor))

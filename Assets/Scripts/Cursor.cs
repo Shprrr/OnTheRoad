@@ -46,8 +46,10 @@ public class Cursor
 
     public Cursor(eTargetType defaultTarget, Battler self, eTargetType[] possibleTargets, List<Battler> actors, List<Battler> enemies)
     {
-        Actors = actors ?? new List<Battler>();
-        Enemies = enemies ?? new List<Battler>();
+        Actors = new List<Battler>();
+        Actors.AddRange(actors);
+        Enemies = new List<Battler>();
+        Enemies.AddRange(enemies);
         Index = 0;
         //IndexSelf = indexSelf;
         Self = self;

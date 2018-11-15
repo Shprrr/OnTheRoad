@@ -46,6 +46,11 @@ public class MapTemplateData : IData
         CostByDifficulty = mapTemplate.CostByDifficulty;
         PossibleEnemiesData = mapTemplate.PossibleEnemiesData;
     }
+
+    public override string ToString()
+    {
+        return Name;
+    }
 }
 
 public interface IMapGenerator

@@ -28,7 +28,7 @@ public class CTBManager : MonoBehaviour
         {
             if (obj is CTBTurn)
             {
-                CTBTurn other = (CTBTurn)obj;
+                var other = (CTBTurn)obj;
                 if (battler == other.battler)
                     return counter == other.counter;
 
@@ -103,7 +103,7 @@ public class CTBManager : MonoBehaviour
         }
 
         //1-Get next CV as ICV, ajoute le plus petit et garde les restes
-        List<CTBTurn> tempCTB = new List<CTBTurn>(battle.MAX_ACTOR + battle.MAX_ENEMY);
+        var tempCTB = new List<CTBTurn>(battle.MAX_ACTOR + battle.MAX_ENEMY);
 
         //Get ICVs
         for (int i = 0; i < battle.Actors.Count; i++)
@@ -117,7 +117,7 @@ public class CTBManager : MonoBehaviour
                 tempCTB.Add(firstTurn.Value);
             else
             {
-                CTBTurn turn = new CTBTurn();
+                var turn = new CTBTurn();
                 turn.battler = battle.Actors[i];
                 turn.rank = CTBTurn.RANK_DEFAULT;
                 turn.counter = turn.battler.CounterCTB;
@@ -137,7 +137,7 @@ public class CTBManager : MonoBehaviour
                 tempCTB.Add(firstTurn.Value);
             else
             {
-                CTBTurn turn = new CTBTurn();
+                var turn = new CTBTurn();
                 turn.battler = battle.Enemies[i];
                 turn.rank = CTBTurn.RANK_DEFAULT;
                 turn.counter = turn.battler.CounterCTB;

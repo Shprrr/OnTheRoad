@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Animator), typeof(BattlerStatus))]
 public class Battler : MonoBehaviour
 {
     private Animator animator;
@@ -60,9 +60,11 @@ public class Battler : MonoBehaviour
     public EquipableData Finger1;
     public EquipableData Finger2;
 
-    public SkillData[] skills;
+    public SkillData[] Skills;
     public string AnimationAttack { get { return Weapon == null ? "AnimationAttack1" : Weapon.AnimationNameAttack; } }
     public BattleAction? lastAction;
+
+    public BattlerStatus BattlerStatus;
 
     // Awake est appelé quand l'instance de script est chargée
     public static AssetBundle animationsBundle;
@@ -85,10 +87,20 @@ public class Battler : MonoBehaviour
         Finger2 = GenerateEquipableData(Finger2);
 
         // Put skills by Unity in the factory
-        for (int i = 0; i < skills.Length; i++)
+        for (int i = 0; i < Skills.Length; i++)
         {
-            skills[i] = SkillFactory.Build(skills[i].Id);
+            Skills[i] = SkillFactory.Build(Skills[i].Id);
         }
+#if UNITY_EDITOR
+        var skills = Skills.Append(SkillFactory.Build("buffStr"));
+        skills = skills.Append(SkillFactory.Build("buffVit"));
+        skills = skills.Append(SkillFactory.Build("buffInt"));
+        skills = skills.Append(SkillFactory.Build("buffWis"));
+        skills = skills.Append(SkillFactory.Build("buffAgi"));
+        Skills = skills.ToArray();
+#endif
+
+        BattlerStatus = GetComponent<BattlerStatus>();
     }
 
     private EquipableData GenerateEquipableData(EquipableData equipableData)
@@ -202,7 +214,16 @@ public class Battler : MonoBehaviour
 
     #region BattleStats
     public bool IsDead { get { return CurrentHP <= 0; } }
-    public bool CantFight { get { return IsDead; } }//TODO: Add "or HasStatus=Stone"
+    public bool CantFight { get { return IsDead || BattlerStatus.HasStatus<StoneStatus>(); } }
+
+    public int ActiveStrength
+    {
+        get
+        {
+            var buff = BattlerStatus.GetStatus<BuffStatus>(s => s.Stat == BuffStatus.Stats.Strength);
+            return (int)(Strength * (buff?.Level > 0 ? 1 + buff.Level * 0.5 : 1));
+        }
+    }
 
     /// <summary>
     /// Get the base damage of the current job with the current equipment.
@@ -224,7 +245,7 @@ public class Battler : MonoBehaviour
         if (Weapon == null)
             weaponDamage = 1; // Barehand
 
-        return Strength / 4 + Level / 4 + weaponDamage;
+        return ActiveStrength / 4 + Level / 4 + weaponDamage;
     }
 
     public int getMaxBaseDamage()
@@ -242,7 +263,7 @@ public class Battler : MonoBehaviour
         if (Weapon == null)
             weaponDamage = 2; // Barehand
 
-        return Strength / 4 + Level / 4 + weaponDamage;
+        return ActiveStrength / 4 + Level / 4 + weaponDamage;
     }
 
     /// <summary>
@@ -506,7 +527,7 @@ public class Battler : MonoBehaviour
     public bool Casts(SkillData skill, out int skillLevel)
     {
         skillLevel = 1;
-        if (!skills.Contains(skill) || Sp < skill.SpCost) return false;
+        if (!Skills.Contains(skill) || Sp < skill.SpCost) return false;
 
         Sp -= skill.SpCost;
         return true;
@@ -590,7 +611,7 @@ public class Battler : MonoBehaviour
 
         //Bonus on defense for Target
         int defense = target.getDefenseDamage();
-        //defense *= (IsDefending ? 4 : 1);
+        defense *= BattlerStatus.HasStatus<GuardStatus>() ? 4 : 1;
         //defense *= (IsAlly ? 0 : 1);
         //defense *= (IsRunning ? 0 : 1);
         //defense *= (IsMini || IsToad ? 0 : 1);
