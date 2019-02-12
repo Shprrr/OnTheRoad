@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Animator), typeof(BattlerStatus))]
-public class Battler : MonoBehaviour
+public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 {
     private Animator animator;
     private int Level = 2;
@@ -51,6 +52,20 @@ public class Battler : MonoBehaviour
     public int MaxHP { get { return BaseMaxHP + Vitality / 4 * (Level - 1) + (Level - 1) * 10; } }
     public int MaxSP { get { return BaseMaxSP + Wisdom / 4 * (Level - 1) + (Level - 1) * 5; } }
 
+    [ContextMenuItem("Reset", nameof(ResetParameters))]
+    public Parameters parameters = new Parameters();
+    private void ResetParameters() => parameters = new Parameters();
+
+    [ContextMenuItem("Reset", nameof(ResetSecondaryParameters))]
+    public SecondaryParameters secondaryParameters = new SecondaryParameters();
+    private void ResetSecondaryParameters() => secondaryParameters = new SecondaryParameters();
+
+
+    public IEnumerable<Trait> GetAllTraits()
+    {
+        return GetAllEquips().SelectMany(e => e.Traits);
+    }
+
     public WeaponData Weapon;
     public EquipableData Offhand;
     public ArmorData Head;
@@ -59,6 +74,19 @@ public class Battler : MonoBehaviour
     public EquipableData Neck;
     public EquipableData Finger1;
     public EquipableData Finger2;
+    public EquipableData[] GetAllEquips()
+    {
+        var list = new List<EquipableData>();
+        if (!string.IsNullOrEmpty(Weapon?.Id)) list.Add(Weapon);
+        if (!string.IsNullOrEmpty(Offhand?.Id)) list.Add(Offhand);
+        if (!string.IsNullOrEmpty(Head?.Id)) list.Add(Head);
+        if (!string.IsNullOrEmpty(Body?.Id)) list.Add(Body);
+        if (!string.IsNullOrEmpty(Feet?.Id)) list.Add(Feet);
+        if (!string.IsNullOrEmpty(Neck?.Id)) list.Add(Neck);
+        if (!string.IsNullOrEmpty(Finger1?.Id)) list.Add(Finger1);
+        if (!string.IsNullOrEmpty(Finger2?.Id)) list.Add(Finger2);
+        return list.ToArray();
+    }
 
     public SkillData[] Skills;
     public string AnimationAttack { get { return Weapon == null ? "AnimationAttack1" : Weapon.AnimationNameAttack; } }
@@ -232,38 +260,47 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getMinBaseDamage()
     {
-        int weaponDamage = 0;
+        //int weaponDamage = 0;
 
-        if (Weapon != null)
-            weaponDamage += Weapon.PhysicalMinDamage;
+        //if (Weapon != null)
+        //    weaponDamage += Weapon.PhysicalMinDamage;
 
-        //if (damageOption != ePhysicalDamageOption.LEFT && RightHand is Weapon)
-        //    weaponDamage += ((Weapon)RightHand).Damage;
-        //if (damageOption != ePhysicalDamageOption.RIGHT && LeftHand is Weapon)
-        //    weaponDamage += ((Weapon)LeftHand).Damage;
-        //if (RightHand == null && LeftHand == null) // Est-ce que Shield est barehand ?
-        if (Weapon == null)
-            weaponDamage = 1; // Barehand
+        ////if (damageOption != ePhysicalDamageOption.LEFT && RightHand is Weapon)
+        ////    weaponDamage += ((Weapon)RightHand).Damage;
+        ////if (damageOption != ePhysicalDamageOption.RIGHT && LeftHand is Weapon)
+        ////    weaponDamage += ((Weapon)LeftHand).Damage;
+        ////if (RightHand == null && LeftHand == null) // Est-ce que Shield est barehand ?
+        //if (Weapon == null)
+        //    weaponDamage = 1; // Barehand
 
-        return ActiveStrength / 4 + Level / 4 + weaponDamage;
+        //return ActiveStrength / 4 + Level / 4 + weaponDamage;
+
+        //return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalMinDamage));
+
+        var key = TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalMinDamage);
+        var value = secondaryParameters.SumAllTrait(GetAllTraits(), key);
+        var minMaxValue = secondaryParameters[SecondaryParameters.SecondaryParameterIndex.PhysicalMinDamage];
+        minMaxValue.Value += Strength / 4;
+        return minMaxValue.Value;
     }
 
     public int getMaxBaseDamage()
     {
-        int weaponDamage = 0;
+        //int weaponDamage = 0;
 
-        if (Weapon != null)
-            weaponDamage += Weapon.PhysicalMaxDamage;
+        //if (Weapon != null)
+        //    weaponDamage += Weapon.PhysicalMaxDamage;
 
-        //if (damageOption != ePhysicalDamageOption.LEFT && RightHand is Weapon)
-        //    weaponDamage += ((Weapon)RightHand).Damage;
-        //if (damageOption != ePhysicalDamageOption.RIGHT && LeftHand is Weapon)
-        //    weaponDamage += ((Weapon)LeftHand).Damage;
-        //if (RightHand == null && LeftHand == null) // Est-ce que Shield est barehand ?
-        if (Weapon == null)
-            weaponDamage = 2; // Barehand
+        ////if (damageOption != ePhysicalDamageOption.LEFT && RightHand is Weapon)
+        ////    weaponDamage += ((Weapon)RightHand).Damage;
+        ////if (damageOption != ePhysicalDamageOption.RIGHT && LeftHand is Weapon)
+        ////    weaponDamage += ((Weapon)LeftHand).Damage;
+        ////if (RightHand == null && LeftHand == null) // Est-ce que Shield est barehand ?
+        //if (Weapon == null)
+        //    weaponDamage = 2; // Barehand
 
-        return ActiveStrength / 4 + Level / 4 + weaponDamage;
+        //return ActiveStrength / 4 + Level / 4 + weaponDamage;
+        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalMaxDamage));
     }
 
     /// <summary>
@@ -273,21 +310,24 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getHitPourc()
     {
-        int weaponHitPourc = 0;
+        //int weaponHitPourc = 0;
 
-        if (Weapon != null)
-            weaponHitPourc += Weapon.PhysicalAccuracy;
-        //if (damageOption != ePhysicalDamageOption.LEFT && RightHand is Weapon)
-        //    weaponHitPourc += ((Weapon)RightHand).HitPourc;
-        //if (damageOption != ePhysicalDamageOption.RIGHT && LeftHand is Weapon)
-        //    weaponHitPourc += ((Weapon)LeftHand).HitPourc;
-        //if (damageOption == ePhysicalDamageOption.BOTH && RightHand is Weapon && LeftHand is Weapon)
-        //    weaponHitPourc /= 2; // On a additionné 2 fois un 100%, donc on remet sur 100%
-        //if (RightHand == null && LeftHand == null) // Est-ce que Shield est barehand ?
-        if (Weapon == null)
-            weaponHitPourc = 80; // Barehand
+        //if (Weapon != null)
+        //    weaponHitPourc += Weapon.PhysicalAccuracy;
+        ////if (damageOption != ePhysicalDamageOption.LEFT && RightHand is Weapon)
+        ////    weaponHitPourc += ((Weapon)RightHand).HitPourc;
+        ////if (damageOption != ePhysicalDamageOption.RIGHT && LeftHand is Weapon)
+        ////    weaponHitPourc += ((Weapon)LeftHand).HitPourc;
+        ////if (damageOption == ePhysicalDamageOption.BOTH && RightHand is Weapon && LeftHand is Weapon)
+        ////    weaponHitPourc /= 2; // On a additionné 2 fois un 100%, donc on remet sur 100%
+        ////if (RightHand == null && LeftHand == null) // Est-ce que Shield est barehand ?
+        //if (Weapon == null)
+        //    weaponHitPourc = 80; // Barehand
 
-        return weaponHitPourc;
+        //return weaponHitPourc;
+
+
+        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalHitRate));
     }
 
     /// <summary>
@@ -296,8 +336,9 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getAttackMultiplier()
     {
-        int attMul = Agility / 16 + Level / 16 + 1;
-        return attMul < 16 ? attMul : 16;
+        //int attMul = Agility / 16 + Level / 16 + 1;
+        //return attMul < 16 ? attMul : 16;
+        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalAttackMultiplier));
     }
 
     /// <summary>
@@ -306,18 +347,19 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getDefenseDamage()
     {
-        int armorsDefense = 0;
+        //int armorsDefense = 0;
 
-        if (Head != null)
-            armorsDefense += Head.PhysicalArmor;
-        if (Body != null)
-            armorsDefense += Body.PhysicalArmor;
-        if (Feet != null)
-            armorsDefense += Feet.PhysicalArmor;
-        if (Offhand is ArmorData)
-            armorsDefense += ((ArmorData)Offhand).PhysicalArmor;
+        //if (Head != null)
+        //    armorsDefense += Head.PhysicalArmor;
+        //if (Body != null)
+        //    armorsDefense += Body.PhysicalArmor;
+        //if (Feet != null)
+        //    armorsDefense += Feet.PhysicalArmor;
+        //if (Offhand is ArmorData)
+        //    armorsDefense += ((ArmorData)Offhand).PhysicalArmor;
 
-        return Math.Max(Vitality / 2 + armorsDefense, 0);
+        //return Math.Max(Vitality / 2 + armorsDefense, 0);
+        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalDefense));
     }
 
     /// <summary>
@@ -326,18 +368,19 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getEvadePourc()
     {
-        int armorsEvadePourc = 0;
+        //int armorsEvadePourc = 0;
 
-        if (Head != null)
-            armorsEvadePourc += Head.PhysicalEvasion;
-        if (Body != null)
-            armorsEvadePourc += Body.PhysicalEvasion;
-        if (Feet != null)
-            armorsEvadePourc += Feet.PhysicalEvasion;
-        if (Offhand is ArmorData)
-            armorsEvadePourc += ((ArmorData)Offhand).PhysicalEvasion;
+        //if (Head != null)
+        //    armorsEvadePourc += Head.PhysicalEvasion;
+        //if (Body != null)
+        //    armorsEvadePourc += Body.PhysicalEvasion;
+        //if (Feet != null)
+        //    armorsEvadePourc += Feet.PhysicalEvasion;
+        //if (Offhand is ArmorData)
+        //    armorsEvadePourc += ((ArmorData)Offhand).PhysicalEvasion;
 
-        return Math.Max(Agility / 4 + armorsEvadePourc, 0);
+        //return Math.Max(Agility / 4 + armorsEvadePourc, 0);
+        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalEvadeRate));
     }
 
     /// <summary>
@@ -364,9 +407,10 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getDefenseMultiplier()
     {
-        return getNbShield() + 1;
-        //return getNbShield() > 0 ? (Agility / 16 + Level / 16 + 1) * getNbShield() :
-        //    Agility / 32 + Level / 32;
+        //return getNbShield() + 1;
+        ////return getNbShield() > 0 ? (Agility / 16 + Level / 16 + 1) * getNbShield() :
+        ////    Agility / 32 + Level / 32;
+        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalDefenseMultiplier));
     }
 
     /// <summary>
@@ -377,22 +421,23 @@ public class Battler : MonoBehaviour
     /// <returns></returns>
     public int getMagicMinBaseDamage(int spellDamage)
     {
-        var weaponDamage = 0;
+        //var weaponDamage = 0;
 
-        if (Weapon != null)
-            weaponDamage += Weapon.MagicalMinDamage;
+        //if (Weapon != null)
+        //    weaponDamage += Weapon.MagicalMinDamage;
 
-        //return (Intelligence / 2) + spellDamage; //FF3
-        //switch (damageOption)
-        //{
-        //    case eMagicalDamageOption.BLACK:
-        //        return (Intelligence / 4) + (Level / 4) + spellDamage;
-        //    case eMagicalDamageOption.WHITE:
-        //        return (Wisdom / 4) + (Level / 4) + spellDamage;
-        //    default:
-        //        return (Intelligence / 8) + (Wisdom / 8) + (Level / 4) + spellDamage;
-        //}
-        return Intellect / 8 + Wisdom / 8 + Level / 4 + weaponDamage + spellDamage;
+        ////return (Intelligence / 2) + spellDamage; //FF3
+        ////switch (damageOption)
+        ////{
+        ////    case eMagicalDamageOption.BLACK:
+        ////        return (Intelligence / 4) + (Level / 4) + spellDamage;
+        ////    case eMagicalDamageOption.WHITE:
+        ////        return (Wisdom / 4) + (Level / 4) + spellDamage;
+        ////    default:
+        ////        return (Intelligence / 8) + (Wisdom / 8) + (Level / 4) + spellDamage;
+        ////}
+        //return Intellect / 8 + Wisdom / 8 + Level / 4 + weaponDamage + spellDamage;
+        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalMinDamage));
     }
 
     public int getMagicMaxBaseDamage(int spellDamage)
@@ -723,4 +768,31 @@ public class Battler : MonoBehaviour
         return damage;
     }
     #endregion
+
+    public void OnBeforeSerialize()
+    {
+    }
+
+    public void OnAfterDeserialize()
+    {
+        if (parameters.Count != Enum.GetValues(typeof(Parameters.ParameterIndex)).Length)
+        {
+            var oldValues = parameters;
+            parameters = new Parameters();
+            for (int i = 0; i < oldValues.Count; i++)
+            {
+                parameters.ChangeValue((Parameters.ParameterIndex)i, oldValues[i].BaseValue);
+            }
+        }
+
+        if (secondaryParameters.Count != Enum.GetValues(typeof(SecondaryParameters.SecondaryParameterIndex)).Length)
+        {
+            var oldValues = secondaryParameters;
+            secondaryParameters = new SecondaryParameters();
+            for (int i = 0; i < oldValues.Count; i++)
+            {
+                secondaryParameters.ChangeValue((SecondaryParameters.SecondaryParameterIndex)i, oldValues[i].Value);
+            }
+        }
+    }
 }

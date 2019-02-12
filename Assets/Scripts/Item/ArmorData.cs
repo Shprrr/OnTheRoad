@@ -20,7 +20,7 @@ public class ArmorData : EquipableData
         MagicalEvasion = itemData.MagicalEvasion;
     }
 
-    public ArmorData(string id, string name, int price, EquipmentSlot slot, int physicalArmor, int physicalEvasion, int magicalArmor, int magicalEvasion, string description, int amount = 1) : base(id, name, price, slot, description, amount)
+    public ArmorData(string id, string name, int price, EquipmentSlot slot, int physicalArmor, int physicalEvasion, int magicalArmor, int magicalEvasion, Trait[] traits, string description, int amount = 1) : base(id, name, price, slot, traits, description, amount)
     {
         PhysicalArmor = physicalArmor;
         PhysicalEvasion = physicalEvasion;

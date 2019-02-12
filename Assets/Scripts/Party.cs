@@ -10,7 +10,8 @@ public class Party : MonoBehaviour
 
 #if UNITY_EDITOR
     [IItemData(nameof(items))]
-    public string itemsInspector;
+    [SerializeField]
+    private string itemsInspector = "";
 #else
     [SerializeField]
     private string itemsInspector;

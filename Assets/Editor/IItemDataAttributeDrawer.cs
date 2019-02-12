@@ -63,11 +63,11 @@ public class IItemDataAttributeDrawer : PropertyDrawer
 
                 return EditorGUIUtility.singleLineHeight * 10 + EditorGUI.GetPropertyHeight(sp, true);
             case ItemDataType.Equipable:
-                return EditorGUIUtility.singleLineHeight * 8;
+                return EditorGUIUtility.singleLineHeight * 9;
             case ItemDataType.Weapon:
-                return EditorGUIUtility.singleLineHeight * 13;
+                return EditorGUIUtility.singleLineHeight * 14;
             case ItemDataType.Armor:
-                return EditorGUIUtility.singleLineHeight * 12;
+                return EditorGUIUtility.singleLineHeight * 13;
             case ItemDataType.NULL:
             case ItemDataType.Undefined:
             default:
@@ -236,6 +236,12 @@ public class IItemDataAttributeDrawer : PropertyDrawer
             equipable.Slot = (EquipableData.EquipmentSlot)EditorGUI.EnumPopup(pos, "Slot", equipable.Slot);
             if (EditorGUI.EndChangeCheck())
                 actionSaveValue?.Invoke();
+
+            pos.y += pos.height;
+            //EditorGUI.BeginChangeCheck();
+            EditorGUI.LabelField(pos, "Number Traits", equipable.Traits?.Length.ToString());
+            //if (EditorGUI.EndChangeCheck())
+            //    actionSaveValue?.Invoke();
         }
 
         if (realValue is WeaponData)

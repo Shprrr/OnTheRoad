@@ -34,6 +34,13 @@ public class EquipableData : IItemData, IEquatable<EquipableData>
     }
 
     public EquipmentSlot Slot;
+    [NonSerialized]
+    public Trait[] Traits;
+
+    [System.Runtime.Serialization.OptionalField]
+    [UnityEngine.SerializeField, ReadOnlyProperty(nameof(NbTraits))]
+    private int nbTraits;
+    public int NbTraits => Traits?.Length ?? -1;
 
     public EquipableData()
     {
@@ -47,9 +54,10 @@ public class EquipableData : IItemData, IEquatable<EquipableData>
         Amount = amount;
         Price = itemData.Price;
         Slot = itemData.Slot;
+        Traits = itemData.Traits;
     }
 
-    public EquipableData(string id, string name, int price, EquipmentSlot slot, string description, int amount = 1)
+    public EquipableData(string id, string name, int price, EquipmentSlot slot, Trait[] traits, string description, int amount = 1)
     {
         Id = id;
         Name = name;
@@ -57,6 +65,7 @@ public class EquipableData : IItemData, IEquatable<EquipableData>
         Amount = amount;
         Price = price;
         Slot = slot;
+        Traits = traits;
     }
 
     public override bool Equals(object obj)
