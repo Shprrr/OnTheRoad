@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,9 +8,9 @@ public class BattlerStatus : MonoBehaviour
 
     public bool AddStatus(Status status)
     {
-        var activeStatus = ActiveStatuses.SingleOrDefault(s => s.Id == status.Id);
-        if (activeStatus != null)
-            return activeStatus.Stackable(status);
+        var activeStatusesByType = ActiveStatuses.ToDictionary(s => s.Type);
+        if (activeStatusesByType.TryGetValue(status.Type, out var activeStatus))
+            return activeStatus.StackStatus(status);
 
         ActiveStatuses.Add(status);
         return true;
@@ -28,23 +27,14 @@ public class BattlerStatus : MonoBehaviour
         }
     }
 
-    public bool HasStatus<T>() where T : Status
+    public bool IsAlive()
     {
-        return ActiveStatuses.Any(s => s is T);
+        return ActiveStatuses.All(s => s.Type.IsAlive);
     }
 
-    public bool HasStatus<T>(Func<T, bool> predicate) where T : Status
+    public RestrictionType? GetRestriction()
     {
-        return ActiveStatuses.Any(s => s is T && predicate.Invoke((T)s));
-    }
-
-    public T GetStatus<T>() where T : Status
-    {
-        return (T)ActiveStatuses.SingleOrDefault(s => s is T);
-    }
-
-    public T GetStatus<T>(Func<T, bool> predicate) where T : Status
-    {
-        return (T)ActiveStatuses.SingleOrDefault(s => s is T && predicate.Invoke((T)s));
+        //TODO: Tester (null, qqch).
+        return ActiveStatuses.OrderBy(s => s.Type.Restriction).Min(s => s.Type.Restriction);
     }
 }

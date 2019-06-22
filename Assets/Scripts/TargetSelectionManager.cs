@@ -165,8 +165,7 @@ public class TargetSelectionManager : MonoBehaviour
 
             case BattleCommand.Skills:
                 {
-                    int skillLevel;
-                    if (!user.Casts((SkillData)action.Data, out skillLevel))
+                    if (!user.Casts((SkillData)action.Data, out var skillLevel))
                         throw new System.InvalidOperationException("Not enough SP.");
 
                     int nbTarget = 0;

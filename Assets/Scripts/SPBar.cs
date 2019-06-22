@@ -18,7 +18,7 @@ public class SPBar : MonoBehaviour
     private void Update()
     {
         slider.value = battler.Sp;
-        slider.maxValue = battler.MaxSP;
+        slider.maxValue = battler.GetMaxSP();
         var fillImage = slider.fillRect.GetComponent<Image>();
         // From 100% to 50%, red goes from 0 to 255.
         // From 50% to 0%, green goes from 255 to 0.

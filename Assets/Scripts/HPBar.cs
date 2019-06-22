@@ -18,7 +18,7 @@ public class HPBar : MonoBehaviour
     private void Update()
     {
         slider.value = battler.Hp;
-        slider.maxValue = battler.MaxHP;
+        slider.maxValue = battler.GetMaxHP();
         var fillImage = slider.fillRect.GetComponent<Image>();
         // From 100% to 50%, red goes from 0 to 255.
         // From 50% to 0%, green goes from 255 to 0.

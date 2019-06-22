@@ -1,33 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
-public abstract class Status : IData
+public class Status
 {
-    public string _id;
-    public string _name;
-    public string _description;
+    public StatusType Type { get; private set; }
+    public int Level;
     public int TurnLeft;
 
-    public string Id { get { return _id; } set { _id = value; } }
-    public string Name { get { return _name; } set { _name = value; } }
-    public string Description { get { return _description; } set { _description = value; } }
-
-    public Status()
+    public Status(StatusType type, int level, int turnLeft)
     {
-
-    }
-
-    public Status(Status status, int turnLeft)
-    {
-        Id = status.Id;
-        Name = status.Name;
-        Description = status.Description;
+        Type = type ?? throw new ArgumentNullException(nameof(type));
+        Level = level;
         TurnLeft = turnLeft;
     }
 
-    public virtual bool Stackable(Status other)
+    public bool StackStatus(Status other)
     {
-        if (Id == other.Id && TurnLeft < other.TurnLeft)
+        if (Type != other.Type) return false;
+
+        if (Level < Type.MaxLevel)
+        {
+            Level = Mathf.Clamp(Level + other.Level, 0, Type.MaxLevel);
+            TurnLeft = Math.Max(TurnLeft, other.TurnLeft);
+            return true;
+        }
+
+        if (TurnLeft < other.TurnLeft)
         {
             TurnLeft = other.TurnLeft;
             return true;
@@ -36,10 +36,16 @@ public abstract class Status : IData
         return false;
     }
 
-    public override string ToString()
+    public IEnumerable<Trait> GetTraits()
     {
-        return Name;
+        return Type.TraitsByLevel[Level];
     }
 
-    public abstract Status Copy(int turns);
+    public override string ToString()
+    {
+        if (Type.MaxLevel > 1)
+            return Type.Name + " L" + Level;
+
+        return Type.Name;
+    }
 }

@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 10
+    serializedVersion: 12
     m_Resolution: 2
     m_BakeResolution: 40
     m_AtlasSize: 1024
@@ -62,6 +62,7 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
     m_CompAOExponentDirect: 0
+    m_ExtractAmbientOcclusion: 0
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
@@ -76,10 +77,16 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
+    m_PVREnvironmentSampleCount: 500
+    m_PVREnvironmentReferencePointCount: 2048
+    m_PVRFilteringMode: 2
+    m_PVRDenoiserTypeDirect: 0
+    m_PVRDenoiserTypeIndirect: 0
+    m_PVRDenoiserTypeAO: 0
     m_PVRFilterTypeDirect: 0
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
-    m_PVRFilteringMode: 1
+    m_PVREnvironmentMIS: 0
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -88,6 +95,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
+    m_ExportTrainingData: 0
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -758,89 +766,72 @@ MonoBehaviour:
   animationPrefab: {fileID: 1125537133379568, guid: f79ecbce87384b34c9ff63266aef17c4,
     type: 3}
   IsPlayer: 1
-  BaseMaxHP: 12
-  BaseMaxSP: 4
-  Strength: 6
-  Vitality: 6
-  Intellect: 4
-  Wisdom: 4
-  Agility: 2
   CurrentHP: 23
   CurrentSP: 10
-  parameters:
-    parameters:
-    - Name: MaxHp
-      MinValue: 1
-      MaxValue: 999999
-      BaseValue: 12
-      PlusValue: 11
-      BuffRate: 1
-      value: 23
-    - Name: MaxSp
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-    - Name: Strength
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-    - Name: Vitality
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-    - Name: Intellect
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-    - Name: Wisdom
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-    - Name: Agility
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-  secondaryParameters:
-    parameters:
-    - MinValue: 1
-      MaxValue: 999
-      value: 1
-    - MinValue: 1
-      MaxValue: 999
-      value: 1
-    - MinValue: 1
-      MaxValue: 16
-      value: 1
-    - MinValue: 0
-      MaxValue: 100
-      value: 80
-    - MinValue: 0
-      MaxValue: 999
-      value: 0
-    - MinValue: 1
-      MaxValue: 16
-      value: 1
-    - MinValue: 0
-      MaxValue: 100
-      value: 0
+  baseTraits:
+  - Name: maxHp Addition 12
+    Characteristic:
+      _id: maxHp
+      _name: MaxHP
+      _description: Maximum Hit Points.
+    Value: 12
+    Operator: 0
+  - Name: maxSp Addition 4
+    Characteristic:
+      _id: maxSp
+      _name: MaxSP
+      _description: Maximum Skill Points.
+    Value: 4
+    Operator: 0
+  - Name: str Addition 6
+    Characteristic:
+      _id: str
+      _name: Strength
+      _description: Strength.
+    Value: 6
+    Operator: 0
+  - Name: vit Addition 6
+    Characteristic:
+      _id: vit
+      _name: Vitality
+      _description: Vitality.
+    Value: 6
+    Operator: 0
+  - Name: int Addition 4
+    Characteristic:
+      _id: int
+      _name: Intellect
+      _description: Intellect.
+    Value: 4
+    Operator: 0
+  - Name: wis Addition 4
+    Characteristic:
+      _id: wis
+      _name: Wisdom
+      _description: Wisdom.
+    Value: 4
+    Operator: 0
+  - Name: agi Addition 2
+    Characteristic:
+      _id: agi
+      _name: Agility
+      _description: Agility.
+    Value: 2
+    Operator: 0
+  - Name: physDefMult Addition 1
+    Characteristic:
+      _id: physDefMult
+      _name: Physical Defense Multiplier
+      _description: Physical Defense Multiplier.
+    Value: 1
+    Operator: 0
+  - Name: magDefMult Addition 1
+    Characteristic:
+      _id: magDefMult
+      _name: Magical Defense Multiplier
+      _description: Magical Defense Multiplier.
+    Value: 1
+    Operator: 0
   Weapon:
     _id: sword
     _name: 
@@ -848,14 +839,7 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: -1
     AnimationNameAttack: 
-    PhysicalMinDamage: 0
-    PhysicalMaxDamage: 0
-    PhysicalAccuracy: 0
-    MagicalMinDamage: 0
-    MagicalMaxDamage: 0
-    MagicalAccuracy: 0
   Offhand:
     _id: 
     _name: 
@@ -863,7 +847,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
   Head:
     _id: helmet
     _name: 
@@ -871,11 +854,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: -1
-    PhysicalArmor: 0
-    PhysicalEvasion: 0
-    MagicalArmor: 0
-    MagicalEvasion: 0
   Body:
     _id: chestArmor
     _name: 
@@ -883,11 +861,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
-    PhysicalArmor: 0
-    PhysicalEvasion: 0
-    MagicalArmor: 0
-    MagicalEvasion: 0
   Feet:
     _id: boots
     _name: 
@@ -895,11 +868,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
-    PhysicalArmor: 0
-    PhysicalEvasion: 0
-    MagicalArmor: 0
-    MagicalEvasion: 0
   Neck:
     _id: amulet
     _name: 
@@ -907,7 +875,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: -1
   Finger1:
     _id: ring
     _name: 
@@ -915,7 +882,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
   Finger2:
     _id: 
     _name: 
@@ -923,7 +889,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
   Skills:
   - _id: guard
     _name: 
@@ -1036,6 +1001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6198f7475bbac4cb0f7f23f15a5887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActiveStatuses: []
 --- !u!1 &160919013
 GameObject:
   m_ObjectHideFlags: 0
@@ -1750,17 +1716,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 314779543}
@@ -2056,89 +2025,72 @@ MonoBehaviour:
   animationPrefab: {fileID: 1125537133379568, guid: f79ecbce87384b34c9ff63266aef17c4,
     type: 3}
   IsPlayer: 1
-  BaseMaxHP: 10
-  BaseMaxSP: 6
-  Strength: 4
-  Vitality: 4
-  Intellect: 6
-  Wisdom: 6
-  Agility: 3
   CurrentHP: 21
   CurrentSP: 12
-  parameters:
-    parameters:
-    - Name: MaxHp
-      MinValue: 1
-      MaxValue: 999999
-      BaseValue: 1
-      PlusValue: 0
-      BuffRate: 1
-      value: 1
-    - Name: MaxSp
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-    - Name: Strength
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-    - Name: Vitality
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-    - Name: Intellect
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-    - Name: Wisdom
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-    - Name: Agility
-      MinValue: 0
-      MaxValue: 999
-      BaseValue: 0
-      PlusValue: 0
-      BuffRate: 1
-      value: 0
-  secondaryParameters:
-    parameters:
-    - MinValue: 1
-      MaxValue: 999
-      value: 1
-    - MinValue: 1
-      MaxValue: 999
-      value: 1
-    - MinValue: 1
-      MaxValue: 16
-      value: 1
-    - MinValue: 0
-      MaxValue: 100
-      value: 80
-    - MinValue: 0
-      MaxValue: 999
-      value: 0
-    - MinValue: 1
-      MaxValue: 16
-      value: 1
-    - MinValue: 0
-      MaxValue: 100
-      value: 0
+  baseTraits:
+  - Name: maxHp Addition 10
+    Characteristic:
+      _id: maxHp
+      _name: MaxHP
+      _description: Maximum Hit Points.
+    Value: 10
+    Operator: 0
+  - Name: maxSp Addition 6
+    Characteristic:
+      _id: maxSp
+      _name: MaxSP
+      _description: Maximum Skill Points.
+    Value: 6
+    Operator: 0
+  - Name: str Addition 4
+    Characteristic:
+      _id: str
+      _name: Strength
+      _description: Strength.
+    Value: 4
+    Operator: 0
+  - Name: vit Addition 4
+    Characteristic:
+      _id: vit
+      _name: Vitality
+      _description: Vitality.
+    Value: 4
+    Operator: 0
+  - Name: int Addition 6
+    Characteristic:
+      _id: int
+      _name: Intellect
+      _description: Intellect.
+    Value: 6
+    Operator: 0
+  - Name: wis Addition 6
+    Characteristic:
+      _id: wis
+      _name: Wisdom
+      _description: Wisdom.
+    Value: 6
+    Operator: 0
+  - Name: agi Addition 3
+    Characteristic:
+      _id: agi
+      _name: Agility
+      _description: Agility.
+    Value: 3
+    Operator: 0
+  - Name: physDefMult Addition 1
+    Characteristic:
+      _id: physDefMult
+      _name: Physical Defense Multiplier
+      _description: Physical Defense Multiplier.
+    Value: 1
+    Operator: 0
+  - Name: magDefMult Addition 1
+    Characteristic:
+      _id: magDefMult
+      _name: Magical Defense Multiplier
+      _description: Magical Defense Multiplier.
+    Value: 1
+    Operator: 0
   Weapon:
     _id: 
     _name: 
@@ -2146,14 +2098,7 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
     AnimationNameAttack: 
-    PhysicalMinDamage: 0
-    PhysicalMaxDamage: 0
-    PhysicalAccuracy: 0
-    MagicalMinDamage: 0
-    MagicalMaxDamage: 0
-    MagicalAccuracy: 0
   Offhand:
     _id: 
     _name: 
@@ -2161,7 +2106,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
   Head:
     _id: 
     _name: 
@@ -2169,11 +2113,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
-    PhysicalArmor: 0
-    PhysicalEvasion: 0
-    MagicalArmor: 0
-    MagicalEvasion: 0
   Body:
     _id: robe
     _name: 
@@ -2181,11 +2120,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
-    PhysicalArmor: 0
-    PhysicalEvasion: 0
-    MagicalArmor: 0
-    MagicalEvasion: 0
   Feet:
     _id: boots
     _name: 
@@ -2193,11 +2127,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
-    PhysicalArmor: 0
-    PhysicalEvasion: 0
-    MagicalArmor: 0
-    MagicalEvasion: 0
   Neck:
     _id: 
     _name: 
@@ -2205,7 +2134,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
   Finger1:
     _id: 
     _name: 
@@ -2213,7 +2141,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
   Finger2:
     _id: ring
     _name: 
@@ -2221,7 +2148,6 @@ MonoBehaviour:
     _amount: 0
     _price: 0
     Slot: 0
-    nbTraits: 0
   Skills:
   - _id: fire1
     _name: 
@@ -2341,6 +2267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa6198f7475bbac4cb0f7f23f15a5887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActiveStatuses: []
 --- !u!1 &361479988
 GameObject:
   m_ObjectHideFlags: 0
@@ -3266,9 +3193,10 @@ Camera:
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_GateFitMode: 2
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -3560,17 +3488,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 578621719}
@@ -3755,6 +3686,8 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
 --- !u!224 &606796428
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3771,7 +3704,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.000019572757, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &606796429
@@ -4098,17 +4031,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 767203596}
@@ -4227,17 +4163,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 838158169}
@@ -5002,17 +4941,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1232514613}
@@ -5173,17 +5115,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1115934893}
@@ -5600,17 +5545,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1232514613}
@@ -6153,17 +6101,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1303392568}
@@ -6926,17 +6877,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1546620374}
@@ -7061,12 +7015,16 @@ MonoBehaviour:
     i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_targetsPossible i:nil="true"
     /><d2p1:_x003C_foldout_x003E_k__BackingField>false</d2p1:_x003C_foldout_x003E_k__BackingField></anyType><anyType
     xmlns:d2p1="http://schemas.datacontract.org/2004/07/" i:type="d2p1:WeaponData"><d2p1:Slot>Weapon</d2p1:Slot><d2p1:_amount>1</d2p1:_amount><d2p1:_description
-    i:nil="true" /><d2p1:_id>staff</d2p1:_id><d2p1:_name i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_x003C_foldout_x003E_k__BackingField>true</d2p1:_x003C_foldout_x003E_k__BackingField><d2p1:AnimationNameAttack
-    i:nil="true" /><d2p1:MagicalAccuracy>0</d2p1:MagicalAccuracy><d2p1:MagicalMaxDamage>0</d2p1:MagicalMaxDamage><d2p1:MagicalMinDamage>0</d2p1:MagicalMinDamage><d2p1:PhysicalAccuracy>0</d2p1:PhysicalAccuracy><d2p1:PhysicalMaxDamage>0</d2p1:PhysicalMaxDamage><d2p1:PhysicalMinDamage>0</d2p1:PhysicalMinDamage></anyType><anyType
-    xmlns:d2p1="http://schemas.datacontract.org/2004/07/" i:type="d2p1:ArmorData"><d2p1:Slot>Offhand</d2p1:Slot><d2p1:_amount>2</d2p1:_amount><d2p1:_description
-    i:nil="true" /><d2p1:_id>shield</d2p1:_id><d2p1:_name i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_x003C_foldout_x003E_k__BackingField>false</d2p1:_x003C_foldout_x003E_k__BackingField><d2p1:MagicalArmor>0</d2p1:MagicalArmor><d2p1:MagicalEvasion>0</d2p1:MagicalEvasion><d2p1:PhysicalArmor>0</d2p1:PhysicalArmor><d2p1:PhysicalEvasion>0</d2p1:PhysicalEvasion></anyType><anyType
+    i:nil="true" /><d2p1:_id>staff</d2p1:_id><d2p1:_name i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_x003C_foldout_x003E_k__BackingField>false</d2p1:_x003C_foldout_x003E_k__BackingField><d2p1:AnimationNameAttack
+    i:nil="true" /></anyType><anyType xmlns:d2p1="http://schemas.datacontract.org/2004/07/"
+    i:type="d2p1:ArmorData"><d2p1:Slot>Offhand</d2p1:Slot><d2p1:_amount>2</d2p1:_amount><d2p1:_description
+    i:nil="true" /><d2p1:_id>shield</d2p1:_id><d2p1:_name i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_x003C_foldout_x003E_k__BackingField>false</d2p1:_x003C_foldout_x003E_k__BackingField></anyType><anyType
     xmlns:d2p1="http://schemas.datacontract.org/2004/07/" i:type="d2p1:ArmorData"><d2p1:Slot>Body</d2p1:Slot><d2p1:_amount>1</d2p1:_amount><d2p1:_description
-    i:nil="true" /><d2p1:_id>chestArmor</d2p1:_id><d2p1:_name i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_x003C_foldout_x003E_k__BackingField>false</d2p1:_x003C_foldout_x003E_k__BackingField><d2p1:MagicalArmor>0</d2p1:MagicalArmor><d2p1:MagicalEvasion>0</d2p1:MagicalEvasion><d2p1:PhysicalArmor>0</d2p1:PhysicalArmor><d2p1:PhysicalEvasion>0</d2p1:PhysicalEvasion></anyType></ArrayOfanyType>
+    i:nil="true" /><d2p1:_id>chestArmor</d2p1:_id><d2p1:_name i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_x003C_foldout_x003E_k__BackingField>false</d2p1:_x003C_foldout_x003E_k__BackingField></anyType><anyType
+    xmlns:d2p1="http://schemas.datacontract.org/2004/07/" i:type="d2p1:ItemUsableData"><d2p1:UsableOutsideBattle>false</d2p1:UsableOutsideBattle><d2p1:_amount>4</d2p1:_amount><d2p1:_animationName
+    i:nil="true" /><d2p1:_description i:nil="true" /><d2p1:_effect i:nil="true" /><d2p1:_id>sleepBomb</d2p1:_id><d2p1:_name
+    i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_targetsPossible i:nil="true"
+    /><d2p1:_x003C_foldout_x003E_k__BackingField>true</d2p1:_x003C_foldout_x003E_k__BackingField></anyType></ArrayOfanyType>
   money: 20
   moneyText: {fileID: 110909565}
 --- !u!224 &1554844939 stripped
@@ -7329,17 +7287,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1593248830}
@@ -7531,17 +7492,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1637864120}
@@ -8193,17 +8157,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 271469239}
@@ -9423,17 +9390,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2036236527}
@@ -9776,17 +9746,20 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
     m_HighlightedSprite: {fileID: 0}
     m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
     m_DisabledTrigger: Disabled
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2101711139}

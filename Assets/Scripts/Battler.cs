@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -8,62 +7,85 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(Animator), typeof(BattlerStatus))]
 public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 {
+#pragma warning disable IDE1006
     private Animator animator;
-    private int Level = 2;
+    private const int Level = 2;
 
     public GameObject animationPrefab;
     public bool IsPlayer;
 
-    public int BaseMaxHP;
-    public int BaseMaxSP;
-    public int Strength;
-    public int Vitality;
-    public int Intellect;
-    public int Wisdom;
-    public int Agility;
-
-    public int CurrentHP;
+    [SerializeField]
+    private int CurrentHP;
     public int Hp
     {
         get { return CurrentHP; }
         set
         {
-            if (value > MaxHP)
-                value = MaxHP;
+            var maxHp = GetMaxHP();
+            if (value > maxHp)
+                value = maxHp;
             if (value < 0)
                 value = 0;
             CurrentHP = value;
         }
     }
-    public int CurrentSP;
+    [SerializeField]
+    private int CurrentSP;
     public int Sp
     {
         get { return CurrentSP; }
         set
         {
-            if (value > MaxSP)
-                value = MaxSP;
+            var maxSp = GetMaxSP();
+            if (value > maxSp)
+                value = maxSp;
             if (value < 0)
                 value = 0;
             CurrentSP = value;
         }
     }
 
-    public int MaxHP { get { return BaseMaxHP + Vitality / 4 * (Level - 1) + (Level - 1) * 10; } }
-    public int MaxSP { get { return BaseMaxSP + Wisdom / 4 * (Level - 1) + (Level - 1) * 5; } }
+    public int GetMaxHP() => (int)GetCalculatedStat(CharacteristicFactory.MaxHPId);
+    public int GetMaxSP() => (int)GetCalculatedStat(CharacteristicFactory.MaxSPId);
+    public int GetStrength() => (int)GetCalculatedStat(CharacteristicFactory.StrengthId);
+    public int GetVitality() => (int)GetCalculatedStat(CharacteristicFactory.VitalityId);
+    public int GetIntellect() => (int)GetCalculatedStat(CharacteristicFactory.IntellectId);
+    public int GetWisdom() => (int)GetCalculatedStat(CharacteristicFactory.WisdomId);
+    public int GetAgility() => (int)GetCalculatedStat(CharacteristicFactory.AgilityId);
 
-    [ContextMenuItem("Reset", nameof(ResetParameters))]
-    public Parameters parameters = new Parameters();
-    private void ResetParameters() => parameters = new Parameters();
+    [ContextMenuItem("Reset Base Stats Traits", nameof(ResetBaseStatsTraits))]
+    [ContextMenuItem("Set Base Stats Traits", nameof(SetBaseStatsTraits))]
+    public List<Trait> baseTraits = new List<Trait>();
+    private Trait[] baseStatsTraits = new[]
+        {
+            new Trait(CharacteristicFactory.MaxHPId, 0, TraitOperator.Addition),
+            new Trait(CharacteristicFactory.MaxSPId, 0, TraitOperator.Addition),
+            new Trait(CharacteristicFactory.StrengthId, 0, TraitOperator.Addition),
+            new Trait(CharacteristicFactory.VitalityId, 0, TraitOperator.Addition),
+            new Trait(CharacteristicFactory.IntellectId, 0, TraitOperator.Addition),
+            new Trait(CharacteristicFactory.WisdomId, 0, TraitOperator.Addition),
+            new Trait(CharacteristicFactory.AgilityId, 0, TraitOperator.Addition),
+            new Trait(CharacteristicFactory.PhysDefMultiplierId, 1, TraitOperator.Addition),
+            new Trait(CharacteristicFactory.MagDefMultiplierId, 1, TraitOperator.Addition)
+        };
+    private void ResetBaseStatsTraits() => baseTraits = baseStatsTraits.ToList();
+    private void SetBaseStatsTraits()
+    {
+        for (int i = 0; i < baseStatsTraits.Length; i++)
+        {
+            if (!baseTraits.Exists(t => t.Characteristic.Id == baseStatsTraits[i].Characteristic.Id && t.Operator == baseStatsTraits[i].Operator))
+                baseTraits.Insert(i, new Trait(baseStatsTraits[i].Characteristic.Id, baseStatsTraits[i].Value, baseStatsTraits[i].Operator));
+        }
+    }
 
-    [ContextMenuItem("Reset", nameof(ResetSecondaryParameters))]
-    public SecondaryParameters secondaryParameters = new SecondaryParameters();
-    private void ResetSecondaryParameters() => secondaryParameters = new SecondaryParameters();
-
+    public float GetCalculatedStat(string characteristicId, params Trait[] temporaryTraits)
+    {
+        return CalculatorTrait.CalculateTraits(GetAllTraits().Concat(temporaryTraits))[characteristicId];
+    }
 
     public IEnumerable<Trait> GetAllTraits()
     {
-        return GetAllEquips().SelectMany(e => e.Traits);
+        return baseTraits.Concat(GetAllEquips().SelectMany(e => e.Traits)).Concat(BattlerStatus.ActiveStatuses.SelectMany(s => s.GetTraits()));
     }
 
     public WeaponData Weapon;
@@ -139,8 +161,8 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     // Start est appelé juste avant qu'une méthode Update soit appelée pour la première fois
     private void Start()
     {
-        Hp = MaxHP;
-        Sp = MaxSP;
+        Hp = GetMaxHP();
+        Sp = GetMaxSP();
         animator = GetComponent<Animator>();
         Update();
     }
@@ -148,7 +170,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     // Update est appelé pour chaque trame, si le MonoBehaviour est activé
     private void Update()
     {
-        animator.SetInteger("CurrentHp", CurrentHP);
+        animator.SetInteger("CurrentHp", Hp);
     }
 
     #region CTB
@@ -160,7 +182,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 
     public int getTickSpeed()
     {
-        int agility = Agility;
+        int agility = (int)GetCalculatedStat(CharacteristicFactory.AgilityId); ;
 
         if (agility == 0)
             return 28;
@@ -241,17 +263,8 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     #endregion
 
     #region BattleStats
-    public bool IsDead { get { return CurrentHP <= 0; } }
-    public bool CantFight { get { return IsDead || BattlerStatus.HasStatus<StoneStatus>(); } }
-
-    public int ActiveStrength
-    {
-        get
-        {
-            var buff = BattlerStatus.GetStatus<BuffStatus>(s => s.Stat == BuffStatus.Stats.Strength);
-            return (int)(Strength * (buff?.Level > 0 ? 1 + buff.Level * 0.5 : 1));
-        }
-    }
+    public bool IsDead { get { return Hp <= 0; } }
+    public bool CantFight { get { return IsDead || !BattlerStatus.IsAlive(); } }
 
     /// <summary>
     /// Get the base damage of the current job with the current equipment.
@@ -275,13 +288,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 
         //return ActiveStrength / 4 + Level / 4 + weaponDamage;
 
-        //return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalMinDamage));
-
-        var key = TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalMinDamage);
-        var value = secondaryParameters.SumAllTrait(GetAllTraits(), key);
-        var minMaxValue = secondaryParameters[SecondaryParameters.SecondaryParameterIndex.PhysicalMinDamage];
-        minMaxValue.Value += Strength / 4;
-        return minMaxValue.Value;
+        return (int)GetCalculatedStat(CharacteristicFactory.PhysMinDamageId);
     }
 
     public int getMaxBaseDamage()
@@ -300,7 +307,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
         //    weaponDamage = 2; // Barehand
 
         //return ActiveStrength / 4 + Level / 4 + weaponDamage;
-        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalMaxDamage));
+        return (int)GetCalculatedStat(CharacteristicFactory.PhysMaxDamageId);
     }
 
     /// <summary>
@@ -326,8 +333,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 
         //return weaponHitPourc;
 
-
-        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalHitRate));
+        return (int)GetCalculatedStat(CharacteristicFactory.PhysHitRateId);
     }
 
     /// <summary>
@@ -338,7 +344,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     {
         //int attMul = Agility / 16 + Level / 16 + 1;
         //return attMul < 16 ? attMul : 16;
-        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalAttackMultiplier));
+        return (int)GetCalculatedStat(CharacteristicFactory.PhysAttMultiplierId);
     }
 
     /// <summary>
@@ -359,7 +365,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
         //    armorsDefense += ((ArmorData)Offhand).PhysicalArmor;
 
         //return Math.Max(Vitality / 2 + armorsDefense, 0);
-        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalDefense));
+        return (int)GetCalculatedStat(CharacteristicFactory.PhysDefenseId);
     }
 
     /// <summary>
@@ -380,7 +386,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
         //    armorsEvadePourc += ((ArmorData)Offhand).PhysicalEvasion;
 
         //return Math.Max(Agility / 4 + armorsEvadePourc, 0);
-        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalEvadeRate));
+        return (int)GetCalculatedStat(CharacteristicFactory.PhysEvadeRateId);
     }
 
     /// <summary>
@@ -410,7 +416,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
         //return getNbShield() + 1;
         ////return getNbShield() > 0 ? (Agility / 16 + Level / 16 + 1) * getNbShield() :
         ////    Agility / 32 + Level / 32;
-        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalDefenseMultiplier));
+        return (int)GetCalculatedStat(CharacteristicFactory.PhysDefMultiplierId);
     }
 
     /// <summary>
@@ -437,27 +443,28 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
         ////        return (Intelligence / 8) + (Wisdom / 8) + (Level / 4) + spellDamage;
         ////}
         //return Intellect / 8 + Wisdom / 8 + Level / 4 + weaponDamage + spellDamage;
-        return secondaryParameters.SumAllTrait(GetAllTraits(), TraitKey.BuildSecondaryParamTrait(SecondaryParameters.SecondaryParameterIndex.PhysicalMinDamage));
+        return (int)GetCalculatedStat(CharacteristicFactory.MagMinDamageId, new Trait(CharacteristicFactory.MagMinDamageId, spellDamage, TraitOperator.Addition));
     }
 
     public int getMagicMaxBaseDamage(int spellDamage)
     {
-        var weaponDamage = 0;
+        //var weaponDamage = 0;
 
-        if (Weapon != null)
-            weaponDamage += Weapon.MagicalMaxDamage;
+        //if (Weapon != null)
+        //    weaponDamage += Weapon.MagicalMaxDamage;
 
-        //return (Intelligence / 2) + spellDamage; //FF3
-        //switch (damageOption)
-        //{
-        //    case eMagicalDamageOption.BLACK:
-        //        return (Intelligence / 4) + (Level / 4) + spellDamage;
-        //    case eMagicalDamageOption.WHITE:
-        //        return (Wisdom / 4) + (Level / 4) + spellDamage;
-        //    default:
-        //        return (Intelligence / 8) + (Wisdom / 8) + (Level / 4) + spellDamage;
-        //}
-        return Intellect / 8 + Wisdom / 8 + Level / 4 + weaponDamage + spellDamage;
+        ////return (Intelligence / 2) + spellDamage; //FF3
+        ////switch (damageOption)
+        ////{
+        ////    case eMagicalDamageOption.BLACK:
+        ////        return (Intelligence / 4) + (Level / 4) + spellDamage;
+        ////    case eMagicalDamageOption.WHITE:
+        ////        return (Wisdom / 4) + (Level / 4) + spellDamage;
+        ////    default:
+        ////        return (Intelligence / 8) + (Wisdom / 8) + (Level / 4) + spellDamage;
+        ////}
+        //return Intellect / 8 + Wisdom / 8 + Level / 4 + weaponDamage + spellDamage;
+        return (int)GetCalculatedStat(CharacteristicFactory.MagMaxDamageId, new Trait(CharacteristicFactory.MagMaxDamageId, spellDamage, TraitOperator.Addition));
     }
 
     /// <summary>
@@ -466,22 +473,24 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     /// <returns></returns>
     public int getMagicHitPourc(int spellHitPourc)
     {
-        int weaponHitPourc = 0;
+        //int weaponHitPourc = 0;
 
-        if (Weapon != null)
-            weaponHitPourc += Weapon.MagicalAccuracy;
-        // 80% barehanded
-        //return (Intelligence / 2) + spellHitPourc; //FF3
-        //switch (damageOption)
-        //{
-        //    case eMagicalDamageOption.BLACK:
-        //        return (Intelligence / 8) + (Accuracy / 8) + (Level / 4) + spellHitPourc;
-        //    case eMagicalDamageOption.WHITE:
-        //        return (Wisdom / 8) + (Accuracy / 8) + (Level / 4) + spellHitPourc;
-        //    default:
-        //        return (Intelligence / 16) + (Wisdom / 16) + (Accuracy / 8) + (Level / 4) + spellHitPourc;
-        //}
-        return Intellect / 16 + Wisdom / 16 + Level / 4 + weaponHitPourc + spellHitPourc;
+        //if (Weapon != null)
+        //    weaponHitPourc += Weapon.MagicalAccuracy;
+        //// 80% barehanded
+        ////return (Intelligence / 2) + spellHitPourc; //FF3
+        ////switch (damageOption)
+        ////{
+        ////    case eMagicalDamageOption.BLACK:
+        ////        return (Intelligence / 8) + (Accuracy / 8) + (Level / 4) + spellHitPourc;
+        ////    case eMagicalDamageOption.WHITE:
+        ////        return (Wisdom / 8) + (Accuracy / 8) + (Level / 4) + spellHitPourc;
+        ////    default:
+        ////        return (Intelligence / 16) + (Wisdom / 16) + (Accuracy / 8) + (Level / 4) + spellHitPourc;
+        ////}
+        //return Intellect / 16 + Wisdom / 16 + Level / 4 + weaponHitPourc + spellHitPourc;
+
+        return (int)GetCalculatedStat(CharacteristicFactory.MagHitRateId, new Trait(CharacteristicFactory.MagHitRateId, spellHitPourc, TraitOperator.PercentMultiplication));
     }
 
     /// <summary>
@@ -490,21 +499,22 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     /// <returns></returns>
     public int getMagicAttackMultiplier()
     {
-        int attMul = 0;
-        //switch (damageOption)
-        //{
-        //    case eMagicalDamageOption.BLACK:
-        //        attMul = (Intelligence / 16) + (Level / 16) + 1;
-        //        break;
-        //    case eMagicalDamageOption.WHITE:
-        //        attMul = (Wisdom / 16) + (Level / 16) + 1;
-        //        break;
-        //    default:
-        //        attMul = (Intelligence / 32) + (Wisdom / 32) + (Level / 16) + 1;
-        //        break;
-        //}
-        attMul = Intellect / 32 + Wisdom / 32 + Level / 16 + 1;
-        return attMul < 16 ? attMul : 16;
+        //int attMul = 0;
+        ////switch (damageOption)
+        ////{
+        ////    case eMagicalDamageOption.BLACK:
+        ////        attMul = (Intelligence / 16) + (Level / 16) + 1;
+        ////        break;
+        ////    case eMagicalDamageOption.WHITE:
+        ////        attMul = (Wisdom / 16) + (Level / 16) + 1;
+        ////        break;
+        ////    default:
+        ////        attMul = (Intelligence / 32) + (Wisdom / 32) + (Level / 16) + 1;
+        ////        break;
+        ////}
+        //attMul = Intellect / 32 + Wisdom / 32 + Level / 16 + 1;
+        //return attMul < 16 ? attMul : 16;
+        return (int)GetCalculatedStat(CharacteristicFactory.MagAttMultiplierId);
     }
 
     /// <summary>
@@ -513,18 +523,19 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     /// <returns></returns>
     public int getMagicDefenseDamage()
     {
-        int armorsDefense = 0;
+        //int armorsDefense = 0;
 
-        if (Head != null)
-            armorsDefense += Head.MagicalArmor;
-        if (Body != null)
-            armorsDefense += Body.MagicalArmor;
-        if (Feet != null)
-            armorsDefense += Feet.MagicalArmor;
-        if (Offhand is ArmorData)
-            armorsDefense += ((ArmorData)Offhand).MagicalArmor;
+        //if (Head != null)
+        //    armorsDefense += Head.MagicalArmor;
+        //if (Body != null)
+        //    armorsDefense += Body.MagicalArmor;
+        //if (Feet != null)
+        //    armorsDefense += Feet.MagicalArmor;
+        //if (Offhand is ArmorData)
+        //    armorsDefense += ((ArmorData)Offhand).MagicalArmor;
 
-        return Math.Max(Wisdom / 2 + armorsDefense, 0);
+        //return Math.Max(Wisdom / 2 + armorsDefense, 0);
+        return (int)GetCalculatedStat(CharacteristicFactory.MagDefenseId);
     }
 
     /// <summary>
@@ -533,18 +544,19 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     /// <returns></returns>
     public int getMagicEvadePourc()
     {
-        int armorsEvadePourc = 0;
+        //int armorsEvadePourc = 0;
 
-        if (Head != null)
-            armorsEvadePourc += Head.MagicalEvasion;
-        if (Body != null)
-            armorsEvadePourc += Body.MagicalEvasion;
-        if (Feet != null)
-            armorsEvadePourc += Feet.MagicalEvasion;
-        if (Offhand is ArmorData)
-            armorsEvadePourc += ((ArmorData)Offhand).MagicalEvasion;
+        //if (Head != null)
+        //    armorsEvadePourc += Head.MagicalEvasion;
+        //if (Body != null)
+        //    armorsEvadePourc += Body.MagicalEvasion;
+        //if (Feet != null)
+        //    armorsEvadePourc += Feet.MagicalEvasion;
+        //if (Offhand is ArmorData)
+        //    armorsEvadePourc += ((ArmorData)Offhand).MagicalEvasion;
 
-        return Math.Max(Agility / 8 + Wisdom / 8 + armorsEvadePourc, 0);
+        //return Math.Max(Agility / 8 + Wisdom / 8 + armorsEvadePourc, 0);
+        return (int)GetCalculatedStat(CharacteristicFactory.MagEvadeRateId);
     }
 
     /// <summary>
@@ -553,10 +565,11 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     /// <returns></returns>
     public int getMagicDefenseMultiplier()
     {
-        return getNbShield() + 1;
-        //return getNbShield() > 0 ? (Agility / 32 + Wisdom / 32 + Level / 16 + 1) * getNbShield() :
-        //    Agility / 64 + Wisdom / 64 + Level / 32;
-        //return (Agility / 32) + (Wisdom / 16); //FF3
+        //return getNbShield() + 1;
+        ////return getNbShield() > 0 ? (Agility / 32 + Wisdom / 32 + Level / 16 + 1) * getNbShield() :
+        ////    Agility / 64 + Wisdom / 64 + Level / 32;
+        ////return (Agility / 32) + (Wisdom / 16); //FF3
+        return (int)GetCalculatedStat(CharacteristicFactory.MagDefMultiplierId);
     }
     #endregion
 
@@ -580,8 +593,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 
     public void Used(Battler target, IDataEffect data, int nbTarget)
     {
-        Damage damage;
-        data.Effect.CalculateDamage(this, target, out damage, nbTarget);
+        data.Effect.CalculateDamage(this, target, out Damage damage, nbTarget);
         damage.Name = data.Name;
         Debug.LogFormat("{0} used {3} on {1} for {2}", name, target.name, damage, data.Name);
         InstantiateTakingDamage(target.transform, damage, data.AnimationName, nbTarget);
@@ -621,10 +633,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 
     public Damage CalculatePhysicalDamage(Battler target, int spellDamage = 0, bool alwaysHit = false, int nbTarget = 1)
     {
-        var damage = new Damage();
-        damage.Type = Damage.eDamageType.HP;
-        damage.User = this;
-        damage.Target = target;
+        var damage = new Damage(Damage.DamageType.HP, 0, 0, this, target);
 
         //Calculate min and max base damage
         int baseMinDmg = getMinBaseDamage() + spellDamage;
@@ -656,7 +665,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 
         //Bonus on defense for Target
         int defense = target.getDefenseDamage();
-        defense *= BattlerStatus.HasStatus<GuardStatus>() ? 4 : 1;
+        //defense *= BattlerStatus.HasStatus<GuardStatus>() ? 4 : 1;
         //defense *= (IsAlly ? 0 : 1);
         //defense *= (IsRunning ? 0 : 1);
         //defense *= (IsMini || IsToad ? 0 : 1);
@@ -697,10 +706,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 
     public Damage CalculateMagicalDamage(Battler target, int spellDamage, int spellHitPourc, int nbTarget)
     {
-        var damage = new Damage();
-        damage.Type = Damage.eDamageType.HP;
-        damage.User = this;
-        damage.Target = target;
+        var damage = new Damage(Damage.DamageType.HP, 0, 0, this, target);
 
         bool isItem = spellHitPourc == 101;
 
@@ -775,24 +781,24 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 
     public void OnAfterDeserialize()
     {
-        if (parameters.Count != Enum.GetValues(typeof(Parameters.ParameterIndex)).Length)
-        {
-            var oldValues = parameters;
-            parameters = new Parameters();
-            for (int i = 0; i < oldValues.Count; i++)
-            {
-                parameters.ChangeValue((Parameters.ParameterIndex)i, oldValues[i].BaseValue);
-            }
-        }
+        //if (parameters.Count != Enum.GetValues(typeof(Parameters.ParameterIndex)).Length)
+        //{
+        //    var oldValues = parameters;
+        //    parameters = new Parameters();
+        //    for (int i = 0; i < oldValues.Count; i++)
+        //    {
+        //        parameters.ChangeValue(i, oldValues[i].BaseValue);
+        //    }
+        //}
 
-        if (secondaryParameters.Count != Enum.GetValues(typeof(SecondaryParameters.SecondaryParameterIndex)).Length)
-        {
-            var oldValues = secondaryParameters;
-            secondaryParameters = new SecondaryParameters();
-            for (int i = 0; i < oldValues.Count; i++)
-            {
-                secondaryParameters.ChangeValue((SecondaryParameters.SecondaryParameterIndex)i, oldValues[i].Value);
-            }
-        }
+        //if (secondaryParameters.Count != Enum.GetValues(typeof(SecondaryParameters.SecondaryParameterIndex)).Length)
+        //{
+        //    var oldValues = secondaryParameters;
+        //    secondaryParameters = new SecondaryParameters();
+        //    for (int i = 0; i < oldValues.Count; i++)
+        //    {
+        //        secondaryParameters.ChangeValue(i, oldValues[i].Value);
+        //    }
+        //}
     }
 }

@@ -44,16 +44,16 @@ public class BattlerStatsUI : MonoBehaviour
     // Update est appelé pour chaque trame, si le MonoBehaviour est activé
     private void Update()
     {
-        if (currentHP != null) currentHP.text = battler.CurrentHP.ToString("### ##0").Trim();
-        maxHP.text = battler.MaxHP.ToString("### ##0").Trim();
-        if (currentSP != null) currentSP.text = battler.CurrentSP.ToString("##0");
-        maxSP.text = battler.MaxSP.ToString("##0");
+        if (currentHP != null) currentHP.text = battler.Hp.ToString("### ##0").Trim();
+        maxHP.text = battler.GetMaxHP().ToString("### ##0").Trim();
+        if (currentSP != null) currentSP.text = battler.Sp.ToString("##0");
+        maxSP.text = battler.GetMaxSP().ToString("##0");
 
-        if (strength != null) strength.text = battler.Strength.ToString("##0");
-        if (vitality != null) vitality.text = battler.Vitality.ToString("##0");
-        if (intellect != null) intellect.text = battler.Intellect.ToString("##0");
-        if (wisdom != null) wisdom.text = battler.Wisdom.ToString("##0");
-        if (agility != null) agility.text = battler.Agility.ToString("##0");
+        if (strength != null) strength.text = battler.GetStrength().ToString("##0");
+        if (vitality != null) vitality.text = battler.GetVitality().ToString("##0");
+        if (intellect != null) intellect.text = battler.GetIntellect().ToString("##0");
+        if (wisdom != null) wisdom.text = battler.GetWisdom().ToString("##0");
+        if (agility != null) agility.text = battler.GetAgility().ToString("##0");
 
         if (physicalDamage != null)
             physicalDamage.text = battler.getMinBaseDamage().ToString("##0") + " - " + battler.getMaxBaseDamage().ToString("##0");
@@ -67,11 +67,12 @@ public class BattlerStatsUI : MonoBehaviour
         if (physicalEvasion != null)
             physicalEvasion.text = battler.getDefenseMultiplier().ToString("#0") + "x" + battler.getEvadePourc().ToString("##0") + "%";
 
+        //TODO: Choisir une action pour calculer les valeurs.
         if (magicalDamage != null)
             magicalDamage.text = battler.getMagicMinBaseDamage(0).ToString("##0") + " - " + battler.getMagicMaxBaseDamage(0).ToString("##0");
 
         if (magicalAccuracy != null)
-            magicalAccuracy.text = battler.getMagicAttackMultiplier().ToString("#0") + "x" + battler.getMagicHitPourc(80).ToString("##0") + "%";
+            magicalAccuracy.text = battler.getMagicAttackMultiplier().ToString("#0") + "x" + battler.getMagicHitPourc(100).ToString("##0") + "%";
 
         if (magicalDefense != null)
             magicalDefense.text = battler.getMagicDefenseDamage().ToString("##0");

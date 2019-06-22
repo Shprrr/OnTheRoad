@@ -69,8 +69,8 @@ public class Party : MonoBehaviour
     {
         foreach (var battler in GetComponentsInChildren<Battler>())
         {
-            battler.Hp = battler.MaxHP;
-            battler.Sp = battler.MaxSP;
+            battler.Hp = battler.GetMaxHP();
+            battler.Sp = battler.GetMaxSP();
         }
     }
 

@@ -37,10 +37,10 @@ public class EquipableData : IItemData, IEquatable<EquipableData>
     [NonSerialized]
     public Trait[] Traits;
 
-    [System.Runtime.Serialization.OptionalField]
-    [UnityEngine.SerializeField, ReadOnlyProperty(nameof(NbTraits))]
-    private int nbTraits;
-    public int NbTraits => Traits?.Length ?? -1;
+    //[System.Runtime.Serialization.OptionalField]
+    //[UnityEngine.SerializeField, ReadOnlyProperty(nameof(NbTraits))]
+    //private int nbTraits;
+    //public int NbTraits => Traits?.Length ?? -1;
 
     public EquipableData()
     {

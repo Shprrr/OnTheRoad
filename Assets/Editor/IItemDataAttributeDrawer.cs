@@ -6,7 +6,7 @@ using UnityEngine;
 public class IItemDataAttributeDrawer : PropertyDrawer
 {
     private IItemDataAttribute _attributeValue = null;
-    private IItemDataAttribute attributeValue
+    private IItemDataAttribute AttributeValue
     {
         get
         {
@@ -30,7 +30,7 @@ public class IItemDataAttributeDrawer : PropertyDrawer
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-        var fieldInfoReal = fieldInfo.DeclaringType.GetField(attributeValue.MemberName);
+        var fieldInfoReal = fieldInfo.DeclaringType.GetField(AttributeValue.MemberName);
         var realValue = fieldInfoReal.GetValue(property.serializedObject.targetObject) as IItemData;
         var realArray = fieldInfoReal.GetValue(property.serializedObject.targetObject) as IItemData[];
 
@@ -53,6 +53,19 @@ public class IItemDataAttributeDrawer : PropertyDrawer
     {
         if (realValue != null && !realValue.foldout) return EditorGUIUtility.singleLineHeight;
 
+        int nbTrait = 0;
+        if (realValue is EquipableData)
+        {
+            try
+            {
+                var realItem = ItemFactory.Build(realValue.Id) as EquipableData;
+                nbTrait = realItem.Traits.Length;
+            }
+            catch (System.InvalidOperationException)
+            {
+            }
+        }
+
         switch (GetItemDataType(realValue))
         {
             case ItemDataType.ItemUsable:
@@ -63,11 +76,10 @@ public class IItemDataAttributeDrawer : PropertyDrawer
 
                 return EditorGUIUtility.singleLineHeight * 10 + EditorGUI.GetPropertyHeight(sp, true);
             case ItemDataType.Equipable:
-                return EditorGUIUtility.singleLineHeight * 9;
-            case ItemDataType.Weapon:
-                return EditorGUIUtility.singleLineHeight * 14;
             case ItemDataType.Armor:
-                return EditorGUIUtility.singleLineHeight * 13;
+                return EditorGUIUtility.singleLineHeight * (8 + nbTrait);
+            case ItemDataType.Weapon:
+                return EditorGUIUtility.singleLineHeight * (9 + nbTrait);
             case ItemDataType.NULL:
             case ItemDataType.Undefined:
             default:
@@ -77,12 +89,12 @@ public class IItemDataAttributeDrawer : PropertyDrawer
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        var fieldInfoReal = fieldInfo.DeclaringType.GetField(attributeValue.MemberName);
+        var fieldInfoReal = fieldInfo.DeclaringType.GetField(AttributeValue.MemberName);
         var realValue = fieldInfoReal.GetValue(property.serializedObject.targetObject) as IItemData;
         var realArray = fieldInfoReal.GetValue(property.serializedObject.targetObject) as IItemData[];
 
         if (fieldInfoReal.FieldType == typeof(IItemData))
-            OnGUISingle(position, ObjectNames.NicifyVariableName(attributeValue.MemberName), ref realValue, () =>
+            OnGUISingle(position, ObjectNames.NicifyVariableName(AttributeValue.MemberName), ref realValue, () =>
             {
                 fieldInfoReal.SetValue(property.serializedObject.targetObject, realValue);
                 property.stringValue = realValue?.ToXML();
@@ -91,7 +103,7 @@ public class IItemDataAttributeDrawer : PropertyDrawer
         else
         {
             var pos = EditorGUI.IndentedRect(new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight));
-            EditorGUI.Foldout(pos, true, ObjectNames.NicifyVariableName(attributeValue.MemberName), true);
+            EditorGUI.Foldout(pos, true, ObjectNames.NicifyVariableName(AttributeValue.MemberName), true);
 
             EditorGUI.indentLevel++;
             pos.y += pos.height;
@@ -191,10 +203,8 @@ public class IItemDataAttributeDrawer : PropertyDrawer
         if (EditorGUI.EndChangeCheck())
             actionSaveValue?.Invoke();
 
-        if (realValue is ItemUsableData)
+        if (realValue is ItemUsableData itemUsable)
         {
-            var itemUsable = (ItemUsableData)realValue;
-
             pos.y += pos.height;
             EditorGUI.BeginChangeCheck();
             itemUsable.AnimationName = EditorGUI.TextField(pos, ObjectNames.NicifyVariableName("AnimationName"), itemUsable.AnimationName);
@@ -227,95 +237,51 @@ public class IItemDataAttributeDrawer : PropertyDrawer
                 actionSaveValue?.Invoke();
         }
 
-        if (realValue is EquipableData)
+        if (realValue is EquipableData equipable)
         {
-            var equipable = (EquipableData)realValue;
-
             pos.y += pos.height;
             EditorGUI.BeginChangeCheck();
             equipable.Slot = (EquipableData.EquipmentSlot)EditorGUI.EnumPopup(pos, "Slot", equipable.Slot);
             if (EditorGUI.EndChangeCheck())
                 actionSaveValue?.Invoke();
 
-            pos.y += pos.height;
-            //EditorGUI.BeginChangeCheck();
-            EditorGUI.LabelField(pos, "Number Traits", equipable.Traits?.Length.ToString());
-            //if (EditorGUI.EndChangeCheck())
-            //    actionSaveValue?.Invoke();
+            try
+            {
+                var realItem = ItemFactory.Build(equipable.Id) as EquipableData;
+                for (int i = 0; i < realItem.Traits.Length; i++)
+                {
+                    pos.y += pos.height;
+                    var labelPos = new Rect(pos.x, pos.y, pos.width - EditorGUIUtility.fieldWidth * 2, pos.height);
+                    EditorGUI.LabelField(labelPos, realItem.Traits[i].Characteristic.Name);
+                    labelPos.x += labelPos.width; labelPos.width = EditorGUIUtility.fieldWidth;
+                    string labelOperator = "";
+                    switch (realItem.Traits[i].Operator)
+                    {
+                        case TraitOperator.Addition:
+                            labelOperator = "+";
+                            break;
+                        case TraitOperator.PercentAddition:
+                            labelOperator = "+%";
+                            break;
+                        case TraitOperator.PercentMultiplication:
+                            labelOperator = "%";
+                            break;
+                    }
+                    EditorGUI.LabelField(labelPos, labelOperator);
+                    labelPos.x += labelPos.width;
+                    EditorGUI.LabelField(labelPos, realItem.Traits[i].Value.ToString());
+                }
+            }
+            catch (System.InvalidOperationException)
+            {
+            }
         }
 
-        if (realValue is WeaponData)
+        if (realValue is WeaponData weapon)
         {
-            var weapon = (WeaponData)realValue;
-
             pos.y += pos.height;
             EditorGUI.BeginChangeCheck();
             weapon.AnimationNameAttack = EditorGUI.TextField(pos, ObjectNames.NicifyVariableName("AnimationNameAttack"), weapon.AnimationNameAttack);
-            if (EditorGUI.EndChangeCheck())
-                actionSaveValue?.Invoke();
-
-            pos.y += pos.height;
-            EditorGUI.BeginChangeCheck();
-            var multiPos = EditorGUI.PrefixLabel(pos, new GUIContent("Physical Damage (Min-Max)"));
-            var values = new int[] { weapon.PhysicalMinDamage, weapon.PhysicalMaxDamage };
-            EditorGUI.MultiIntField(multiPos, new GUIContent[] { GUIContent.none, new GUIContent("-") }, values);
-            if (EditorGUI.EndChangeCheck())
-            {
-                weapon.PhysicalMinDamage = values[0];
-                weapon.PhysicalMaxDamage = values[1];
-                actionSaveValue?.Invoke();
-            }
-
-            pos.y += pos.height;
-            EditorGUI.BeginChangeCheck();
-            weapon.PhysicalAccuracy = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("PhysicalAccuracy"), weapon.PhysicalAccuracy);
-            if (EditorGUI.EndChangeCheck())
-                actionSaveValue?.Invoke();
-
-            pos.y += pos.height;
-            EditorGUI.BeginChangeCheck();
-            multiPos = EditorGUI.PrefixLabel(pos, new GUIContent("Magical Damage (Min-Max)"));
-            values = new int[] { weapon.MagicalMinDamage, weapon.MagicalMaxDamage };
-            EditorGUI.MultiIntField(multiPos, new GUIContent[] { GUIContent.none, new GUIContent("-") }, values);
-            if (EditorGUI.EndChangeCheck())
-            {
-                weapon.MagicalMinDamage = values[0];
-                weapon.MagicalMaxDamage = values[1];
-                actionSaveValue?.Invoke();
-            }
-
-            pos.y += pos.height;
-            EditorGUI.BeginChangeCheck();
-            weapon.MagicalAccuracy = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("MagicalAccuracy"), weapon.MagicalAccuracy);
-            if (EditorGUI.EndChangeCheck())
-                actionSaveValue?.Invoke();
-        }
-
-        if (realValue is ArmorData)
-        {
-            var armor = (ArmorData)realValue;
-
-            pos.y += pos.height;
-            EditorGUI.BeginChangeCheck();
-            armor.PhysicalArmor = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("PhysicalArmor"), armor.PhysicalArmor);
-            if (EditorGUI.EndChangeCheck())
-                actionSaveValue?.Invoke();
-
-            pos.y += pos.height;
-            EditorGUI.BeginChangeCheck();
-            armor.PhysicalEvasion = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("PhysicalEvasion"), armor.PhysicalEvasion);
-            if (EditorGUI.EndChangeCheck())
-                actionSaveValue?.Invoke();
-
-            pos.y += pos.height;
-            EditorGUI.BeginChangeCheck();
-            armor.MagicalArmor = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("MagicalArmor"), armor.MagicalArmor);
-            if (EditorGUI.EndChangeCheck())
-                actionSaveValue?.Invoke();
-
-            pos.y += pos.height;
-            EditorGUI.BeginChangeCheck();
-            armor.MagicalEvasion = EditorGUI.IntField(pos, ObjectNames.NicifyVariableName("MagicalEvasion"), armor.MagicalEvasion);
             if (EditorGUI.EndChangeCheck())
                 actionSaveValue?.Invoke();
         }

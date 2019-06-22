@@ -39,13 +39,13 @@ public class ComparaisonManager : MonoBehaviour
         itemFrom.text = GetItemFromSlot(battler)?.Name ?? "- NONE -";
         itemTo.text = equipableData?.Name ?? "- NONE -";
 
-        ChangeColor(newStatsUI.maxHP, oldStatsUI.battler.MaxHP, newStatsUI.battler.MaxHP);
-        ChangeColor(newStatsUI.maxSP, oldStatsUI.battler.MaxSP, newStatsUI.battler.MaxSP);
-        ChangeColor(newStatsUI.strength, oldStatsUI.battler.Strength, newStatsUI.battler.Strength);
-        ChangeColor(newStatsUI.vitality, oldStatsUI.battler.Vitality, newStatsUI.battler.Vitality);
-        ChangeColor(newStatsUI.intellect, oldStatsUI.battler.Intellect, newStatsUI.battler.Intellect);
-        ChangeColor(newStatsUI.wisdom, oldStatsUI.battler.Wisdom, newStatsUI.battler.Wisdom);
-        ChangeColor(newStatsUI.agility, oldStatsUI.battler.Agility, newStatsUI.battler.Agility);
+        ChangeColor(newStatsUI.maxHP, oldStatsUI.battler.GetMaxHP(), newStatsUI.battler.GetMaxHP());
+        ChangeColor(newStatsUI.maxSP, oldStatsUI.battler.GetMaxSP(), newStatsUI.battler.GetMaxSP());
+        ChangeColor(newStatsUI.strength, oldStatsUI.battler.GetStrength(), newStatsUI.battler.GetStrength());
+        ChangeColor(newStatsUI.vitality, oldStatsUI.battler.GetVitality(), newStatsUI.battler.GetVitality());
+        ChangeColor(newStatsUI.intellect, oldStatsUI.battler.GetIntellect(), newStatsUI.battler.GetIntellect());
+        ChangeColor(newStatsUI.wisdom, oldStatsUI.battler.GetWisdom(), newStatsUI.battler.GetWisdom());
+        ChangeColor(newStatsUI.agility, oldStatsUI.battler.GetAgility(), newStatsUI.battler.GetAgility());
 
         ChangeColor(newStatsUI.physicalDamage, (oldStatsUI.battler.getMinBaseDamage() + oldStatsUI.battler.getMaxBaseDamage()) / 2, (newStatsUI.battler.getMinBaseDamage() + newStatsUI.battler.getMaxBaseDamage()) / 2);
         ChangeColor(newStatsUI.physicalAccuracy, oldStatsUI.battler.getAttackMultiplier() * oldStatsUI.battler.getHitPourc(), newStatsUI.battler.getAttackMultiplier() * newStatsUI.battler.getHitPourc());
@@ -53,7 +53,7 @@ public class ComparaisonManager : MonoBehaviour
         ChangeColor(newStatsUI.physicalEvasion, oldStatsUI.battler.getDefenseMultiplier() * oldStatsUI.battler.getEvadePourc(), newStatsUI.battler.getDefenseMultiplier() * newStatsUI.battler.getEvadePourc());
 
         ChangeColor(newStatsUI.magicalDamage, (oldStatsUI.battler.getMagicMinBaseDamage(0) + oldStatsUI.battler.getMagicMaxBaseDamage(0)) / 2, (newStatsUI.battler.getMagicMinBaseDamage(0) + newStatsUI.battler.getMagicMaxBaseDamage(0)) / 2);
-        ChangeColor(newStatsUI.magicalAccuracy, oldStatsUI.battler.getMagicAttackMultiplier() * oldStatsUI.battler.getMagicHitPourc(80), newStatsUI.battler.getMagicAttackMultiplier() * newStatsUI.battler.getMagicHitPourc(80));
+        ChangeColor(newStatsUI.magicalAccuracy, oldStatsUI.battler.getMagicAttackMultiplier() * oldStatsUI.battler.getMagicHitPourc(100), newStatsUI.battler.getMagicAttackMultiplier() * newStatsUI.battler.getMagicHitPourc(100));
         ChangeColor(newStatsUI.magicalDefense, oldStatsUI.battler.getMagicDefenseDamage(), newStatsUI.battler.getMagicDefenseDamage());
         ChangeColor(newStatsUI.magicalEvasion, oldStatsUI.battler.getMagicDefenseMultiplier() * oldStatsUI.battler.getMagicEvadePourc(), newStatsUI.battler.getMagicDefenseMultiplier() * newStatsUI.battler.getMagicEvadePourc());
     }

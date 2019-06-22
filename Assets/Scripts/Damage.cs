@@ -2,7 +2,7 @@
 
 public struct Damage
 {
-    public enum eDamageType
+    public enum DamageType
     {
         HP,
         MP,
@@ -10,7 +10,7 @@ public struct Damage
         DrainMP
     }
 
-    public eDamageType Type { get; set; }
+    public DamageType Type { get; set; }
     public int Value { get; set; }
     /// <summary>
     /// Number of hits hitted.  Already calculated in Damage.
@@ -21,7 +21,7 @@ public struct Damage
 
     public string Name { get; set; }
 
-    public Damage(eDamageType type, int value, int multiplier, Battler user, Battler target, string name = "")
+    public Damage(DamageType type, int value, int multiplier, Battler user, Battler target, string name = "")
     {
         Type = type;
         Value = value;
@@ -35,8 +35,8 @@ public struct Damage
     {
         switch (Type)
         {
-            case eDamageType.HP:
-            case eDamageType.DrainHP:
+            case DamageType.HP:
+            case DamageType.DrainHP:
                 //if (target != null && target.Statuses.ContainsKey(Status.eStatus.Stone))
                 //{
                 //    target.Statuses[Status.eStatus.Stone].OnAppliedDamage(target, Value);
@@ -44,15 +44,15 @@ public struct Damage
                 //else
                 {
                     Target.Hp -= Value;
-                    if (Type == eDamageType.DrainHP)
+                    if (Type == DamageType.DrainHP)
                         User.Hp += Value;
                 }
                 break;
 
-            case eDamageType.MP:
-            case eDamageType.DrainMP:
+            case DamageType.MP:
+            case DamageType.DrainMP:
                 Target.Sp -= Value;
-                if (Type == eDamageType.DrainMP)
+                if (Type == DamageType.DrainMP)
                     User.Sp += Value;
                 break;
         }
@@ -109,5 +109,5 @@ public struct Damage
         return new Damage(d1.Type, d1.Value + d2.Value, d1.Multiplier + d2.Multiplier, d1.User, d1.Target, d1.Name);
     }
 
-    public static readonly Damage Empty = new Damage(eDamageType.HP, 0, 0, null, null);
+    public static readonly Damage Empty = new Damage(DamageType.HP, 0, 0, null, null);
 }

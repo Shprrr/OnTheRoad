@@ -5,13 +5,13 @@ public class DamagePhysicalEffect : Effect
 {
     public int BaseDamage;
     public bool AlwaysHit;
-    public Damage.eDamageType DamageType;
+    public Damage.DamageType DamageType;
 
     public DamagePhysicalEffect()
     {
     }
 
-    public DamagePhysicalEffect(int baseDamage, bool alwaysHit, Damage.eDamageType damageType = Damage.eDamageType.HP)
+    public DamagePhysicalEffect(int baseDamage, bool alwaysHit, Damage.DamageType damageType = Damage.DamageType.HP)
     {
         BaseDamage = baseDamage;
         AlwaysHit = alwaysHit;

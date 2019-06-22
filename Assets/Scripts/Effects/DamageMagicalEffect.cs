@@ -5,13 +5,13 @@ public class DamageMagicalEffect : Effect
 {
     public int BaseDamage;
     public int BaseAccuracy;
-    public Damage.eDamageType DamageType;
+    public Damage.DamageType DamageType;
 
     public DamageMagicalEffect()
     {
     }
 
-    public DamageMagicalEffect(int baseDamage, int baseAccuracy, Damage.eDamageType damageType = Damage.eDamageType.HP)
+    public DamageMagicalEffect(int baseDamage, int baseAccuracy, Damage.DamageType damageType = Damage.DamageType.HP)
     {
         BaseDamage = baseDamage;
         BaseAccuracy = baseAccuracy;

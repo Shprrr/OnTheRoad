@@ -39,10 +39,10 @@ public class TakingDamage : MonoBehaviour
         var text = GetComponentInChildren<TextMeshProUGUI>();
         text.text = damage.Multiplier == 0 ? "MISS" : System.Math.Abs(damage.Value).ToString();
         if (damage.Value < 0)
-            if (damage.Type == Damage.eDamageType.MP)
+            if (damage.Type == Damage.DamageType.MP)
                 text.color = healMPColor;
             else text.color = healHPColor;
-        else if (damage.Type == Damage.eDamageType.MP)
+        else if (damage.Type == Damage.DamageType.MP)
             text.color = damageMPColor;
         else
             text.color = damageHPColor;

@@ -5,13 +5,13 @@ public class HealEffect : Effect
 {
     public int BaseHeal;
     public int BaseAccuracy;
-    public Damage.eDamageType DamageType;
+    public Damage.DamageType DamageType;
 
     public HealEffect()
     {
     }
 
-    public HealEffect(int baseHeal, int baseAccuracy, Damage.eDamageType damageType = Damage.eDamageType.HP)
+    public HealEffect(int baseHeal, int baseAccuracy, Damage.DamageType damageType = Damage.DamageType.HP)
     {
         BaseHeal = baseHeal;
         BaseAccuracy = baseAccuracy;
