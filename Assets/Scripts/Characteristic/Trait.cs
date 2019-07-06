@@ -35,7 +35,9 @@ public class Trait : ISerializationCallbackReceiver
 
     public void OnAfterDeserialize()
     {
+#if UNITY_EDITOR
         Name = ToString();
+#endif
     }
 }
 

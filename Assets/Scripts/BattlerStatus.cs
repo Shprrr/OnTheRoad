@@ -16,6 +16,21 @@ public class BattlerStatus : MonoBehaviour
         return true;
     }
 
+    public bool RemoveStatus(StatusType[] type)
+    {
+        var removed = false;
+        for (int i = ActiveStatuses.Count - 1; i >= 0; i--)
+        {
+            if (type.Any(t => t == ActiveStatuses[i].Type))
+            {
+                ActiveStatuses.RemoveAt(i);
+                removed = true;
+            }
+        }
+
+        return removed;
+    }
+
     public void PassTurn()
     {
         for (int i = ActiveStatuses.Count - 1; i >= 0; i--)
@@ -34,7 +49,6 @@ public class BattlerStatus : MonoBehaviour
 
     public RestrictionType? GetRestriction()
     {
-        //TODO: Tester (null, qqch).
-        return ActiveStatuses.OrderBy(s => s.Type.Restriction).Min(s => s.Type.Restriction);
+        return ActiveStatuses.Min(s => s.Type.Restriction);
     }
 }

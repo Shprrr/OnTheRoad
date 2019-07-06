@@ -46,10 +46,8 @@ public class Cursor
 
     public Cursor(eTargetType defaultTarget, Battler self, eTargetType[] possibleTargets, List<Battler> actors, List<Battler> enemies)
     {
-        Actors = new List<Battler>();
-        Actors.AddRange(actors);
-        Enemies = new List<Battler>();
-        Enemies.AddRange(enemies);
+        Actors = new List<Battler>(actors);
+        Enemies = new List<Battler>(enemies);
         Index = 0;
         //IndexSelf = indexSelf;
         Self = self;
@@ -198,7 +196,7 @@ public class Cursor
         while (Enemies[Index] == null);
     }
 
-    public List<Battler> getTargetBattler()
+    public List<Battler> GetTargetBattler()
     {
         var targets = new List<Battler>(Actors.Count + Enemies.Count);
         switch (TargetType)

@@ -56,7 +56,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     [ContextMenuItem("Reset Base Stats Traits", nameof(ResetBaseStatsTraits))]
     [ContextMenuItem("Set Base Stats Traits", nameof(SetBaseStatsTraits))]
     public List<Trait> baseTraits = new List<Trait>();
-    private Trait[] baseStatsTraits = new[]
+    private readonly Trait[] baseStatsTraits = new[]
         {
             new Trait(CharacteristicFactory.MaxHPId, 0, TraitOperator.Addition),
             new Trait(CharacteristicFactory.MaxSPId, 0, TraitOperator.Addition),
@@ -127,15 +127,6 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
                 Debug.LogError("animationsBundle is null");
         }
 
-        Weapon = GenerateEquipableData(Weapon) as WeaponData;
-        Offhand = GenerateEquipableData(Offhand);
-        Head = GenerateEquipableData(Head) as ArmorData;
-        Body = GenerateEquipableData(Body) as ArmorData;
-        Feet = GenerateEquipableData(Feet) as ArmorData;
-        Neck = GenerateEquipableData(Neck);
-        Finger1 = GenerateEquipableData(Finger1);
-        Finger2 = GenerateEquipableData(Finger2);
-
         // Put skills by Unity in the factory
         for (int i = 0; i < Skills.Length; i++)
         {
@@ -155,7 +146,14 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 
     private EquipableData GenerateEquipableData(EquipableData equipableData)
     {
-        return string.IsNullOrEmpty(equipableData?.Id) ? null : ItemFactory.Build(equipableData.Id) as EquipableData;
+        try
+        {
+            return string.IsNullOrEmpty(equipableData?.Id) ? null : ItemFactory.Build(equipableData.Id) as EquipableData;
+        }
+        catch (System.InvalidOperationException)
+        {
+            return null;
+        }
     }
 
     // Start est appelé juste avant qu'une méthode Update soit appelée pour la première fois
@@ -579,7 +577,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
         var damage = CalculatePhysicalDamage(target);
         damage.Name = "Attack";
         Debug.LogFormat("{0} attacks {1} for {2}", name, target.name, damage);
-        InstantiateTakingDamage(target.transform, damage, AnimationAttack, 1);
+        InstantiateTakingDamage(target.transform, damage, AnimationAttack, 1, true);
     }
 
     public bool Casts(SkillData skill, out int skillLevel)
@@ -596,10 +594,15 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
         data.Effect.CalculateDamage(this, target, out Damage damage, nbTarget);
         damage.Name = data.Name;
         Debug.LogFormat("{0} used {3} on {1} for {2}", name, target.name, damage, data.Name);
-        InstantiateTakingDamage(target.transform, damage, data.AnimationName, nbTarget);
+        InstantiateTakingDamage(target.transform, damage, data.AnimationName, nbTarget, true);
     }
 
-    private void InstantiateTakingDamage(Transform targetTransform, Damage damage, string animationName, int nbTarget)
+    public void SelfTakingDamage(Damage damage, string animationName)
+    {
+        InstantiateTakingDamage(transform, damage, animationName, 1, false);
+    }
+
+    private void InstantiateTakingDamage(Transform targetTransform, Damage damage, string animationName, int nbTarget, bool nextTurn)
     {
         // When targetting more than one target, the animation plays on the party, but damages is showing on each targets.
         if (nbTarget > 1)
@@ -610,6 +613,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
             if (partyTransform.GetComponentInChildren<TakingDamage>() == null)
             {
                 var takingParty = Instantiate(animationPrefab, partyTransform).GetComponent<TakingDamage>();
+                takingParty.nextTurn = nextTurn;
                 takingParty.showAnimation = true;
                 takingParty.showDamage = false;
                 takingParty.damage = Damage.Empty; // To not taking damage.
@@ -622,6 +626,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
         }
 
         var taking = Instantiate(animationPrefab, targetTransform).GetComponent<TakingDamage>();
+        taking.nextTurn = nextTurn;
         taking.showAnimation = nbTarget == 1;
         taking.showDamage = true;
         taking.damage = damage;
@@ -721,7 +726,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
         int baseMaxDmg = getMagicMaxBaseDamage(spellDamage);
 
         //Calculate hit%
-        int hitPourc = 0;
+        int hitPourc;
         if (isItem)
             hitPourc = 100;
         else
@@ -781,24 +786,13 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 
     public void OnAfterDeserialize()
     {
-        //if (parameters.Count != Enum.GetValues(typeof(Parameters.ParameterIndex)).Length)
-        //{
-        //    var oldValues = parameters;
-        //    parameters = new Parameters();
-        //    for (int i = 0; i < oldValues.Count; i++)
-        //    {
-        //        parameters.ChangeValue(i, oldValues[i].BaseValue);
-        //    }
-        //}
-
-        //if (secondaryParameters.Count != Enum.GetValues(typeof(SecondaryParameters.SecondaryParameterIndex)).Length)
-        //{
-        //    var oldValues = secondaryParameters;
-        //    secondaryParameters = new SecondaryParameters();
-        //    for (int i = 0; i < oldValues.Count; i++)
-        //    {
-        //        secondaryParameters.ChangeValue(i, oldValues[i].Value);
-        //    }
-        //}
+        Weapon = GenerateEquipableData(Weapon) as WeaponData;
+        Offhand = GenerateEquipableData(Offhand);
+        Head = GenerateEquipableData(Head) as ArmorData;
+        Body = GenerateEquipableData(Body) as ArmorData;
+        Feet = GenerateEquipableData(Feet) as ArmorData;
+        Neck = GenerateEquipableData(Neck);
+        Finger1 = GenerateEquipableData(Finger1);
+        Finger2 = GenerateEquipableData(Finger2);
     }
 }

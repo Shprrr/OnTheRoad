@@ -43,7 +43,7 @@ public struct TraitByLevel
     public int Level;
     public Trait Trait;
 
-    public TraitByLevel(int level, string characteristicId, int value, TraitOperator @operator)
+    public TraitByLevel(int level, string characteristicId, float value, TraitOperator @operator)
     {
         Level = level;
         Trait = new Trait(characteristicId, value, @operator);
@@ -58,7 +58,7 @@ public struct TraitByLevel
 public enum RestrictionType
 {
     CannotMove,
-    AttackEveryone,
     AttackAlly,
+    AttackEveryone,
     AttackEnemy
 }

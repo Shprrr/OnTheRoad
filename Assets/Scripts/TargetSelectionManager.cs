@@ -9,7 +9,7 @@ using static BattleAction;
 public class TargetSelectionManager : MonoBehaviour
 {
     private CurrentEvent currentEvent;
-    private List<GameObject> targetsPossible = new List<GameObject>();
+    private readonly List<GameObject> targetsPossible = new List<GameObject>();
     private bool wasDirectionActive, wasBattleCommandsActive;
 
     public GameObject targetPrefab;
@@ -154,10 +154,11 @@ public class TargetSelectionManager : MonoBehaviour
 
     public void ActionState(Battler user, BattleAction action)
     {
-        var targets = action.Target.getTargetBattler();
+        var targets = action.Target?.GetTargetBattler() ?? new List<Battler>();
         switch (action.Kind)
         {
             case BattleCommand.Attack:
+                if (user.GetCalculatedStat(CharacteristicFactory.BattleCommandAttackId) == 0) throw new System.InvalidOperationException("Can't use Attack.");
                 for (int i = 0; i < targets.Count; i++)
                     if (targets[i] != null)
                         user.Attacks(targets[i]);
@@ -165,6 +166,7 @@ public class TargetSelectionManager : MonoBehaviour
 
             case BattleCommand.Skills:
                 {
+                    if (user.GetCalculatedStat(CharacteristicFactory.BattleCommandSkillsId) == 0) throw new System.InvalidOperationException("Can't use Skills.");
                     if (!user.Casts((SkillData)action.Data, out var skillLevel))
                         throw new System.InvalidOperationException("Not enough SP.");
 
@@ -181,6 +183,7 @@ public class TargetSelectionManager : MonoBehaviour
             //TODO: Revoir nbTarget vs CantFight avec des items qui target les morts
             case BattleCommand.Items:
                 {
+                    if (user.GetCalculatedStat(CharacteristicFactory.BattleCommandItemsId) == 0) throw new System.InvalidOperationException("Can't use Items.");
                     int nbTarget = 0;
                     for (int i = 0; i < targets.Count; i++)
                         if (targets[i] != null && !targets[i].CantFight)
@@ -198,6 +201,7 @@ public class TargetSelectionManager : MonoBehaviour
                 break;
 
             case BattleCommand.Run:
+                if (user.GetCalculatedStat(CharacteristicFactory.BattleCommandRunId) == 0) throw new System.InvalidOperationException("Can't use Run.");
                 break;
 
             case BattleCommand.Nothing:

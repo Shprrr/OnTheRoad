@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class BattleStateChooseCommand : StateMachineBehaviour
 {
@@ -19,33 +20,99 @@ public class BattleStateChooseCommand : StateMachineBehaviour
 
         battle._currentEvent.ctbManager.BeginTurn(battle);
 
-        //TODO: Statuses
-        battle.getActiveBattler().BattlerStatus.PassTurn();
-        //foreach (var actor in Actors)
+        Battler activeBattler = battle.GetActiveBattler();
+        activeBattler.BattlerStatus.PassTurn();
+
+        var hpRegen = activeBattler.GetCalculatedStat(CharacteristicFactory.HPRegenId);
+        hpRegen += activeBattler.GetCalculatedStat(CharacteristicFactory.HPRegenRateId) * activeBattler.GetMaxHP();
+        if (hpRegen <= -1 || hpRegen >= 1)
+            activeBattler.SelfTakingDamage(new Damage(Damage.DamageType.HP, (int)-hpRegen, 1, activeBattler, activeBattler), "AnimationAttack1");
+
+        var spRegen = activeBattler.GetCalculatedStat(CharacteristicFactory.SPRegenId);
+        spRegen += activeBattler.GetCalculatedStat(CharacteristicFactory.SPRegenRateId) * activeBattler.GetMaxSP();
+        if (spRegen <= -1 || spRegen >= 1)
+            activeBattler.SelfTakingDamage(new Damage(Damage.DamageType.MP, (int)-spRegen, 1, activeBattler, activeBattler), "AnimationAttack1");
+
+        //if (activeBattler.CantFight)
         //{
-        //    if (!Character.IsNullOrDead(actor))
-        //        foreach (var status in actor.Statuses)
-        //        {
-        //            status.Value.OnBeginTurn(actor, _CounterActiveTurn);
-        //        }
+        //    // Active battler can't choose an action so we jump directly to the show damage state to apply changes in statuses.
+        //    Debug.LogFormat("DoNothing for {0}", activeBattler.name);
+        //    battle._currentEvent.targetSelectionManager.ActionState(activeBattler, new BattleAction());
+        //    return;
         //}
 
-        //foreach (var enemy in Enemies)
-        //{
-        //    if (!Character.IsNullOrDead(enemy))
-        //        foreach (var status in enemy.Statuses)
-        //        {
-        //            status.Value.OnBeginTurn(enemy, _CounterActiveTurn);
-        //        }
-        //}
-
-        if (!battle.getActiveBattler().CantFight)
-            animator.SetInteger("state", 1);
-        else
+        //TODO: Bug potentiel restriction plus DoT qui tue
+        if (activeBattler.BattlerStatus.GetRestriction().HasValue)
         {
-            // Active battler can't choose an action so we jump directly to the show damage state to apply changes in statuses.
-            Debug.LogFormat("DoNothing for {0}", battle.getActiveBattler().name);
-            animator.SetInteger("state", 2);
+            var restriction = activeBattler.BattlerStatus.GetRestriction().Value;
+            Debug.LogFormat("Restricted {1} for {0}", activeBattler.name, restriction);
+
+            var action = new BattleAction();
+            var indexTargetPotential = new List<int>();
+            var actors = activeBattler.IsPlayer ? battle.Actors : battle.Enemies;
+            var enemies = activeBattler.IsPlayer ? battle.Enemies : battle.Actors;
+            switch (restriction)
+            {
+                case RestrictionType.CannotMove:
+                    break;
+
+                case RestrictionType.AttackAlly:
+                    action.Kind = BattleAction.BattleCommand.Attack;
+
+                    for (int i = 0; i < actors.Count; i++)
+                    {
+                        if (actors[i] != null && !actors[i].CantFight)
+                            indexTargetPotential.Add(i);
+                    }
+
+                    action.Target = new Cursor(Cursor.eTargetType.SINGLE_PARTY, activeBattler, Cursor.POSSIBLE_TARGETS_ANYONE, actors, enemies)
+                    {
+                        SingleTarget = actors[indexTargetPotential[Random.Range(0, indexTargetPotential.Count)]]
+                    };
+                    break;
+
+                case RestrictionType.AttackEveryone:
+                    action.Kind = BattleAction.BattleCommand.Attack;
+
+                    for (int i = 0; i < actors.Count; i++)
+                    {
+                        if (actors[i] != null && !actors[i].CantFight)
+                            indexTargetPotential.Add(i);
+                    }
+
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        if (enemies[i] != null && !enemies[i].CantFight)
+                            indexTargetPotential.Add(actors.Count + i);
+                    }
+
+                    action.Target = new Cursor(Cursor.eTargetType.SINGLE_PARTY, activeBattler, Cursor.POSSIBLE_TARGETS_ANYONE, actors, enemies);
+                    var targetIndex = indexTargetPotential[Random.Range(0, indexTargetPotential.Count)];
+                    if (targetIndex < actors.Count)
+                        action.Target.SingleTarget = actors[targetIndex];
+                    else
+                        action.Target.SingleTarget = enemies[targetIndex - actors.Count];
+                    break;
+
+                case RestrictionType.AttackEnemy:
+                    action.Kind = BattleAction.BattleCommand.Attack;
+
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        if (enemies[i] != null && !enemies[i].CantFight)
+                            indexTargetPotential.Add(i);
+                    }
+
+                    action.Target = new Cursor(Cursor.eTargetType.SINGLE_ENEMY, activeBattler, Cursor.POSSIBLE_TARGETS_ANYONE, actors, enemies)
+                    {
+                        SingleTarget = enemies[indexTargetPotential[Random.Range(0, indexTargetPotential.Count)]]
+                    };
+                    break;
+            }
+            battle._currentEvent.targetSelectionManager.ActionState(activeBattler, action);
+            return;
         }
+
+        animator.SetInteger("state", 1);
     }
 }

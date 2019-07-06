@@ -9,7 +9,7 @@ public static class SkillFactory
     static SkillFactory()
     {
 #pragma warning disable IDE0028
-        var list = new List<SkillData>(27 - 13 + 1);
+        var list = new List<SkillData>(28 - 13 + 1);
         list.Add(new SkillData("fire1", "Fire", 4, "AnimationFire1", Cursor.POSSIBLE_TARGETS_ONE, 3, new DamageMagicalEffect(5, 100), "A simple fire based spell."));
         list.Add(new SkillData("multihit", "Multi-hit", 2, "AnimationAttack6", Cursor.POSSIBLE_TARGETS_MULTI, 3, new DamagePhysicalEffect(5, false), "Creates an explosion that hits all enemies."));
         list.Add(new SkillData("guard", "Guard", 1, "AnimationSpecial11", Cursor.POSSIBLE_TARGETS_SELF, 5, new AddStatusEffect(STF.Build(STF.GuardId), 100, 1, 1), "Put itself in a defensive stance to reduce incoming attacks."));
@@ -25,6 +25,7 @@ public static class SkillFactory
         list.Add(new SkillData("buffInt", "Buff Intellect", 4, "AnimationHeal1", Cursor.POSSIBLE_TARGETS_ONE, 3, new AddStatusEffect(STF.Build(STF.BuffIntellectId), 20), "Buff Intellect from one level."));
         list.Add(new SkillData("buffWis", "Buff Wisdom", 4, "AnimationHeal1", Cursor.POSSIBLE_TARGETS_ONE, 3, new AddStatusEffect(STF.Build(STF.BuffWisdomId), 100), "Buff Wisdom from one level."));
         list.Add(new SkillData("buffAgi", "Buff Agility", 4, "AnimationHeal1", Cursor.POSSIBLE_TARGETS_ONE, 3, new AddStatusEffect(STF.Build(STF.BuffAgilityId), 100, 2, 3), "Buff Agility from one level."));
+        list.Add(new SkillData("poison", "Poison", 4, "AnimationHeal1", Cursor.POSSIBLE_TARGETS_ONE, 3, new AddStatusEffect(STF.Build(STF.PoisonId), 95), "Poison the target."));
 
         datas = list.ToArray();
     }

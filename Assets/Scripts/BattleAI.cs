@@ -16,7 +16,7 @@ public class BattleAI : MonoBehaviour
         var action = new BattleAction();
         var indexTargetPotential = new List<int>();
 
-        //TODO: Si aucun skill appris, attack obligatoirement physique.
+        //TODO: Si aucun skill appris, attack obligatoirement physique.  Choisir une action parmis celles disponibles.
         action.Kind = BattleCommand.Attack;
         for (int i = 0; i < enemies.Count; i++)
         {
@@ -24,8 +24,10 @@ public class BattleAI : MonoBehaviour
                 indexTargetPotential.Add(i);
         }
         //var cursor = new Cursor(Cursor.eTargetType.SINGLE_PARTY, indexTargetPotential[Random.Range(0, indexTargetPotential.Count)], Cursor.POSSIBLE_TARGETS_ANYONE);
-        var cursor = new Cursor(Cursor.eTargetType.SINGLE_PARTY, GetComponent<Battler>(), Cursor.POSSIBLE_TARGETS_ANYONE, enemies, actors);
-        cursor.SingleTarget = enemies[indexTargetPotential[Random.Range(0, indexTargetPotential.Count)]];
+        var cursor = new Cursor(Cursor.eTargetType.SINGLE_ENEMY, GetComponent<Battler>(), Cursor.POSSIBLE_TARGETS_ANYONE, actors, enemies)
+        {
+            SingleTarget = enemies[indexTargetPotential[Random.Range(0, indexTargetPotential.Count)]]
+        };
         action.Target = cursor;
         return action;
 

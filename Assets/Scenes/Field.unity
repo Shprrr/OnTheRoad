@@ -834,12 +834,12 @@ MonoBehaviour:
     Operator: 0
   Weapon:
     _id: sword
-    _name: 
-    _description: 
-    _amount: 0
-    _price: 0
+    _name: Sword
+    _description: A sword.
+    _amount: 1
+    _price: 100
     Slot: 0
-    AnimationNameAttack: 
+    AnimationNameAttack: AnimationSword1
   Offhand:
     _id: 
     _name: 
@@ -849,27 +849,27 @@ MonoBehaviour:
     Slot: 0
   Head:
     _id: helmet
-    _name: 
-    _description: 
-    _amount: 0
-    _price: 0
-    Slot: 0
+    _name: Helmet
+    _description: A helmet.
+    _amount: 1
+    _price: 50
+    Slot: 2
   Body:
     _id: chestArmor
-    _name: 
-    _description: 
-    _amount: 0
-    _price: 0
-    Slot: 0
+    _name: Chest Armor
+    _description: A chest armor.
+    _amount: 1
+    _price: 100
+    Slot: 3
   Feet:
     _id: boots
-    _name: 
-    _description: 
-    _amount: 0
-    _price: 0
-    Slot: 0
+    _name: Boots
+    _description: Boots.
+    _amount: 1
+    _price: 50
+    Slot: 4
   Neck:
-    _id: amulet
+    _id: 
     _name: 
     _description: 
     _amount: 0
@@ -877,11 +877,13 @@ MonoBehaviour:
     Slot: 0
   Finger1:
     _id: ring
-    _name: 
-    _description: 
-    _amount: 0
-    _price: 0
-    Slot: 0
+    _name: Ring
+    _description: 'A ring.
+
+      +10% Max HP'
+    _amount: 1
+    _price: 100
+    Slot: 6
   Finger2:
     _id: 
     _name: 
@@ -2115,25 +2117,27 @@ MonoBehaviour:
     Slot: 0
   Body:
     _id: robe
-    _name: 
-    _description: 
-    _amount: 0
-    _price: 0
-    Slot: 0
+    _name: Robe
+    _description: A robe.
+    _amount: 1
+    _price: 100
+    Slot: 3
   Feet:
     _id: boots
-    _name: 
-    _description: 
-    _amount: 0
-    _price: 0
-    Slot: 0
+    _name: Boots
+    _description: Boots.
+    _amount: 1
+    _price: 50
+    Slot: 4
   Neck:
-    _id: 
-    _name: 
-    _description: 
-    _amount: 0
-    _price: 0
-    Slot: 0
+    _id: amulet
+    _name: Amulet
+    _description: 'An amulet.
+
+      +1 SP Regen'
+    _amount: 1
+    _price: 150
+    Slot: 5
   Finger1:
     _id: 
     _name: 
@@ -2143,11 +2147,13 @@ MonoBehaviour:
     Slot: 0
   Finger2:
     _id: ring
-    _name: 
-    _description: 
-    _amount: 0
-    _price: 0
-    Slot: 0
+    _name: Ring
+    _description: 'A ring.
+
+      +10% Max HP'
+    _amount: 1
+    _price: 100
+    Slot: 6
   Skills:
   - _id: fire1
     _name: 
@@ -2171,6 +2177,13 @@ MonoBehaviour:
     SpCost: 0
     CTBRank: 0
   - _id: fire2
+    _name: 
+    _description: 
+    _animationName: 
+    _targetsPossible: 
+    SpCost: 0
+    CTBRank: 0
+  - _id: poison
     _name: 
     _description: 
     _animationName: 
@@ -7023,6 +7036,18 @@ MonoBehaviour:
     i:nil="true" /><d2p1:_id>chestArmor</d2p1:_id><d2p1:_name i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_x003C_foldout_x003E_k__BackingField>false</d2p1:_x003C_foldout_x003E_k__BackingField></anyType><anyType
     xmlns:d2p1="http://schemas.datacontract.org/2004/07/" i:type="d2p1:ItemUsableData"><d2p1:UsableOutsideBattle>false</d2p1:UsableOutsideBattle><d2p1:_amount>4</d2p1:_amount><d2p1:_animationName
     i:nil="true" /><d2p1:_description i:nil="true" /><d2p1:_effect i:nil="true" /><d2p1:_id>sleepBomb</d2p1:_id><d2p1:_name
+    i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_targetsPossible i:nil="true"
+    /><d2p1:_x003C_foldout_x003E_k__BackingField>true</d2p1:_x003C_foldout_x003E_k__BackingField></anyType><anyType
+    xmlns:d2p1="http://schemas.datacontract.org/2004/07/" i:type="d2p1:ItemUsableData"><d2p1:UsableOutsideBattle>false</d2p1:UsableOutsideBattle><d2p1:_amount>4</d2p1:_amount><d2p1:_animationName
+    i:nil="true" /><d2p1:_description i:nil="true" /><d2p1:_effect i:nil="true" /><d2p1:_id>lovePotion</d2p1:_id><d2p1:_name
+    i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_targetsPossible i:nil="true"
+    /><d2p1:_x003C_foldout_x003E_k__BackingField>true</d2p1:_x003C_foldout_x003E_k__BackingField></anyType><anyType
+    xmlns:d2p1="http://schemas.datacontract.org/2004/07/" i:type="d2p1:ItemUsableData"><d2p1:UsableOutsideBattle>false</d2p1:UsableOutsideBattle><d2p1:_amount>4</d2p1:_amount><d2p1:_animationName
+    i:nil="true" /><d2p1:_description i:nil="true" /><d2p1:_effect i:nil="true" /><d2p1:_id>confuseBomb</d2p1:_id><d2p1:_name
+    i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_targetsPossible i:nil="true"
+    /><d2p1:_x003C_foldout_x003E_k__BackingField>true</d2p1:_x003C_foldout_x003E_k__BackingField></anyType><anyType
+    xmlns:d2p1="http://schemas.datacontract.org/2004/07/" i:type="d2p1:ItemUsableData"><d2p1:UsableOutsideBattle>false</d2p1:UsableOutsideBattle><d2p1:_amount>4</d2p1:_amount><d2p1:_animationName
+    i:nil="true" /><d2p1:_description i:nil="true" /><d2p1:_effect i:nil="true" /><d2p1:_id>enragePowder</d2p1:_id><d2p1:_name
     i:nil="true" /><d2p1:_price>0</d2p1:_price><d2p1:_targetsPossible i:nil="true"
     /><d2p1:_x003C_foldout_x003E_k__BackingField>true</d2p1:_x003C_foldout_x003E_k__BackingField></anyType></ArrayOfanyType>
   money: 20

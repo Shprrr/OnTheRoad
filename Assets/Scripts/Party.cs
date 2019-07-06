@@ -14,7 +14,7 @@ public class Party : MonoBehaviour
     private string itemsInspector = "";
 #else
     [SerializeField]
-    private string itemsInspector;
+    private string itemsInspector = "";
 #endif
     public IItemData[] items;
     public int money;
@@ -23,11 +23,10 @@ public class Party : MonoBehaviour
     // Cette fonction est appelée quand le script est chargé ou qu'une valeur est modifiée dans l'inspecteur (appelée dans l'éditeur uniquement)
     private void OnValidate()
     {
-        //Debug.LogFormat("OnValidate() with {0}", itemsInspector);
-#if !UNITY_2018_2 || UNITY_EDITOR
+#if UNITY_EDITOR
         items = itemsInspector.FromXML<IItemData[]>();
 #else
-        items = new IItemData[] { new ItemUsableData { Id = "potionHp1", Amount = 4 }, new ItemUsableData { Id = "molotov", Amount = 1 }, new WeaponData { Id = "staff", Amount = 1 }, new ArmorData { Id = "shield", Amount = 2 }, new ArmorData { Id = "chestArmor", Amount = 1 } };
+        items = new IItemData[] { new ItemUsableData { Id = "potionHp1", Amount = 4 }, new ItemUsableData { Id = "molotov", Amount = 1 }, new WeaponData { Id = "staff", Amount = 1 }, new ArmorData { Id = "shield", Amount = 2 }, new ArmorData { Id = "chestArmor", Amount = 1 }, new ArmorData { Id = "sleepBomb", Amount = 1 }, new ArmorData { Id = "confuseBomb", Amount = 1 } };
 #endif
     }
 

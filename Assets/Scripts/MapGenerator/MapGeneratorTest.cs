@@ -17,7 +17,7 @@ public class MapGeneratorTest : MonoBehaviour, IMapGenerator
     {
         map.mapData.Clear();
         map.mapData.Add(new MapPosition(0, 0), difficulty == 1 ? new SpawnEvent() : new MapEvent());
-        map.mapData.Add(new MapPosition(-1, 0), new TreasureEvent(new IItemData[] { ItemFactory.Build("molotov") }, 2));
+        map.mapData.Add(new MapPosition(-1, 0), new TreasureEvent(new IItemData[] { ItemFactory.Build("molotov"), ItemFactory.Build("antidote", 2) }, 2));
         map.mapData.Add(new MapPosition(1, 0), new MapEvent());
         map.mapData.Add(new MapPosition(0, 1), new BattleEvent(enemiesPrefabs[0], enemiesPrefabs[1]));
         map.mapData.Add(new MapPosition(0, 2), new EndMapEvent());

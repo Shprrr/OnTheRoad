@@ -14,6 +14,7 @@ public class TakingDamage : MonoBehaviour
     private Animator animator;
     private GameObject attackNamePanel;
 
+    public bool nextTurn;
     public bool showAnimation;
     public AnimatorOverrideController animationAttack;
     public bool showDamage;
@@ -57,7 +58,8 @@ public class TakingDamage : MonoBehaviour
         if (damage != Damage.Empty)
             damage.ApplyDamage();
 
-        GameObject.FindGameObjectWithTag("GameController").GetComponent<Animator>().SetInteger("state", 0);
+        if (nextTurn)
+            GameObject.FindGameObjectWithTag("GameController").GetComponent<Animator>().SetInteger("state", 0);
     }
 
     public void AdjustAnimation()

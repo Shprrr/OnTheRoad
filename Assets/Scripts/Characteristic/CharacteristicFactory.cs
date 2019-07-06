@@ -11,14 +11,18 @@ public static class CharacteristicFactory
         IBaseValueStrategy physicalDamageBaseValueStrategy = new PhysicalDamageBaseValueStrategy();
         IBaseValueStrategy magicalDamageBaseValueStrategy = new MagicalDamageBaseValueStrategy();
         IBaseValueStrategy hitRateBaseValueStrategy = new HitRateBaseValueStrategy();
+        IBaseValueStrategy battleCommandBaseValueStrategy = new BattleCommandBaseValueStrategy();
         IMinMaxStrategy baseMinMaxStategy = new BaseMinMaxStrategy();
         IMinMaxStrategy baseStatMinMaxStategy = new BaseStatMinMaxStrategy();
         IMinMaxStrategy damageMinMaxStrategy = new DamageMinMaxStrategy();
         IMinMaxStrategy percentMinMaxStrategy = new PercentageMinMaxStrategy();
+        IMinMaxStrategy signedPercentMinMaxStrategy = new SignedPercentageMinMaxStrategy();
         IMinMaxStrategy multiplierMinMaxStrategy = new MultiplierMinMaxStrategy();
+        IMinMaxStrategy regenMinMaxStrategy = new RegenMinMaxStrategy();
+        IMinMaxStrategy boolMinMaxStrategy = new BooleanMinMaxStrategy();
 
 #pragma warning disable IDE0028
-        datas = new Dictionary<string, Characteristic>(41 - 21 + 1);
+        datas = new Dictionary<string, Characteristic>(54 - 26 + 1);
         datas.Add(MaxHPId, new Characteristic(MaxHPId, "MaxHP", "Maximum Hit Points.", new MaxHPBaseValueStrategy(), new MaxHPMinMaxStrategy()));
         datas.Add(MaxSPId, new Characteristic(MaxSPId, "MaxSP", "Maximum Skill Points.", new MaxSPBaseValueStrategy(), baseMinMaxStategy));
         datas.Add(StrengthId, new Characteristic(StrengthId, "Strength", "Strength.", baseValueStrategy, baseStatMinMaxStategy));
@@ -40,6 +44,14 @@ public static class CharacteristicFactory
         datas.Add(MagDefenseId, new Characteristic(MagDefenseId, "Magical Defense", "Magical Defense.", new MagicalDefenseBaseValueStrategy(), baseMinMaxStategy));
         datas.Add(MagDefMultiplierId, new Characteristic(MagDefMultiplierId, "Magical Defense Multiplier", "Magical Defense Multiplier.", baseValueStrategy, multiplierMinMaxStrategy));
         datas.Add(MagEvadeRateId, new Characteristic(MagEvadeRateId, "Magical Evade Rate", "Magical Evade Rate.", new MagicalEvadeBaseValueStrategy(), percentMinMaxStrategy));
+        datas.Add(HPRegenId, new Characteristic(HPRegenId, "HP Regen", "Hit Points Regeneration per turn.", baseValueStrategy, regenMinMaxStrategy));
+        datas.Add(SPRegenId, new Characteristic(SPRegenId, "SP Regen", "Skill Points Regeneration per turn.", baseValueStrategy, regenMinMaxStrategy));
+        datas.Add(HPRegenRateId, new Characteristic(HPRegenRateId, "HP Regen Rate", "Hit Points % Regeneration per turn.", baseValueStrategy, signedPercentMinMaxStrategy));
+        datas.Add(SPRegenRateId, new Characteristic(SPRegenRateId, "SP Regen Rate", "Skill Points % Regeneration per turn.", baseValueStrategy, signedPercentMinMaxStrategy));
+        datas.Add(BattleCommandAttackId, new Characteristic(BattleCommandAttackId, "Attack Command", "Attack Command in battle.", battleCommandBaseValueStrategy, boolMinMaxStrategy));
+        datas.Add(BattleCommandSkillsId, new Characteristic(BattleCommandSkillsId, "Skills Command", "Skills Command in battle.", battleCommandBaseValueStrategy, boolMinMaxStrategy));
+        datas.Add(BattleCommandItemsId, new Characteristic(BattleCommandItemsId, "Items Command", "Items Command in battle.", battleCommandBaseValueStrategy, boolMinMaxStrategy));
+        datas.Add(BattleCommandRunId, new Characteristic(BattleCommandRunId, "Run Command", "Run Command in battle.", battleCommandBaseValueStrategy, boolMinMaxStrategy));
 
         CalculatorTrait.UpdateDefinitions(datas.Values.ToArray());
     }
@@ -65,6 +77,14 @@ public static class CharacteristicFactory
     public const string MagDefenseId = "magDef";
     public const string MagDefMultiplierId = "magDefMult";
     public const string MagEvadeRateId = "magEvadeRate";
+    public const string HPRegenId = "hpRegen";
+    public const string SPRegenId = "spRegen";
+    public const string HPRegenRateId = "hpRegenRate";
+    public const string SPRegenRateId = "spRegenRate";
+    public const string BattleCommandAttackId = "battleCommandAttack";
+    public const string BattleCommandSkillsId = "battleCommandSkills";
+    public const string BattleCommandItemsId = "battleCommandItems";
+    public const string BattleCommandRunId = "battleCommandRun";
 
     public static string[] GetEveryIds() => datas.Keys.ToArray();
 

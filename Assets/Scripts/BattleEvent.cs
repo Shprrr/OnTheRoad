@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,7 +10,7 @@ using UnityObject = UnityEngine.Object;
 [Serializable]
 public class BattleEvent : MapEvent
 {
-    public enum eBattleResult
+    public enum BattleResult
     {
         NONE,
         WIN,
@@ -33,7 +34,7 @@ public class BattleEvent : MapEvent
     public List<Battler> Actors;
     public List<Battler> Enemies;
     public int ActiveBattlerIndex;
-    public eBattleResult Result;
+    public BattleResult Result;
 
     public BattleEvent(GameObject enemy1Prefab, GameObject enemy2Prefab = null, GameObject enemy3Prefab = null, string type = "Battle")
     {
@@ -110,11 +111,18 @@ public class BattleEvent : MapEvent
 
     public void RefreshButtons(bool activateButtons)
     {
-        if (!getActiveBattler().IsPlayer) return;
-        Array.ForEach(_currentEvent.battleCommands.GetComponentsInChildren<Button>(), b => b.interactable = activateButtons);
+        if (!GetActiveBattler().IsPlayer) return;
+
+        if (GetActiveBattler().BattlerStatus.GetRestriction().HasValue) activateButtons = false;
+
+        //Array.ForEach(_currentEvent.battleCommands.GetComponentsInChildren<Button>(), b => b.interactable = activateButtons);
+        _currentEvent.buttonAttack.GetComponent<Button>().interactable = activateButtons && GetActiveBattler().GetCalculatedStat(CharacteristicFactory.BattleCommandAttackId) == 1;
+        _currentEvent.buttonSkills.GetComponent<Button>().interactable = activateButtons && GetActiveBattler().GetCalculatedStat(CharacteristicFactory.BattleCommandSkillsId) == 1;
+        _currentEvent.buttonItems.GetComponent<Button>().interactable = activateButtons && GetActiveBattler().GetCalculatedStat(CharacteristicFactory.BattleCommandItemsId) == 1;
+        _currentEvent.buttonRun.GetComponent<Button>().interactable = activateButtons && GetActiveBattler().GetCalculatedStat(CharacteristicFactory.BattleCommandRunId) == 1;
         var buttonLastCommand = _currentEvent.buttonLastCommand.GetComponent<Button>();
 
-        var lastAction = getActiveBattler().lastAction;
+        var lastAction = GetActiveBattler().lastAction;
         buttonLastCommand.interactable = lastAction.HasValue && activateButtons;
 
         if (!lastAction.HasValue)
@@ -125,21 +133,25 @@ public class BattleEvent : MapEvent
                     buttonLastCommand.GetComponentInChildren<Text>().text = "Do Nothing";
                     break;
                 case BattleCommand.Attack:
+                    buttonLastCommand.interactable = GetActiveBattler().GetCalculatedStat(CharacteristicFactory.BattleCommandAttackId) == 1;
                     buttonLastCommand.GetComponentInChildren<Text>().text = "Attack";
                     break;
                 case BattleCommand.Skills:
                     var lastSkill = (SkillData)lastAction.Value.Data;
-                    if (lastSkill.SpCost > getActiveBattler().Sp)
+                    buttonLastCommand.interactable = GetActiveBattler().GetCalculatedStat(CharacteristicFactory.BattleCommandSkillsId) == 1;
+                    if (lastSkill.SpCost > GetActiveBattler().Sp)
                         buttonLastCommand.interactable = false;
                     buttonLastCommand.GetComponentInChildren<Text>().text = lastSkill.Name + "\nSP Cost:" + lastSkill.SpCost;
                     break;
                 case BattleCommand.Items:
                     var lastItem = (ItemUsableData)lastAction.Value.Data;
+                    buttonLastCommand.interactable = GetActiveBattler().GetCalculatedStat(CharacteristicFactory.BattleCommandItemsId) == 1;
                     if (lastItem.Amount == 0)
                         buttonLastCommand.interactable = false;
                     buttonLastCommand.GetComponentInChildren<Text>().text = lastItem.Name + "\nAmount:" + lastItem.Amount;
                     break;
                 case BattleCommand.Run:
+                    buttonLastCommand.interactable = GetActiveBattler().GetCalculatedStat(CharacteristicFactory.BattleCommandRunId) == 1;
                     buttonLastCommand.GetComponentInChildren<Text>().text = "Run";
                     break;
             }
@@ -149,7 +161,7 @@ public class BattleEvent : MapEvent
     /// Get the Battler who is taking an action.
     /// </summary>
     /// <returns></returns>
-    public Battler getActiveBattler()
+    public Battler GetActiveBattler()
     {
         return ActiveBattlerIndex < MAX_ACTOR ? Actors[ActiveBattlerIndex] : Enemies[ActiveBattlerIndex - MAX_ACTOR];
     }
@@ -164,14 +176,14 @@ public class BattleEvent : MapEvent
         if (nbBattlerAlive == 0)
         {
             //Result = CanLose ? eBattleResult.LOSE : eBattleResult.ESCAPE;
-            Result = eBattleResult.LOSE;
+            Result = BattleResult.LOSE;
             return true;
         }
 
         nbBattlerAlive = Enemies.Count(b => !b.CantFight);
         if (nbBattlerAlive == 0)
         {
-            Result = eBattleResult.WIN;
+            Result = BattleResult.WIN;
             return true;
         }
 
@@ -190,13 +202,21 @@ public class BattleEvent : MapEvent
         //getActiveBattler().lastAction = action;
         RefreshButtons(false);
         animator.SetInteger("state", 2);
+
+        if (GetActiveBattler().lastAction.Value.Kind == BattleCommand.Nothing)
+            _currentEvent.StartCoroutine(AfterActionNothing());
+
+        IEnumerator AfterActionNothing()
+        {
+            yield return new WaitForSeconds(1);
+            animator.SetInteger("state", 0);
+        }
     }
 
     public void Attack()
     {
-        var action = new BattleAction(BattleCommand.Attack);
-        action.Target = new Cursor(Cursor.eTargetType.SINGLE_ENEMY, getActiveBattler(), Cursor.POSSIBLE_TARGETS_ONE, Actors, Enemies);
-        _currentEvent.targetSelectionManager.ShowTargetChoice(getActiveBattler(), action);
+        var action = new BattleAction(BattleCommand.Attack, target: new Cursor(Cursor.eTargetType.SINGLE_ENEMY, GetActiveBattler(), Cursor.POSSIBLE_TARGETS_ONE, Actors, Enemies));
+        _currentEvent.targetSelectionManager.ShowTargetChoice(GetActiveBattler(), action);
         lastCommand = BattleCommand.Attack;
     }
 
@@ -217,7 +237,7 @@ public class BattleEvent : MapEvent
 
     public void LastCommand()
     {
-        var lastAction = getActiveBattler().lastAction;
+        var lastAction = GetActiveBattler().lastAction;
         //Debug.LogFormat("LastCommand => {0} !", lastAction.Value);
         switch (lastAction.Value.Kind)
         {
@@ -229,7 +249,7 @@ public class BattleEvent : MapEvent
                 break;
             case BattleCommand.Skills:
             case BattleCommand.Items:
-                _currentEvent.targetSelectionManager.ShowTargetChoice(getActiveBattler(), lastAction.Value);
+                _currentEvent.targetSelectionManager.ShowTargetChoice(GetActiveBattler(), lastAction.Value);
                 break;
             case BattleCommand.Run:
                 Run();
@@ -240,14 +260,14 @@ public class BattleEvent : MapEvent
     public void Skills()
     {
         var skillManager = _currentEvent.AccessSkills().GetComponent<SkillsManager>();
-        skillManager.user = getActiveBattler();
-        skillManager.skills = getActiveBattler().Skills;
+        skillManager.user = GetActiveBattler();
+        skillManager.skills = GetActiveBattler().Skills;
         skillManager.OnClick += (sender, e) =>
             {
                 var skill = (SkillData)sender;
                 var action = new BattleAction(BattleCommand.Skills, skill,
-                    new Cursor(Cursor.eTargetType.SINGLE_ENEMY, getActiveBattler(), skill.TargetsPossible, Actors, Enemies));
-                _currentEvent.targetSelectionManager.ShowTargetChoice(getActiveBattler(), action);
+                    new Cursor(Cursor.eTargetType.SINGLE_ENEMY, GetActiveBattler(), skill.TargetsPossible, Actors, Enemies));
+                _currentEvent.targetSelectionManager.ShowTargetChoice(GetActiveBattler(), action);
             };
 
         lastCommand = BattleCommand.Skills;
@@ -261,8 +281,8 @@ public class BattleEvent : MapEvent
           {
               var item = (ItemUsableData)sender;
               var action = new BattleAction(BattleCommand.Items, item,
-                  new Cursor(Cursor.eTargetType.SINGLE_ENEMY, getActiveBattler(), item.TargetsPossible, Actors, Enemies));
-              _currentEvent.targetSelectionManager.ShowTargetChoice(getActiveBattler(), action);
+                  new Cursor(Cursor.eTargetType.SINGLE_ENEMY, GetActiveBattler(), item.TargetsPossible, Actors, Enemies));
+              _currentEvent.targetSelectionManager.ShowTargetChoice(GetActiveBattler(), action);
           };
 
         lastCommand = BattleCommand.Items;

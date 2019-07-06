@@ -11,7 +11,7 @@ public static class ItemFactory
     static ItemFactory()
     {
 #pragma warning disable IDE0028
-        var list = new List<IItemData>(30 - 15 + 1);
+        var list = new List<IItemData>(35 - 15 + 1);
         list.Add(new ItemUsableData("potionHp1", "Potion", 4, "AnimationHeal1", Cursor.POSSIBLE_TARGETS_ONE, true, new HealEffect(10, 101), "Potion to regain health."));
         list.Add(new ItemUsableData("potionSp1", "Ether", 4, "AnimationHeal1", Cursor.POSSIBLE_TARGETS_ONE, true, new HealEffect(5, 101, Damage.DamageType.MP), "Potion to regain skill points."));
         list.Add(new ItemUsableData("potionRevive1", "Revive", 10, "AnimationAttack1", Cursor.POSSIBLE_TARGETS_ONE, true, new HealEffect(5, 101), "A medicine that revives a fallen comrade."));
@@ -26,9 +26,13 @@ public static class ItemFactory
         list.Add(new ArmorData("chestArmor", "Chest Armor", 100, ES.Body, new Trait[] { new Trait(CF.PhysDefenseId, 10, TO.Addition), new Trait(CF.PhysEvadeRateId, -1, TO.Addition), new Trait(CF.MagDefenseId, -5, TO.Addition), new Trait(CF.MagEvadeRateId, -1, TO.Addition) }, "A chest armor."));
         list.Add(new ArmorData("robe", "Robe", 100, ES.Body, new Trait[] { new Trait(CF.PhysEvadeRateId, 5, TO.Addition), new Trait(CF.MagDefenseId, 10, TO.Addition), new Trait(CF.MagEvadeRateId, 5, TO.Addition) }, "A robe."));
         list.Add(new ArmorData("boots", "Boots", 50, ES.Feet, new Trait[] { new Trait(CF.PhysDefenseId, 4, TO.Addition), new Trait(CF.PhysEvadeRateId, 3, TO.Addition), new Trait(CF.MagDefenseId, 2, TO.Addition), new Trait(CF.MagEvadeRateId, 3, TO.Addition) }, "Boots."));
-        list.Add(new EquipableData("amulet", "Amulet", 150, ES.Neck, new Trait[] { }, "An amulet."));
+        list.Add(new EquipableData("amulet", "Amulet", 150, ES.Neck, new Trait[] { new Trait(CF.SPRegenId, 1, TO.Addition) }, "An amulet.\n+1 SP Regen"));
         list.Add(new EquipableData("ring", "Ring", 100, ES.Finger, new Trait[] { new Trait(CF.MaxHPId, 10, TO.PercentAddition) }, "A ring.\n+10% Max HP"));
         list.Add(new ItemUsableData("sleepBomb", "Sleep Bomb", 100, "AnimationHeal1", Cursor.POSSIBLE_TARGETS_MULTI, false, new AddStatusEffect(StatusTypeFactory.Build(StatusTypeFactory.SleepId), 100, 3, 5), "A bomb that puts targets asleep."));
+        list.Add(new ItemUsableData("lovePotion", "Love Potion", 100, "AnimationHeal1", Cursor.POSSIBLE_TARGETS_MULTI, false, new AddStatusEffect(StatusTypeFactory.Build(StatusTypeFactory.CharmId), 100, 3, 5), "A throwing potion that puts targets charmed."));
+        list.Add(new ItemUsableData("confuseBomb", "Confuse Bomb", 100, "AnimationHeal1", Cursor.POSSIBLE_TARGETS_MULTI, false, new AddStatusEffect(StatusTypeFactory.Build(StatusTypeFactory.ConfuseId), 100, 3, 5), "A bomb that puts targets confused."));
+        list.Add(new ItemUsableData("enragePowder", "Enrage Powder", 100, "AnimationHeal1", Cursor.POSSIBLE_TARGETS_ONE, false, new AddStatusEffect(StatusTypeFactory.Build(StatusTypeFactory.EnrageId), 100, 3, 5), "A powder that puts the target in rage."));
+        list.Add(new ItemUsableData("antidote", "Antidote", 40, "AnimationHeal1", Cursor.POSSIBLE_TARGETS_ONE, true, new RemoveStatusEffect(100, StatusTypeFactory.Build(StatusTypeFactory.PoisonId)), "Cures poison."));
 
         datas = list.ToArray();
     }

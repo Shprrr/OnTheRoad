@@ -13,7 +13,7 @@ public class BattleStateResult : StateMachineBehaviour
 
         var result = Instantiate(resultPanelPrefab, currentEvent.canvas.transform).GetComponent<BattleResult>();
         result.currentEvent = currentEvent;
-        result.gameOver = battle.Result != BattleEvent.eBattleResult.WIN;
+        result.gameOver = battle.Result != BattleEvent.BattleResult.WIN;
         if (!result.gameOver)
         {
             result.moneyGained = battle.Enemies.Count * 2;
