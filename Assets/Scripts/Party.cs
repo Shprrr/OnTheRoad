@@ -11,7 +11,9 @@ public class Party : MonoBehaviour
 #if UNITY_EDITOR
     [IItemData(nameof(items))]
     [SerializeField]
+#pragma warning disable IDE0044 // Ajouter un modificateur readonly
     private string itemsInspector = "";
+#pragma warning restore IDE0044 // Ajouter un modificateur readonly
 #else
     [SerializeField]
     private string itemsInspector = "";

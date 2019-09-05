@@ -128,13 +128,13 @@ public class ComparaisonManager : MonoBehaviour
                 battler.Offhand = equipableData;
                 break;
             case EquipmentSlot.Head:
-                battler.Head = (ArmorData)equipableData;
+                battler.Head = equipableData;
                 break;
             case EquipmentSlot.Body:
-                battler.Body = (ArmorData)equipableData;
+                battler.Body = equipableData;
                 break;
             case EquipmentSlot.Feet:
-                battler.Feet = (ArmorData)equipableData;
+                battler.Feet = equipableData;
                 break;
             case EquipmentSlot.Neck:
                 battler.Neck = equipableData;

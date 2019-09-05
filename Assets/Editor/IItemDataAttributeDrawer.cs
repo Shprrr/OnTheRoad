@@ -24,7 +24,6 @@ public class IItemDataAttributeDrawer : PropertyDrawer
         ItemUsable,
         Equipable,
         Weapon,
-        Armor,
         Undefined = ~0
     }
 
@@ -76,7 +75,6 @@ public class IItemDataAttributeDrawer : PropertyDrawer
 
                 return EditorGUIUtility.singleLineHeight * 10 + EditorGUI.GetPropertyHeight(sp, true);
             case ItemDataType.Equipable:
-            case ItemDataType.Armor:
                 return EditorGUIUtility.singleLineHeight * (8 + nbTrait);
             case ItemDataType.Weapon:
                 return EditorGUIUtility.singleLineHeight * (9 + nbTrait);
@@ -300,7 +298,6 @@ public class IItemDataAttributeDrawer : PropertyDrawer
 
         if (type == typeof(ItemUsableData)) return ItemDataType.ItemUsable;
         if (type == typeof(WeaponData)) return ItemDataType.Weapon;
-        if (type == typeof(ArmorData)) return ItemDataType.Armor;
         if (type == typeof(EquipableData)) return ItemDataType.Equipable;
         return ItemDataType.Undefined;
     }
@@ -318,9 +315,6 @@ public class IItemDataAttributeDrawer : PropertyDrawer
                 break;
             case ItemDataType.Weapon:
                 newValue = new WeaponData();
-                break;
-            case ItemDataType.Armor:
-                newValue = new ArmorData();
                 break;
             case ItemDataType.Undefined:
             case ItemDataType.NULL:

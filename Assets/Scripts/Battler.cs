@@ -90,9 +90,9 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
 
     public WeaponData Weapon;
     public EquipableData Offhand;
-    public ArmorData Head;
-    public ArmorData Body;
-    public ArmorData Feet;
+    public EquipableData Head;
+    public EquipableData Body;
+    public EquipableData Feet;
     public EquipableData Neck;
     public EquipableData Finger1;
     public EquipableData Finger2;
@@ -395,7 +395,7 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     {
         int nbShield = 0;
 
-        if (Offhand is ArmorData)
+        if (Offhand is EquipableData)
             nbShield++;
         //if (RightHand is Shield)
         //    nbShield++;
@@ -788,9 +788,9 @@ public class Battler : MonoBehaviour, ISerializationCallbackReceiver
     {
         Weapon = GenerateEquipableData(Weapon) as WeaponData;
         Offhand = GenerateEquipableData(Offhand);
-        Head = GenerateEquipableData(Head) as ArmorData;
-        Body = GenerateEquipableData(Body) as ArmorData;
-        Feet = GenerateEquipableData(Feet) as ArmorData;
+        Head = GenerateEquipableData(Head);
+        Body = GenerateEquipableData(Body);
+        Feet = GenerateEquipableData(Feet);
         Neck = GenerateEquipableData(Neck);
         Finger1 = GenerateEquipableData(Finger1);
         Finger2 = GenerateEquipableData(Finger2);
