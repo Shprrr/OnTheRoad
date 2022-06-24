@@ -1,0 +1,52 @@
+name: Unity
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  SOLUTION_NAME: On The Road
+  TARGET_PLATFORM: Android
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Cache
+      uses: actions/cache@v2
+      with:
+        path: Library
+        key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+        restore-keys: |
+          Library-
+
+    - name: Run tests
+      uses: game-ci/unity-test-runner@v2
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      with:
+        githubToken: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Unity - Builder
+      uses: game-ci/unity-builder@v2.0.4
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+        UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      with:
+        targetPlatform: ${{ env.TARGET_PLATFORM }}
+
+    - name: Upload build
+      uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.SOLUTION_NAME }}
+        path: build
