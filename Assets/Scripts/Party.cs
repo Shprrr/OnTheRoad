@@ -28,7 +28,7 @@ public class Party : MonoBehaviour
 #if UNITY_EDITOR
         items = itemsInspector.FromXML<IItemData[]>();
 #else
-        items = new IItemData[] { new ItemUsableData { Id = "potionHp1", Amount = 4 }, new ItemUsableData { Id = "molotov", Amount = 1 }, new WeaponData { Id = "staff", Amount = 1 }, new ArmorData { Id = "shield", Amount = 2 }, new ArmorData { Id = "chestArmor", Amount = 1 }, new ArmorData { Id = "sleepBomb", Amount = 1 }, new ArmorData { Id = "confuseBomb", Amount = 1 } };
+        items = new IItemData[] { new ItemUsableData { Id = "potionHp1", Amount = 4 }, new ItemUsableData { Id = "molotov", Amount = 1 }, new WeaponData { Id = "staff", Amount = 1 }, new EquipableData { Id = "shield", Amount = 2 }, new EquipableData { Id = "chestArmor", Amount = 1 }, new EquipableData { Id = "sleepBomb", Amount = 1 }, new EquipableData { Id = "confuseBomb", Amount = 1 } };
 #endif
     }
 
