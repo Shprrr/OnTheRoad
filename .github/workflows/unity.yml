@@ -44,6 +44,8 @@ jobs:
         UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
       with:
         targetPlatform: ${{ env.TARGET_PLATFORM }}
+        buildName: ${{ env.SOLUTION_NAME }}
+        customParameters: -development
 
     - name: Upload build
       uses: actions/upload-artifact@v2
