@@ -21,13 +21,13 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Cache
-      uses: actions/cache@v2
-      with:
-        path: Library
-        key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
-        restore-keys: |
-          Library-
+    #- name: Cache
+    #  uses: actions/cache@v2
+    #  with:
+    #    path: Library
+    #    key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+    #    restore-keys: |
+    #      Library-
 
     - name: Run tests
       uses: game-ci/unity-test-runner@v2
