@@ -45,7 +45,7 @@ jobs:
       with:
         targetPlatform: ${{ env.TARGET_PLATFORM }}
         buildName: ${{ env.SOLUTION_NAME }}
-        customParameters: -development
+        customParameters: -Development
 
     - name: Upload build
       uses: actions/upload-artifact@v2
