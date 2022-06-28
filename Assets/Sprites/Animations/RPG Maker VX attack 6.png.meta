@@ -1,19 +1,39 @@
 fileFormatVersion: 2
 guid: 38bfb7b5c8d41d246acff5e65f181744
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: RPG Maker VX attack 6_0
-    21300002: RPG Maker VX attack 6_1
-    21300004: RPG Maker VX attack 6_2
-    21300006: RPG Maker VX attack 6_3
-    21300008: RPG Maker VX attack 6_4
-    21300010: RPG Maker VX attack 6_5
-    21300012: RPG Maker VX attack 6_6
-    21300014: RPG Maker VX attack 6_7
-    21300016: RPG Maker VX attack 6_8
-    21300018: RPG Maker VX attack 6_9
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: RPG Maker VX attack 6_0
+  - first:
+      213: 21300002
+    second: RPG Maker VX attack 6_1
+  - first:
+      213: 21300004
+    second: RPG Maker VX attack 6_2
+  - first:
+      213: 21300006
+    second: RPG Maker VX attack 6_3
+  - first:
+      213: 21300008
+    second: RPG Maker VX attack 6_4
+  - first:
+      213: 21300010
+    second: RPG Maker VX attack 6_5
+  - first:
+      213: 21300012
+    second: RPG Maker VX attack 6_6
+  - first:
+      213: 21300014
+    second: RPG Maker VX attack 6_7
+  - first:
+      213: 21300016
+    second: RPG Maker VX attack 6_8
+  - first:
+      213: 21300018
+    second: RPG Maker VX attack 6_9
   externalObjects: {}
-  serializedVersion: 5
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -30,7 +50,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -39,9 +64,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -1
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -62,11 +87,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -77,7 +107,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -88,7 +119,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -99,6 +131,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -118,6 +151,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: cc28b3874196c0b48984a625a13c392e
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -138,6 +172,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 78cdfd0b0c9752b44b39a549cd999a46
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -158,6 +193,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4a73742200921c4419d6d297721b2f7b
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -178,6 +214,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 1dc54891d3a52eb40a3cf7d7712748a5
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -198,6 +235,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2447c2b47e02ebb4ea677b0c6b4f05fd
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -218,6 +256,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9a7ed2475e5e0864893d2462eaf47279
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -238,6 +277,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 75dd97ea1909c014fb9d4656bd8fa7fc
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -258,6 +298,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 7be3949b1a41d1747bed8d3d9933d9d9
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -278,6 +319,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5ee644196f7fe18428783cef162aa087
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -298,6 +340,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 1f2bb6531275f3c449aec2dbcdbaab0c
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -306,11 +349,25 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: fadfd695a9473ec48bcbc25b789510d6
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      RPG Maker VX attack 6_4: 21300008
+      RPG Maker VX attack 6_8: 21300016
+      RPG Maker VX attack 6_5: 21300010
+      RPG Maker VX attack 6_3: 21300006
+      RPG Maker VX attack 6_7: 21300014
+      RPG Maker VX attack 6_2: 21300004
+      RPG Maker VX attack 6_1: 21300002
+      RPG Maker VX attack 6_9: 21300018
+      RPG Maker VX attack 6_0: 21300000
+      RPG Maker VX attack 6_6: 21300012
   spritePackingTag: 
+  pSDRemoveMatte: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

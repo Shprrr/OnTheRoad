@@ -1,33 +1,81 @@
 fileFormatVersion: 2
 guid: eaf068b541fadfe4ea70efabe066f021
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: RPG Maker VX sword 5_0
-    21300002: RPG Maker VX sword 5_1
-    21300004: RPG Maker VX sword 5_2
-    21300006: RPG Maker VX sword 5_3
-    21300008: RPG Maker VX sword 5_4
-    21300010: RPG Maker VX sword 5_5
-    21300012: RPG Maker VX sword 5_6
-    21300014: RPG Maker VX sword 5_7
-    21300016: RPG Maker VX sword 5_8
-    21300018: RPG Maker VX sword 5_9
-    21300020: RPG Maker VX sword 5_10
-    21300022: RPG Maker VX sword 5_11
-    21300024: RPG Maker VX sword 5_12
-    21300026: RPG Maker VX sword 5_13
-    21300028: RPG Maker VX sword 5_14
-    21300030: RPG Maker VX sword 5_15
-    21300032: RPG Maker VX sword 5_16
-    21300034: RPG Maker VX sword 5_17
-    21300036: RPG Maker VX sword 5_18
-    21300038: RPG Maker VX sword 5_19
-    21300040: RPG Maker VX sword 5_20
-    21300042: RPG Maker VX sword 5_21
-    21300044: RPG Maker VX sword 5_22
-    21300046: RPG Maker VX sword 5_23
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: RPG Maker VX sword 5_0
+  - first:
+      213: 21300002
+    second: RPG Maker VX sword 5_1
+  - first:
+      213: 21300004
+    second: RPG Maker VX sword 5_2
+  - first:
+      213: 21300006
+    second: RPG Maker VX sword 5_3
+  - first:
+      213: 21300008
+    second: RPG Maker VX sword 5_4
+  - first:
+      213: 21300010
+    second: RPG Maker VX sword 5_5
+  - first:
+      213: 21300012
+    second: RPG Maker VX sword 5_6
+  - first:
+      213: 21300014
+    second: RPG Maker VX sword 5_7
+  - first:
+      213: 21300016
+    second: RPG Maker VX sword 5_8
+  - first:
+      213: 21300018
+    second: RPG Maker VX sword 5_9
+  - first:
+      213: 21300020
+    second: RPG Maker VX sword 5_10
+  - first:
+      213: 21300022
+    second: RPG Maker VX sword 5_11
+  - first:
+      213: 21300024
+    second: RPG Maker VX sword 5_12
+  - first:
+      213: 21300026
+    second: RPG Maker VX sword 5_13
+  - first:
+      213: 21300028
+    second: RPG Maker VX sword 5_14
+  - first:
+      213: 21300030
+    second: RPG Maker VX sword 5_15
+  - first:
+      213: 21300032
+    second: RPG Maker VX sword 5_16
+  - first:
+      213: 21300034
+    second: RPG Maker VX sword 5_17
+  - first:
+      213: 21300036
+    second: RPG Maker VX sword 5_18
+  - first:
+      213: 21300038
+    second: RPG Maker VX sword 5_19
+  - first:
+      213: 21300040
+    second: RPG Maker VX sword 5_20
+  - first:
+      213: 21300042
+    second: RPG Maker VX sword 5_21
+  - first:
+      213: 21300044
+    second: RPG Maker VX sword 5_22
+  - first:
+      213: 21300046
+    second: RPG Maker VX sword 5_23
   externalObjects: {}
-  serializedVersion: 5
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -44,7 +92,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -53,9 +106,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -1
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -76,11 +129,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -91,7 +149,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -102,7 +161,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -113,6 +173,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -132,6 +193,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e0fea79c374a06f4893ee1c1f42eaa90
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -152,6 +214,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 788b6c0830b2e58448e08e688b2ac874
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -172,6 +235,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 226e36097d7814b4397c1500849b6d6e
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -192,6 +256,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fa0e3548e96a248458a957d806520928
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -212,6 +277,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bb4c8a335e605174ba65f8dbb66347d0
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -232,6 +298,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 36e5862552b119842828234bc137225c
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -252,6 +319,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4089a061240c6364dae257bd25164740
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -272,6 +340,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 7896337d58415c74a8c43b702d87d0d1
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -292,6 +361,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fd5cabaf346f9934f8e25b4bdc6b41f8
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -312,6 +382,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4e37c9c726657a34680157cccbba59ec
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -332,6 +403,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 7a4a72f2a82c3544bad1d7f2624b8aff
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -352,6 +424,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b37e7da77fc4a1b4f8b02362d2fc475f
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -372,6 +445,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b8bdff502d6a43b4baf6f70213eceacb
+      internalID: 21300024
       vertices: []
       indices: 
       edges: []
@@ -392,6 +466,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3ba87959b8f36d949b20432f581ac2c5
+      internalID: 21300026
       vertices: []
       indices: 
       edges: []
@@ -412,6 +487,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 14679e47fa140364fa19766ab2e55c1f
+      internalID: 21300028
       vertices: []
       indices: 
       edges: []
@@ -432,6 +508,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 29c3bcaf93f841b48a9f0a7c0e563a78
+      internalID: 21300030
       vertices: []
       indices: 
       edges: []
@@ -452,6 +529,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fbbe30f1139b7f643877a7dcd4e5d665
+      internalID: 21300032
       vertices: []
       indices: 
       edges: []
@@ -472,6 +550,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f3bab1dc12355924e99c4c9fd9f52a8f
+      internalID: 21300034
       vertices: []
       indices: 
       edges: []
@@ -492,6 +571,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e8acbc91526e36a4b90cdc9a41980104
+      internalID: 21300036
       vertices: []
       indices: 
       edges: []
@@ -512,6 +592,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f137ac6326770654fae9a0997a867849
+      internalID: 21300038
       vertices: []
       indices: 
       edges: []
@@ -532,6 +613,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: abeff55bb985d8a4a9e3660084375471
+      internalID: 21300040
       vertices: []
       indices: 
       edges: []
@@ -552,6 +634,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fac0358e7d39e7e4fbe54fa443c08575
+      internalID: 21300042
       vertices: []
       indices: 
       edges: []
@@ -572,6 +655,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: da51c1bb07924734ab963d0eb737d243
+      internalID: 21300044
       vertices: []
       indices: 
       edges: []
@@ -592,6 +676,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4f259aff6aa8cd44382e5d2fb059e03c
+      internalID: 21300046
       vertices: []
       indices: 
       edges: []
@@ -600,11 +685,39 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 175ef4a24aaf33c4f8c40bae4a35edf9
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      RPG Maker VX sword 5_7: 21300014
+      RPG Maker VX sword 5_20: 21300040
+      RPG Maker VX sword 5_0: 21300000
+      RPG Maker VX sword 5_2: 21300004
+      RPG Maker VX sword 5_10: 21300020
+      RPG Maker VX sword 5_3: 21300006
+      RPG Maker VX sword 5_9: 21300018
+      RPG Maker VX sword 5_21: 21300042
+      RPG Maker VX sword 5_11: 21300022
+      RPG Maker VX sword 5_14: 21300028
+      RPG Maker VX sword 5_23: 21300046
+      RPG Maker VX sword 5_15: 21300030
+      RPG Maker VX sword 5_17: 21300034
+      RPG Maker VX sword 5_4: 21300008
+      RPG Maker VX sword 5_18: 21300036
+      RPG Maker VX sword 5_8: 21300016
+      RPG Maker VX sword 5_12: 21300024
+      RPG Maker VX sword 5_1: 21300002
+      RPG Maker VX sword 5_6: 21300012
+      RPG Maker VX sword 5_16: 21300032
+      RPG Maker VX sword 5_19: 21300038
+      RPG Maker VX sword 5_5: 21300010
+      RPG Maker VX sword 5_13: 21300026
+      RPG Maker VX sword 5_22: 21300044
   spritePackingTag: 
+  pSDRemoveMatte: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

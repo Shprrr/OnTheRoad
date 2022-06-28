@@ -1,33 +1,81 @@
 fileFormatVersion: 2
 guid: 8c23cff421840ce48944a398da1cd914
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: RPG Maker VX Ace special 11_0
-    21300002: RPG Maker VX Ace special 11_1
-    21300004: RPG Maker VX Ace special 11_2
-    21300006: RPG Maker VX Ace special 11_3
-    21300008: RPG Maker VX Ace special 11_4
-    21300010: RPG Maker VX Ace special 11_5
-    21300012: RPG Maker VX Ace special 11_6
-    21300014: RPG Maker VX Ace special 11_7
-    21300016: RPG Maker VX Ace special 11_8
-    21300018: RPG Maker VX Ace special 11_9
-    21300020: RPG Maker VX Ace special 11_10
-    21300022: RPG Maker VX Ace special 11_11
-    21300024: RPG Maker VX Ace special 11_12
-    21300026: RPG Maker VX Ace special 11_13
-    21300028: RPG Maker VX Ace special 11_14
-    21300030: RPG Maker VX Ace special 11_15
-    21300032: RPG Maker VX Ace special 11_16
-    21300034: RPG Maker VX Ace special 11_17
-    21300036: RPG Maker VX Ace special 11_18
-    21300038: RPG Maker VX Ace special 11_19
-    21300040: RPG Maker VX Ace special 11_20
-    21300042: RPG Maker VX Ace special 11_21
-    21300044: RPG Maker VX Ace special 11_22
-    21300046: RPG Maker VX Ace special 11_23
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: RPG Maker VX Ace special 11_0
+  - first:
+      213: 21300002
+    second: RPG Maker VX Ace special 11_1
+  - first:
+      213: 21300004
+    second: RPG Maker VX Ace special 11_2
+  - first:
+      213: 21300006
+    second: RPG Maker VX Ace special 11_3
+  - first:
+      213: 21300008
+    second: RPG Maker VX Ace special 11_4
+  - first:
+      213: 21300010
+    second: RPG Maker VX Ace special 11_5
+  - first:
+      213: 21300012
+    second: RPG Maker VX Ace special 11_6
+  - first:
+      213: 21300014
+    second: RPG Maker VX Ace special 11_7
+  - first:
+      213: 21300016
+    second: RPG Maker VX Ace special 11_8
+  - first:
+      213: 21300018
+    second: RPG Maker VX Ace special 11_9
+  - first:
+      213: 21300020
+    second: RPG Maker VX Ace special 11_10
+  - first:
+      213: 21300022
+    second: RPG Maker VX Ace special 11_11
+  - first:
+      213: 21300024
+    second: RPG Maker VX Ace special 11_12
+  - first:
+      213: 21300026
+    second: RPG Maker VX Ace special 11_13
+  - first:
+      213: 21300028
+    second: RPG Maker VX Ace special 11_14
+  - first:
+      213: 21300030
+    second: RPG Maker VX Ace special 11_15
+  - first:
+      213: 21300032
+    second: RPG Maker VX Ace special 11_16
+  - first:
+      213: 21300034
+    second: RPG Maker VX Ace special 11_17
+  - first:
+      213: 21300036
+    second: RPG Maker VX Ace special 11_18
+  - first:
+      213: 21300038
+    second: RPG Maker VX Ace special 11_19
+  - first:
+      213: 21300040
+    second: RPG Maker VX Ace special 11_20
+  - first:
+      213: 21300042
+    second: RPG Maker VX Ace special 11_21
+  - first:
+      213: 21300044
+    second: RPG Maker VX Ace special 11_22
+  - first:
+      213: 21300046
+    second: RPG Maker VX Ace special 11_23
   externalObjects: {}
-  serializedVersion: 5
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -44,7 +92,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -53,9 +106,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -1
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -76,11 +129,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -91,7 +149,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -102,7 +161,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -113,6 +173,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -132,6 +193,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d7f735e5cad2827498b0f5fb601f9ce5
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -152,6 +214,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c5ff6618aec6c5a4e8347679989cd820
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -172,6 +235,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f9059c6eb346538449360772d486a1ce
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -192,6 +256,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 7a9e12ca7cc089c4d8289b816ab4451d
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -212,6 +277,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9681deb03df8851458d919f08eedd117
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -232,6 +298,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a513adb6c992e97439c3246507cb19c7
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -252,6 +319,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 09757e182d6d8ee4f8531eb698114cdd
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -272,6 +340,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 898e8530eeeeec44fa2f76e14e18c1b9
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -292,6 +361,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fff4aeefd8af5634ab80ce30c2ae4ef5
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -312,6 +382,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d11ea7ca0e9f80046b623f24db00b2a4
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -332,6 +403,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: cf5851913034caa438da89444b46418c
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -352,6 +424,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 04a5ed01318f75040ad850c1aa824225
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -372,6 +445,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f1acec2802f14334e82646bf9655f03d
+      internalID: 21300024
       vertices: []
       indices: 
       edges: []
@@ -392,6 +466,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d16eaa758a4ab7a43a44e0265fdc5ea6
+      internalID: 21300026
       vertices: []
       indices: 
       edges: []
@@ -412,6 +487,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 81497eb760b9ede4c9d8dbbf645cc5f4
+      internalID: 21300028
       vertices: []
       indices: 
       edges: []
@@ -432,6 +508,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 50bb3774db9b8e8409f91410cc705adb
+      internalID: 21300030
       vertices: []
       indices: 
       edges: []
@@ -452,6 +529,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 8ae832e7bb6d22d46b6b37b6fa084134
+      internalID: 21300032
       vertices: []
       indices: 
       edges: []
@@ -472,6 +550,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 69c993078c118b94eab3bd5599a0d40e
+      internalID: 21300034
       vertices: []
       indices: 
       edges: []
@@ -492,6 +571,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d9769c9dec8348c44a016da1f187ffe9
+      internalID: 21300036
       vertices: []
       indices: 
       edges: []
@@ -512,6 +592,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: eba09d08bcc4b6e4dbbd50590231a1fd
+      internalID: 21300038
       vertices: []
       indices: 
       edges: []
@@ -532,6 +613,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f41a31b01fdf6284f996c494d3513520
+      internalID: 21300040
       vertices: []
       indices: 
       edges: []
@@ -552,6 +634,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 05f2c2c0a68824044a2f653f1e273ed9
+      internalID: 21300042
       vertices: []
       indices: 
       edges: []
@@ -572,6 +655,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 1046a91180b60b6408280b928327996f
+      internalID: 21300044
       vertices: []
       indices: 
       edges: []
@@ -592,6 +676,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ae7bc864e8fa13e47af5f68e1f1e619b
+      internalID: 21300046
       vertices: []
       indices: 
       edges: []
@@ -600,11 +685,39 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 7d9e873ca20eb314b84fe262500767bc
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      RPG Maker VX Ace special 11_8: 21300016
+      RPG Maker VX Ace special 11_13: 21300026
+      RPG Maker VX Ace special 11_20: 21300040
+      RPG Maker VX Ace special 11_2: 21300004
+      RPG Maker VX Ace special 11_10: 21300020
+      RPG Maker VX Ace special 11_14: 21300028
+      RPG Maker VX Ace special 11_16: 21300032
+      RPG Maker VX Ace special 11_6: 21300012
+      RPG Maker VX Ace special 11_9: 21300018
+      RPG Maker VX Ace special 11_11: 21300022
+      RPG Maker VX Ace special 11_0: 21300000
+      RPG Maker VX Ace special 11_19: 21300038
+      RPG Maker VX Ace special 11_18: 21300036
+      RPG Maker VX Ace special 11_21: 21300042
+      RPG Maker VX Ace special 11_1: 21300002
+      RPG Maker VX Ace special 11_23: 21300046
+      RPG Maker VX Ace special 11_12: 21300024
+      RPG Maker VX Ace special 11_22: 21300044
+      RPG Maker VX Ace special 11_5: 21300010
+      RPG Maker VX Ace special 11_3: 21300006
+      RPG Maker VX Ace special 11_17: 21300034
+      RPG Maker VX Ace special 11_15: 21300030
+      RPG Maker VX Ace special 11_4: 21300008
+      RPG Maker VX Ace special 11_7: 21300014
   spritePackingTag: 
+  pSDRemoveMatte: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

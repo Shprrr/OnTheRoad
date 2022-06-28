@@ -1,89 +1,249 @@
 fileFormatVersion: 2
 guid: 4ee0297879b021748af43330b74abdae
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: portrait RPG Maker MV_0
-    21300002: portrait RPG Maker MV_1
-    21300004: portrait RPG Maker MV_2
-    21300006: portrait RPG Maker MV_3
-    21300008: portrait RPG Maker MV_4
-    21300010: portrait RPG Maker MV_5
-    21300012: portrait RPG Maker MV_6
-    21300014: portrait RPG Maker MV_7
-    21300016: portrait RPG Maker MV_8
-    21300018: portrait RPG Maker MV_9
-    21300020: portrait RPG Maker MV_10
-    21300022: portrait RPG Maker MV_11
-    21300024: portrait RPG Maker MV_12
-    21300026: portrait RPG Maker MV_13
-    21300028: portrait RPG Maker MV_14
-    21300030: portrait RPG Maker MV_15
-    21300032: portrait RPG Maker MV_16
-    21300034: portrait RPG Maker MV_17
-    21300036: portrait RPG Maker MV_18
-    21300038: portrait RPG Maker MV_19
-    21300040: portrait RPG Maker MV_20
-    21300042: portrait RPG Maker MV_21
-    21300044: portrait RPG Maker MV_22
-    21300046: portrait RPG Maker MV_23
-    21300048: portrait RPG Maker MV_24
-    21300050: portrait RPG Maker MV_25
-    21300052: portrait RPG Maker MV_26
-    21300054: portrait RPG Maker MV_27
-    21300056: portrait RPG Maker MV_28
-    21300058: portrait RPG Maker MV_29
-    21300060: portrait RPG Maker MV_30
-    21300062: portrait RPG Maker MV_31
-    21300064: portrait RPG Maker MV_32
-    21300066: portrait RPG Maker MV_33
-    21300068: portrait RPG Maker MV_34
-    21300070: portrait RPG Maker MV_35
-    21300072: portrait RPG Maker MV_36
-    21300074: portrait RPG Maker MV_37
-    21300076: portrait RPG Maker MV_38
-    21300078: portrait RPG Maker MV_39
-    21300080: portrait RPG Maker MV_40
-    21300082: portrait RPG Maker MV_41
-    21300084: portrait RPG Maker MV_42
-    21300086: portrait RPG Maker MV_43
-    21300088: portrait RPG Maker MV_44
-    21300090: portrait RPG Maker MV_45
-    21300092: portrait RPG Maker MV_46
-    21300094: portrait RPG Maker MV_47
-    21300096: portrait RPG Maker MV_48
-    21300098: portrait RPG Maker MV_49
-    21300100: portrait RPG Maker MV_50
-    21300102: portrait RPG Maker MV_51
-    21300104: portrait RPG Maker MV_52
-    21300106: portrait RPG Maker MV_53
-    21300108: portrait RPG Maker MV_54
-    21300110: portrait RPG Maker MV_55
-    21300112: portrait RPG Maker MV_56
-    21300114: portrait RPG Maker MV_57
-    21300116: portrait RPG Maker MV_58
-    21300118: portrait RPG Maker MV_59
-    21300120: portrait RPG Maker MV_60
-    21300122: portrait RPG Maker MV_61
-    21300124: portrait RPG Maker MV_62
-    21300126: portrait RPG Maker MV_63
-    21300128: portrait RPG Maker MV_64
-    21300130: portrait RPG Maker MV_65
-    21300132: portrait RPG Maker MV_66
-    21300134: portrait RPG Maker MV_67
-    21300136: portrait RPG Maker MV_68
-    21300138: portrait RPG Maker MV_69
-    21300140: portrait RPG Maker MV_70
-    21300142: portrait RPG Maker MV_71
-    21300144: portrait RPG Maker MV_72
-    21300146: portrait RPG Maker MV_73
-    21300148: portrait RPG Maker MV_74
-    21300150: portrait RPG Maker MV_75
-    21300152: portrait RPG Maker MV_76
-    21300154: portrait RPG Maker MV_77
-    21300156: portrait RPG Maker MV_78
-    21300158: portrait RPG Maker MV_79
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: portrait RPG Maker MV_0
+  - first:
+      213: 21300002
+    second: portrait RPG Maker MV_1
+  - first:
+      213: 21300004
+    second: portrait RPG Maker MV_2
+  - first:
+      213: 21300006
+    second: portrait RPG Maker MV_3
+  - first:
+      213: 21300008
+    second: portrait RPG Maker MV_4
+  - first:
+      213: 21300010
+    second: portrait RPG Maker MV_5
+  - first:
+      213: 21300012
+    second: portrait RPG Maker MV_6
+  - first:
+      213: 21300014
+    second: portrait RPG Maker MV_7
+  - first:
+      213: 21300016
+    second: portrait RPG Maker MV_8
+  - first:
+      213: 21300018
+    second: portrait RPG Maker MV_9
+  - first:
+      213: 21300020
+    second: portrait RPG Maker MV_10
+  - first:
+      213: 21300022
+    second: portrait RPG Maker MV_11
+  - first:
+      213: 21300024
+    second: portrait RPG Maker MV_12
+  - first:
+      213: 21300026
+    second: portrait RPG Maker MV_13
+  - first:
+      213: 21300028
+    second: portrait RPG Maker MV_14
+  - first:
+      213: 21300030
+    second: portrait RPG Maker MV_15
+  - first:
+      213: 21300032
+    second: portrait RPG Maker MV_16
+  - first:
+      213: 21300034
+    second: portrait RPG Maker MV_17
+  - first:
+      213: 21300036
+    second: portrait RPG Maker MV_18
+  - first:
+      213: 21300038
+    second: portrait RPG Maker MV_19
+  - first:
+      213: 21300040
+    second: portrait RPG Maker MV_20
+  - first:
+      213: 21300042
+    second: portrait RPG Maker MV_21
+  - first:
+      213: 21300044
+    second: portrait RPG Maker MV_22
+  - first:
+      213: 21300046
+    second: portrait RPG Maker MV_23
+  - first:
+      213: 21300048
+    second: portrait RPG Maker MV_24
+  - first:
+      213: 21300050
+    second: portrait RPG Maker MV_25
+  - first:
+      213: 21300052
+    second: portrait RPG Maker MV_26
+  - first:
+      213: 21300054
+    second: portrait RPG Maker MV_27
+  - first:
+      213: 21300056
+    second: portrait RPG Maker MV_28
+  - first:
+      213: 21300058
+    second: portrait RPG Maker MV_29
+  - first:
+      213: 21300060
+    second: portrait RPG Maker MV_30
+  - first:
+      213: 21300062
+    second: portrait RPG Maker MV_31
+  - first:
+      213: 21300064
+    second: portrait RPG Maker MV_32
+  - first:
+      213: 21300066
+    second: portrait RPG Maker MV_33
+  - first:
+      213: 21300068
+    second: portrait RPG Maker MV_34
+  - first:
+      213: 21300070
+    second: portrait RPG Maker MV_35
+  - first:
+      213: 21300072
+    second: portrait RPG Maker MV_36
+  - first:
+      213: 21300074
+    second: portrait RPG Maker MV_37
+  - first:
+      213: 21300076
+    second: portrait RPG Maker MV_38
+  - first:
+      213: 21300078
+    second: portrait RPG Maker MV_39
+  - first:
+      213: 21300080
+    second: portrait RPG Maker MV_40
+  - first:
+      213: 21300082
+    second: portrait RPG Maker MV_41
+  - first:
+      213: 21300084
+    second: portrait RPG Maker MV_42
+  - first:
+      213: 21300086
+    second: portrait RPG Maker MV_43
+  - first:
+      213: 21300088
+    second: portrait RPG Maker MV_44
+  - first:
+      213: 21300090
+    second: portrait RPG Maker MV_45
+  - first:
+      213: 21300092
+    second: portrait RPG Maker MV_46
+  - first:
+      213: 21300094
+    second: portrait RPG Maker MV_47
+  - first:
+      213: 21300096
+    second: portrait RPG Maker MV_48
+  - first:
+      213: 21300098
+    second: portrait RPG Maker MV_49
+  - first:
+      213: 21300100
+    second: portrait RPG Maker MV_50
+  - first:
+      213: 21300102
+    second: portrait RPG Maker MV_51
+  - first:
+      213: 21300104
+    second: portrait RPG Maker MV_52
+  - first:
+      213: 21300106
+    second: portrait RPG Maker MV_53
+  - first:
+      213: 21300108
+    second: portrait RPG Maker MV_54
+  - first:
+      213: 21300110
+    second: portrait RPG Maker MV_55
+  - first:
+      213: 21300112
+    second: portrait RPG Maker MV_56
+  - first:
+      213: 21300114
+    second: portrait RPG Maker MV_57
+  - first:
+      213: 21300116
+    second: portrait RPG Maker MV_58
+  - first:
+      213: 21300118
+    second: portrait RPG Maker MV_59
+  - first:
+      213: 21300120
+    second: portrait RPG Maker MV_60
+  - first:
+      213: 21300122
+    second: portrait RPG Maker MV_61
+  - first:
+      213: 21300124
+    second: portrait RPG Maker MV_62
+  - first:
+      213: 21300126
+    second: portrait RPG Maker MV_63
+  - first:
+      213: 21300128
+    second: portrait RPG Maker MV_64
+  - first:
+      213: 21300130
+    second: portrait RPG Maker MV_65
+  - first:
+      213: 21300132
+    second: portrait RPG Maker MV_66
+  - first:
+      213: 21300134
+    second: portrait RPG Maker MV_67
+  - first:
+      213: 21300136
+    second: portrait RPG Maker MV_68
+  - first:
+      213: 21300138
+    second: portrait RPG Maker MV_69
+  - first:
+      213: 21300140
+    second: portrait RPG Maker MV_70
+  - first:
+      213: 21300142
+    second: portrait RPG Maker MV_71
+  - first:
+      213: 21300144
+    second: portrait RPG Maker MV_72
+  - first:
+      213: 21300146
+    second: portrait RPG Maker MV_73
+  - first:
+      213: 21300148
+    second: portrait RPG Maker MV_74
+  - first:
+      213: 21300150
+    second: portrait RPG Maker MV_75
+  - first:
+      213: 21300152
+    second: portrait RPG Maker MV_76
+  - first:
+      213: 21300154
+    second: portrait RPG Maker MV_77
+  - first:
+      213: 21300156
+    second: portrait RPG Maker MV_78
+  - first:
+      213: 21300158
+    second: portrait RPG Maker MV_79
   externalObjects: {}
-  serializedVersion: 5
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -100,7 +260,12 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
+    flipGreenChannel: 0
   isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -109,9 +274,9 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
-    aniso: -1
-    mipBias: -1
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -132,11 +297,16 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 1
+  swizzle: 50462976
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -147,7 +317,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -158,7 +329,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -169,6 +341,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -188,6 +361,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 460fb63e4642696458d0e6f965f0e9ec
+      internalID: 21300000
       vertices: []
       indices: 
       edges: []
@@ -208,6 +382,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6b3d1eabefdc12c4eb5205cd9e01dc08
+      internalID: 21300002
       vertices: []
       indices: 
       edges: []
@@ -228,6 +403,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2fc6bbef8b3e07141ab416ce775ebbac
+      internalID: 21300004
       vertices: []
       indices: 
       edges: []
@@ -248,6 +424,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c75d981861f447d4dab5f1932be65999
+      internalID: 21300006
       vertices: []
       indices: 
       edges: []
@@ -268,6 +445,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ff8f11486cf96ba4fa7003efe97df8ea
+      internalID: 21300008
       vertices: []
       indices: 
       edges: []
@@ -288,6 +466,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e8c1903acd8d5524b9d2833c4f0131b3
+      internalID: 21300010
       vertices: []
       indices: 
       edges: []
@@ -308,6 +487,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: aad628fef8507434d9d6f8ffca2e8257
+      internalID: 21300012
       vertices: []
       indices: 
       edges: []
@@ -328,6 +508,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c0ac837bd4bd29649bd449d5dd104104
+      internalID: 21300014
       vertices: []
       indices: 
       edges: []
@@ -348,6 +529,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f3be1da7a92160a419271d178a1c523a
+      internalID: 21300016
       vertices: []
       indices: 
       edges: []
@@ -368,6 +550,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 884361731b450e74a87304f27d9829ea
+      internalID: 21300018
       vertices: []
       indices: 
       edges: []
@@ -388,6 +571,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: f9f07dffa4b0115438d79910f9f37913
+      internalID: 21300020
       vertices: []
       indices: 
       edges: []
@@ -408,6 +592,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bdce7f14851f1534a9b2c71f4619766a
+      internalID: 21300022
       vertices: []
       indices: 
       edges: []
@@ -428,6 +613,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0163c2b3d32cc3747b6bbc7b968d4d02
+      internalID: 21300024
       vertices: []
       indices: 
       edges: []
@@ -448,6 +634,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 111df1cd05742ee43b66e5fcfedeaafa
+      internalID: 21300026
       vertices: []
       indices: 
       edges: []
@@ -468,6 +655,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d9d1ed39f7522034fa0ac47ccac6c85e
+      internalID: 21300028
       vertices: []
       indices: 
       edges: []
@@ -488,6 +676,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 56c8ca8d2098498439455fdc5938df20
+      internalID: 21300030
       vertices: []
       indices: 
       edges: []
@@ -508,6 +697,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3ee71f000ef104b429fcf6ad1fa88c91
+      internalID: 21300032
       vertices: []
       indices: 
       edges: []
@@ -528,6 +718,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d5fbb60a910ba184e968c468e6f82556
+      internalID: 21300034
       vertices: []
       indices: 
       edges: []
@@ -548,6 +739,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5f6450c06361f5c40bdb9d3cd3eec5f7
+      internalID: 21300036
       vertices: []
       indices: 
       edges: []
@@ -568,6 +760,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d232e48a53152a24496bedb9057c191c
+      internalID: 21300038
       vertices: []
       indices: 
       edges: []
@@ -588,6 +781,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 78b8fb243303fc847ba2e6efb1321845
+      internalID: 21300040
       vertices: []
       indices: 
       edges: []
@@ -608,6 +802,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4e2f0598bad5530438c80aa88694cfc6
+      internalID: 21300042
       vertices: []
       indices: 
       edges: []
@@ -628,6 +823,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9b4d173a62385ff408b275677fb4795e
+      internalID: 21300044
       vertices: []
       indices: 
       edges: []
@@ -648,6 +844,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 33c44df3d81f35b458ddcec7ca7811ba
+      internalID: 21300046
       vertices: []
       indices: 
       edges: []
@@ -668,6 +865,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5cb57c5e3e7539643930f55f9f1c34c9
+      internalID: 21300048
       vertices: []
       indices: 
       edges: []
@@ -688,6 +886,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: ba53dc20d41ac144c870a86220a827b3
+      internalID: 21300050
       vertices: []
       indices: 
       edges: []
@@ -708,6 +907,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 77479941078bf3c4da2a8f4d2d09a86b
+      internalID: 21300052
       vertices: []
       indices: 
       edges: []
@@ -728,6 +928,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6cd287d227c80fe49bfa7d6e296e5898
+      internalID: 21300054
       vertices: []
       indices: 
       edges: []
@@ -748,6 +949,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 8a1dc2e26c0864a4da32ebd92e9698b6
+      internalID: 21300056
       vertices: []
       indices: 
       edges: []
@@ -768,6 +970,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 8749af9f6fdb06a4b8c0b2759383989f
+      internalID: 21300058
       vertices: []
       indices: 
       edges: []
@@ -788,6 +991,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 82ddf650e28ffec40bec6d6378406f8e
+      internalID: 21300060
       vertices: []
       indices: 
       edges: []
@@ -808,6 +1012,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 7ae3e765cae81254cb6bd1e1d611fcd8
+      internalID: 21300062
       vertices: []
       indices: 
       edges: []
@@ -828,6 +1033,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5b8c2ae38ee304341b0d1ed29c6597f6
+      internalID: 21300064
       vertices: []
       indices: 
       edges: []
@@ -848,6 +1054,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 992952edc250c504e80abbe409f35661
+      internalID: 21300066
       vertices: []
       indices: 
       edges: []
@@ -868,6 +1075,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5794ceab03020a241913e09e86a4eff2
+      internalID: 21300068
       vertices: []
       indices: 
       edges: []
@@ -888,6 +1096,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 21284985b9195a34eaa8b0d8e1c38164
+      internalID: 21300070
       vertices: []
       indices: 
       edges: []
@@ -908,6 +1117,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3338b942ff612074da6fdbecff5a6d5d
+      internalID: 21300072
       vertices: []
       indices: 
       edges: []
@@ -928,6 +1138,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bba5da106449b6548896f911e8809a56
+      internalID: 21300074
       vertices: []
       indices: 
       edges: []
@@ -948,6 +1159,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4023d8fe805b2f946a7ff8cee526ccf1
+      internalID: 21300076
       vertices: []
       indices: 
       edges: []
@@ -968,6 +1180,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 5c159314dbdd84247b41e141cdb18df1
+      internalID: 21300078
       vertices: []
       indices: 
       edges: []
@@ -988,6 +1201,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 18e31c4dda3fa95449e6ff47f543303e
+      internalID: 21300080
       vertices: []
       indices: 
       edges: []
@@ -1008,6 +1222,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e0cfec6e44ce82941bff65ec076360fd
+      internalID: 21300082
       vertices: []
       indices: 
       edges: []
@@ -1028,6 +1243,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 1621ef4b694ac584a84b2e3db5d60f5d
+      internalID: 21300084
       vertices: []
       indices: 
       edges: []
@@ -1048,6 +1264,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: cbdb391dda79462488f4623cabc4a2de
+      internalID: 21300086
       vertices: []
       indices: 
       edges: []
@@ -1068,6 +1285,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 01be13210c2476c4e8c17bd5c49e937f
+      internalID: 21300088
       vertices: []
       indices: 
       edges: []
@@ -1088,6 +1306,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 8fdddd2658616e34aacbeb622b981d2f
+      internalID: 21300090
       vertices: []
       indices: 
       edges: []
@@ -1108,6 +1327,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2e93db9de3a9524499fc2d2e6fecb57f
+      internalID: 21300092
       vertices: []
       indices: 
       edges: []
@@ -1128,6 +1348,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: bca53c1e682f09f4fa06c3c9df7b7762
+      internalID: 21300094
       vertices: []
       indices: 
       edges: []
@@ -1148,6 +1369,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b342e3cc3ef2b3c438352af347ea69a5
+      internalID: 21300096
       vertices: []
       indices: 
       edges: []
@@ -1168,6 +1390,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 012b6f03f9c8b7148858b5bf5f5a2166
+      internalID: 21300098
       vertices: []
       indices: 
       edges: []
@@ -1188,6 +1411,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d729c39247383304592b421ecf9098eb
+      internalID: 21300100
       vertices: []
       indices: 
       edges: []
@@ -1208,6 +1432,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: efad4f0caadc555489ccd92b982cbf78
+      internalID: 21300102
       vertices: []
       indices: 
       edges: []
@@ -1228,6 +1453,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: c3094048883b2ff498ceba3e7c67ecf4
+      internalID: 21300104
       vertices: []
       indices: 
       edges: []
@@ -1248,6 +1474,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 679b327f68688144da8c0d623de91d84
+      internalID: 21300106
       vertices: []
       indices: 
       edges: []
@@ -1268,6 +1495,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: aeac44be4b5440744be0231529dd81c9
+      internalID: 21300108
       vertices: []
       indices: 
       edges: []
@@ -1288,6 +1516,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 3e6198c5601f30245b83276603b877ac
+      internalID: 21300110
       vertices: []
       indices: 
       edges: []
@@ -1308,6 +1537,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: b0b2346ae105d064f9356d0520c1aa62
+      internalID: 21300112
       vertices: []
       indices: 
       edges: []
@@ -1328,6 +1558,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 05eeabb55f7f13348a6ed2b5d1cd459e
+      internalID: 21300114
       vertices: []
       indices: 
       edges: []
@@ -1348,6 +1579,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: fe2a92a63ed03274a887ab9314666192
+      internalID: 21300116
       vertices: []
       indices: 
       edges: []
@@ -1368,6 +1600,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a48898885cd15d844bc4136c312ea6d5
+      internalID: 21300118
       vertices: []
       indices: 
       edges: []
@@ -1388,6 +1621,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4b44027ca95853e4a9973665450167a2
+      internalID: 21300120
       vertices: []
       indices: 
       edges: []
@@ -1408,6 +1642,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: d38f49ff82ef05643aacfbbfa8f6b8cf
+      internalID: 21300122
       vertices: []
       indices: 
       edges: []
@@ -1428,6 +1663,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: cbe853294e664904ab0e5a04f700d885
+      internalID: 21300124
       vertices: []
       indices: 
       edges: []
@@ -1448,6 +1684,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 0ed35a0c410df544a9b9bac3b2d7f70f
+      internalID: 21300126
       vertices: []
       indices: 
       edges: []
@@ -1468,6 +1705,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 7050e26d9571eae4c8c55ea29fe16928
+      internalID: 21300128
       vertices: []
       indices: 
       edges: []
@@ -1488,6 +1726,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 98e77980da6a37d41a6f3a50855141ce
+      internalID: 21300130
       vertices: []
       indices: 
       edges: []
@@ -1508,6 +1747,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: aca9a314c7bbb22418d0baebd4f2625a
+      internalID: 21300132
       vertices: []
       indices: 
       edges: []
@@ -1528,6 +1768,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 6c5156b986330054493c0f54ab468c45
+      internalID: 21300134
       vertices: []
       indices: 
       edges: []
@@ -1548,6 +1789,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 42ab51e4e3736c74d84d7038b5fc441c
+      internalID: 21300136
       vertices: []
       indices: 
       edges: []
@@ -1568,6 +1810,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 8a761ad56e16bfd4c8944e3c2dc125b0
+      internalID: 21300138
       vertices: []
       indices: 
       edges: []
@@ -1588,6 +1831,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a812f711ab79e76489dd7bdf7d112308
+      internalID: 21300140
       vertices: []
       indices: 
       edges: []
@@ -1608,6 +1852,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 9394fea15d620fe4cb176e477eedf1f7
+      internalID: 21300142
       vertices: []
       indices: 
       edges: []
@@ -1628,6 +1873,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 648ee970645bacb43a3cd016bf61257e
+      internalID: 21300144
       vertices: []
       indices: 
       edges: []
@@ -1648,6 +1894,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 96ea8136b20f23241bba669420843188
+      internalID: 21300146
       vertices: []
       indices: 
       edges: []
@@ -1668,6 +1915,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 4ae104142402c6f43a439932f0c77f66
+      internalID: 21300148
       vertices: []
       indices: 
       edges: []
@@ -1688,6 +1936,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: e14d48111ca2a854499f452af1861d12
+      internalID: 21300150
       vertices: []
       indices: 
       edges: []
@@ -1708,6 +1957,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: a8de27b8ef59158489462697336823f5
+      internalID: 21300152
       vertices: []
       indices: 
       edges: []
@@ -1728,6 +1978,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 51efb343c69834749b7c53f36a9b45b9
+      internalID: 21300154
       vertices: []
       indices: 
       edges: []
@@ -1748,6 +1999,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 52419c0e65893e8498ec8a9c3fc804ca
+      internalID: 21300156
       vertices: []
       indices: 
       edges: []
@@ -1768,6 +2020,7 @@ TextureImporter:
       tessellationDetail: 0
       bones: []
       spriteID: 2a17a71716cb7434e8f353b64aba6517
+      internalID: 21300158
       vertices: []
       indices: 
       edges: []
@@ -1776,11 +2029,95 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 1e42652ac22bab546bc4da5b4d5983ed
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      portrait RPG Maker MV_11: 21300022
+      portrait RPG Maker MV_38: 21300076
+      portrait RPG Maker MV_34: 21300068
+      portrait RPG Maker MV_48: 21300096
+      portrait RPG Maker MV_22: 21300044
+      portrait RPG Maker MV_41: 21300082
+      portrait RPG Maker MV_42: 21300084
+      portrait RPG Maker MV_47: 21300094
+      portrait RPG Maker MV_68: 21300136
+      portrait RPG Maker MV_28: 21300056
+      portrait RPG Maker MV_32: 21300064
+      portrait RPG Maker MV_49: 21300098
+      portrait RPG Maker MV_3: 21300006
+      portrait RPG Maker MV_30: 21300060
+      portrait RPG Maker MV_57: 21300114
+      portrait RPG Maker MV_64: 21300128
+      portrait RPG Maker MV_35: 21300070
+      portrait RPG Maker MV_59: 21300118
+      portrait RPG Maker MV_66: 21300132
+      portrait RPG Maker MV_67: 21300134
+      portrait RPG Maker MV_50: 21300100
+      portrait RPG Maker MV_8: 21300016
+      portrait RPG Maker MV_19: 21300038
+      portrait RPG Maker MV_43: 21300086
+      portrait RPG Maker MV_39: 21300078
+      portrait RPG Maker MV_70: 21300140
+      portrait RPG Maker MV_10: 21300020
+      portrait RPG Maker MV_76: 21300152
+      portrait RPG Maker MV_75: 21300150
+      portrait RPG Maker MV_78: 21300156
+      portrait RPG Maker MV_21: 21300042
+      portrait RPG Maker MV_12: 21300024
+      portrait RPG Maker MV_63: 21300126
+      portrait RPG Maker MV_79: 21300158
+      portrait RPG Maker MV_15: 21300030
+      portrait RPG Maker MV_37: 21300074
+      portrait RPG Maker MV_40: 21300080
+      portrait RPG Maker MV_55: 21300110
+      portrait RPG Maker MV_60: 21300120
+      portrait RPG Maker MV_54: 21300108
+      portrait RPG Maker MV_23: 21300046
+      portrait RPG Maker MV_44: 21300088
+      portrait RPG Maker MV_4: 21300008
+      portrait RPG Maker MV_36: 21300072
+      portrait RPG Maker MV_51: 21300102
+      portrait RPG Maker MV_62: 21300124
+      portrait RPG Maker MV_18: 21300036
+      portrait RPG Maker MV_17: 21300034
+      portrait RPG Maker MV_2: 21300004
+      portrait RPG Maker MV_13: 21300026
+      portrait RPG Maker MV_16: 21300032
+      portrait RPG Maker MV_74: 21300148
+      portrait RPG Maker MV_27: 21300054
+      portrait RPG Maker MV_53: 21300106
+      portrait RPG Maker MV_9: 21300018
+      portrait RPG Maker MV_52: 21300104
+      portrait RPG Maker MV_69: 21300138
+      portrait RPG Maker MV_14: 21300028
+      portrait RPG Maker MV_65: 21300130
+      portrait RPG Maker MV_77: 21300154
+      portrait RPG Maker MV_29: 21300058
+      portrait RPG Maker MV_45: 21300090
+      portrait RPG Maker MV_7: 21300014
+      portrait RPG Maker MV_5: 21300010
+      portrait RPG Maker MV_25: 21300050
+      portrait RPG Maker MV_31: 21300062
+      portrait RPG Maker MV_61: 21300122
+      portrait RPG Maker MV_46: 21300092
+      portrait RPG Maker MV_26: 21300052
+      portrait RPG Maker MV_24: 21300048
+      portrait RPG Maker MV_20: 21300040
+      portrait RPG Maker MV_72: 21300144
+      portrait RPG Maker MV_6: 21300012
+      portrait RPG Maker MV_73: 21300146
+      portrait RPG Maker MV_33: 21300066
+      portrait RPG Maker MV_0: 21300000
+      portrait RPG Maker MV_58: 21300116
+      portrait RPG Maker MV_56: 21300112
+      portrait RPG Maker MV_1: 21300002
+      portrait RPG Maker MV_71: 21300142
   spritePackingTag: 
+  pSDRemoveMatte: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
